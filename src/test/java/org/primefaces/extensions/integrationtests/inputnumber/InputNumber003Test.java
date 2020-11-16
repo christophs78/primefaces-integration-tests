@@ -43,7 +43,7 @@ public class InputNumber003Test extends AbstractPrimePageTest {
         // Assert
         Assertions.assertEquals("1.230000", inputNumber.getValue());
         Assertions.assertEquals("1.230000", inputNumber.getWidgetValue());
-        assertConfiguration(inputNumber.getWidgetConfiguration(), false);
+        assertConfiguration(inputNumber.getWidgetConfiguration(), true);
     }
 
     @Test
@@ -62,14 +62,19 @@ public class InputNumber003Test extends AbstractPrimePageTest {
         // Assert
         Assertions.assertEquals("4.56", inputNumber.getValue());
         Assertions.assertEquals("4.56", inputNumber.getWidgetValue());
-        assertConfiguration(inputNumber.getWidgetConfiguration(), true);
+        assertConfiguration(inputNumber.getWidgetConfiguration(), false);
     }
 
-    private void assertConfiguration(JSONObject cfg, boolean hasPadControl) {
+    private void assertConfiguration(JSONObject cfg, boolean allowDecimalPadding) {
         assertNoJavascriptErrors();
         System.out.println("InputNumber Config = " + cfg);
         Assertions.assertEquals("6", cfg.get("decimalPlaces"));
-        Assertions.assertEquals(hasPadControl, cfg.has("allowDecimalPadding"));
+        if (cfg.has("allowDecimalPadding")) {
+            Assertions.assertEquals(allowDecimalPadding, cfg.getBoolean("allowDecimalPadding"));
+        }
+        else {
+            Assertions.assertTrue(allowDecimalPadding);
+        }
     }
 
     public static class Page extends AbstractPrimePage {
