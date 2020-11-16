@@ -12,7 +12,7 @@
     <h:body>
 
         <h:form id="form">
-            <!-- GitHub #6387 Test Decimal Places and Padding Control together -->
+            <!-- GitHub #6387/#6518 Test Decimal Places and Padding Control together -->
             <p:inputNumber id="inputnumber" value="#{inputNumber003.value}" decimalPlaces="6" padControl="#{inputNumber003.padControl}"/>
 
             <p:commandButton id="buttonPadControl" update="@form" value="Pad Control" immediate="true" actionListener="#{inputNumber003.updatePadControl}"/>

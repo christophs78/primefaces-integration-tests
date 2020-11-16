@@ -30,7 +30,7 @@ public class InputNumber003Test extends AbstractPrimePageTest {
 
     @Test
     @Order(1)
-    @DisplayName("InputNumber: GitHub #6387 test decimal places with padding zeroes")
+    @DisplayName("InputNumber: GitHub #6387, #6518 test decimal places with padding zeroes")
     public void testPaddingZeroes(Page page) {
         // Arrange
         InputNumber inputNumber = page.inputnumber;
@@ -42,12 +42,13 @@ public class InputNumber003Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertEquals("1.230000", inputNumber.getValue());
+        Assertions.assertEquals("1.230000", inputNumber.getWidgetValue());
         assertConfiguration(inputNumber.getWidgetConfiguration(), false);
     }
 
     @Test
     @Order(2)
-    @DisplayName("InputNumber: GitHub #6387 test decimal places without padding zeroes")
+    @DisplayName("InputNumber: GitHub #6387, #6518 test decimal places without padding zeroes")
     public void testNoPadding(Page page) {
         // Arrange
         InputNumber inputNumber = page.inputnumber;
@@ -60,6 +61,7 @@ public class InputNumber003Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertEquals("4.56", inputNumber.getValue());
+        Assertions.assertEquals("4.56", inputNumber.getWidgetValue());
         assertConfiguration(inputNumber.getWidgetConfiguration(), true);
     }
 
