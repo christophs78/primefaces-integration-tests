@@ -43,5 +43,5 @@ jobs:
           path: primefaces-selenium
       - name: Build PrimeFaces Selenium
         run: cd primefaces-selenium && mvn install && cd ..
-      - name: Build with Maven
+      - name: Run Integration Tests
         run: mvn -B -V clean install -P${{ matrix.profile }}
