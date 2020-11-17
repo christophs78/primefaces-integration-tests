@@ -140,13 +140,13 @@ public class Spinner002Test extends AbstractPrimePageTest {
         System.out.println("Spinner Config = " + cfg);
         Assertions.assertEquals(0.25, cfg.getDouble("step"));
         Assertions.assertEquals("2", cfg.get("decimalPlaces"));
+        Assertions.assertEquals(2, cfg.getInt("precision"));
         Assertions.assertEquals(".", cfg.get("decimalSeparator"));
         Assertions.assertEquals(",", cfg.get("thousandSeparator"));
     }
 
     public void sendKeys(Spinner spinner, CharSequence value) {
         WebElement input = spinner.getInput();
-        input.click();
         ComponentUtils.sendKeys(input, value);
     }
 

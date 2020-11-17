@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -35,7 +36,7 @@ public class Spinner001Test extends AbstractPrimePageTest {
     public void testSpinUp(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
 
         // Act
         spinner.increment();
@@ -52,7 +53,7 @@ public class Spinner001Test extends AbstractPrimePageTest {
     public void testSpinDown(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
 
         // Act
         spinner.decrement();
@@ -70,14 +71,14 @@ public class Spinner001Test extends AbstractPrimePageTest {
     public void testInvalidCharacter(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
 
         // Act
         ComponentUtils.sendKeys(spinner.getInput(), "abc");
         page.button.click();
 
         // Assert
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
         assertConfiguration(spinner.getWidgetConfiguration());
     }
 
@@ -87,10 +88,10 @@ public class Spinner001Test extends AbstractPrimePageTest {
     public void testDecimalSeparator(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
 
         // Act
-        ComponentUtils.sendKeys(spinner.getInput(), "3.4");
+        sendKeys(spinner, "3.4");
         page.button.click();
 
         // Assert
@@ -104,10 +105,10 @@ public class Spinner001Test extends AbstractPrimePageTest {
     public void testThousandSeparator(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
-        Assertions.assertEquals("0", spinner.getValue());
+        Assertions.assertEquals("", spinner.getValue());
 
         // Act
-        ComponentUtils.sendKeys(spinner.getInput(), "1,456");
+        sendKeys(spinner, "1,456");
         page.button.click();
 
         // Assert
@@ -119,9 +120,14 @@ public class Spinner001Test extends AbstractPrimePageTest {
         assertNoJavascriptErrors();
         System.out.println("Spinner Config = " + cfg);
         Assertions.assertEquals(1, cfg.getInt("step"));
-        Assertions.assertEquals("0", cfg.get("decimalPlaces"));
+        Assertions.assertEquals(0, cfg.getInt("precision"));
         Assertions.assertEquals(".", cfg.get("decimalSeparator"));
         Assertions.assertEquals(",", cfg.get("thousandSeparator"));
+    }
+
+    public void sendKeys(Spinner spinner, CharSequence value) {
+        WebElement input = spinner.getInput();
+        ComponentUtils.sendKeys(input, value);
     }
 
     public static class Page extends AbstractPrimePage {

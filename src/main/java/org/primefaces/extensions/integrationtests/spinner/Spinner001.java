@@ -26,11 +26,10 @@ import lombok.Data;
 public class Spinner001 implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private int integer;
+    private Integer integer;
 
     @PostConstruct
     public void init() {
-        integer = 0;
     }
 
 }
