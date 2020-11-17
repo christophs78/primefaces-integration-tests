@@ -120,7 +120,12 @@ public class Spinner001Test extends AbstractPrimePageTest {
         assertNoJavascriptErrors();
         System.out.println("Spinner Config = " + cfg);
         Assertions.assertEquals(1, cfg.getInt("step"));
-        Assertions.assertEquals(0, cfg.getInt("precision"));
+        if (cfg.has("decimalPlaces")) {
+            Assertions.assertEquals("0", cfg.get("decimalPlaces"));
+        }
+        if (cfg.has("precision")) {
+            Assertions.assertEquals(0, cfg.getInt("precision"));
+        }
         Assertions.assertEquals(".", cfg.get("decimalSeparator"));
         Assertions.assertEquals(",", cfg.get("thousandSeparator"));
     }
