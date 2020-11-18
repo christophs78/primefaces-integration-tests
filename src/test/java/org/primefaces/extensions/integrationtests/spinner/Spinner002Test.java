@@ -121,7 +121,7 @@ public class Spinner002Test extends AbstractPrimePageTest {
     @Test
     @Order(6)
     @DisplayName("Spinner: Negative number not allowed when min = 0")
-    public void testMegativeNumber(Page page) {
+    public void testNegativeNumber(Page page) {
         // Arrange
         Spinner spinner = page.spinner;
         Assertions.assertEquals("", spinner.getValue());
