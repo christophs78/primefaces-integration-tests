@@ -36,6 +36,6 @@
     </context-param>
     <context-param>
         <param-name>primefaces.CSP</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
 </web-app>
