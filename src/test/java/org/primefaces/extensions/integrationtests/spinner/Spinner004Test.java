@@ -70,14 +70,14 @@ public class Spinner004Test extends AbstractPrimePageTest {
         assertNoJavascriptErrors();
         System.out.println("Spinner Config = " + cfg);
         Assertions.assertEquals(0.33, cfg.getDouble("step"));
+        Assertions.assertEquals(",", cfg.get("decimalSeparator"));
+        Assertions.assertEquals(".", cfg.get("thousandSeparator"));
         if (cfg.has("decimalPlaces")) {
             Assertions.assertEquals("2", cfg.get("decimalPlaces"));
         }
         if (cfg.has("precision")) {
             Assertions.assertEquals(2, cfg.getInt("precision"));
         }
-        Assertions.assertEquals(",", cfg.get("decimalSeparator"));
-        Assertions.assertEquals(".", cfg.get("thousandSeparator"));
     }
 
     private void assertOutputLabel(Page page, String value) {
