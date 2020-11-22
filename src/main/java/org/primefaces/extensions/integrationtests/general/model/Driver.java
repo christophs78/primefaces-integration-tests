@@ -1,4 +1,4 @@
-package org.primefaces.extensions.integrationtests.selectonemenu;
+package org.primefaces.extensions.integrationtests.general.model;
 
 import java.io.Serializable;
 

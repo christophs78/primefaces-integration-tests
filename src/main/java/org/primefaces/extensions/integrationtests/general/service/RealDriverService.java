@@ -1,6 +1,7 @@
-package org.primefaces.extensions.integrationtests.selectonemenu;
+package org.primefaces.extensions.integrationtests.general.service;
 
 import lombok.Getter;
+import org.primefaces.extensions.integrationtests.general.model.Driver;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Named
 @ApplicationScoped
-public class DriverService {
+public class RealDriverService {
 
     @Getter
     private List<Driver> drivers;

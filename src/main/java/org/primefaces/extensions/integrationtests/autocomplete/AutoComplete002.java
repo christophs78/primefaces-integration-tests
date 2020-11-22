@@ -10,36 +10,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.primefaces.extensions.integrationtests.selectonemenu;
+package org.primefaces.extensions.integrationtests.autocomplete;
 
 import lombok.Data;
 import org.primefaces.extensions.integrationtests.general.model.Driver;
-import org.primefaces.extensions.integrationtests.general.service.RealDriverService;
+import org.primefaces.extensions.integrationtests.general.service.GeneratedDriverService;
+import org.primefaces.util.LangUtils;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named
 @ViewScoped
 @Data
-public class SelectOneMenu001 implements Serializable {
+public class AutoComplete002 implements Serializable {
 
-    private static final long serialVersionUID = -7518459955779385834L;
+    private static final long serialVersionUID = 5157497001324985194L;
 
     @Inject
-    private RealDriverService driverService;
-    private List<Driver> drivers;
+    private GeneratedDriverService service;
 
-    private int value;
+    private Driver driver;
 
     @PostConstruct
     public void init() {
-        drivers = driverService.getDrivers();
-        value = 1;
+        driver = service.getDrivers().get(4);
+    }
+
+    public void submit() {
+        if (driver != null) {
+            FacesMessage msg = new FacesMessage("Driver", "id: " + driver.getId()+ ", name: " + driver.getName());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
 
 }

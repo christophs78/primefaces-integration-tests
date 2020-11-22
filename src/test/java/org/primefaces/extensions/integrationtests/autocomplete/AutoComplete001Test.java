@@ -64,7 +64,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         // Act
         autoComplete.activate();
         autoComplete.setValueWithoutTab("bye");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(autoComplete.getPanel()));
+        autoComplete.wait4Panel();
         autoComplete.getInput().sendKeys(new CharSequence[]{Keys.TAB});
         page.button.click();
 
@@ -83,7 +83,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         // Act
         autoComplete.activate();
         autoComplete.setValueWithoutTab("Prime");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(autoComplete.getPanel()));
+        autoComplete.wait4Panel();
 
         // Assert - Part 1
         Assertions.assertTrue(autoComplete.getPanel().isDisplayed());
