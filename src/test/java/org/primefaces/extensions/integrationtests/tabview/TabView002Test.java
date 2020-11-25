@@ -15,7 +15,10 @@
  */
 package org.primefaces.extensions.integrationtests.tabview;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
@@ -25,12 +28,11 @@ import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.TabView;
 import org.primefaces.extensions.selenium.component.model.Tab;
 
-import java.util.List;
-
 public class TabView002Test extends AbstractPrimePageTest {
 
     @Test
-    public void test(Page page) {
+    @DisplayName("TabView: Test dynamic tabview loading AJAX tabs")
+    public void testDynamic(Page page) {
         // Arrange
         TabView tabView = page.tabView;
 
