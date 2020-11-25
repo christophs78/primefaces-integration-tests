@@ -27,7 +27,7 @@
         <lombok.version>1.18.16</lombok.version>
         <myfaces.version>2.3.7</myfaces.version>
         <junit.version>5.7.0</junit.version>
-        <tomee.version>8.0.4</tomee.version>
+        <tomee.version>8.0.5</tomee.version>
         <!-- plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
