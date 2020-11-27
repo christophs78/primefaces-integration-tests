@@ -12,9 +12,9 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import lombok.Data;
-import org.primefaces.component.datatable.DataTable;
-import org.primefaces.event.data.FilterEvent;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -22,9 +22,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.data.FilterEvent;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -47,12 +49,12 @@ public class DataTable009 implements Serializable {
     public void filterListener(FilterEvent filterEvent) {
         // show actual filter as message
         filterEvent.getFilterBy().values().stream()
-                .filter(filterMeta -> filterMeta.getFilterValue() != null)
-                .forEach(filterMeta -> {
-                    FacesMessage msg = new FacesMessage("FilterValue for " + filterMeta.getFilterField(), filterMeta.getFilterValue().toString());
-                    FacesContext.getCurrentInstance().addMessage(null, msg);
-                }
-        );
+                    .filter(filterMeta -> filterMeta.getFilterValue() != null)
+                    .forEach(filterMeta -> {
+                                    FacesMessage msg = new FacesMessage("FilterValue for " + filterMeta.getField(), filterMeta.getFilterValue().toString());
+                                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                                }
+                    );
 
         // show actual filtered values (attention: filter is not yet applied - see https://github.com/primefaces/primefaces/issues/1390)
         DataTable dataTable = (DataTable) filterEvent.getSource();

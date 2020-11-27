@@ -31,7 +31,7 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
             for (FilterMeta meta : filterMeta.values()) {
                 if (meta.getFilterValue() != null) {
                     langsStream = langsStream.filter(lang -> {
-                        if (meta.getFilterField().equals("firstAppeared") && meta.getFilterMatchMode() == MatchMode.GREATER_THAN_EQUALS) {
+                        if (meta.getField().equals("firstAppeared") && meta.getMatchMode() == MatchMode.GREATER_THAN_EQUALS) {
                             int filterValueInt = Integer.parseInt((String) meta.getFilterValue());
                             return lang.getFirstAppeared() >= filterValueInt;
                         }
