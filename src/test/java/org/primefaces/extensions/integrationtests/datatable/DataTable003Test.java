@@ -108,7 +108,8 @@ public class DataTable003Test extends AbstractDataTableTest {
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
-        Assertions.assertTrue(cfg.has("sortMode"));
+        Assertions.assertTrue(cfg.getBoolean("multiSort"));
+        Assertions.assertFalse(cfg.getBoolean("allowUnsorting"));
     }
 
     public static class Page extends AbstractPrimePage {

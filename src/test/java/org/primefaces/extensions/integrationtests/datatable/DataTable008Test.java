@@ -19,10 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,7 +33,9 @@ public class DataTable008Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
+    @Disabled("Enable when GitHub #1390/#5481 are fixed")
     @DisplayName("DataTable: filter - issue 5481 - https://github.com/primefaces/primefaces/issues/5481")
+    // TODO: Enable when GitHub #1390/#5481 are fixed
     public void testFilterIssue_5481(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
