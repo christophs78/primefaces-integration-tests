@@ -60,6 +60,7 @@ public class DataTable003Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(actionMetaPlusSortClick).perform();
 
         // Assert
+        assertConfiguration(dataTable.getWidgetConfiguration());
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-n"));
 
@@ -90,6 +91,7 @@ public class DataTable003Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(actionMetaPlusSortClick).perform();
 
         // Assert
+        assertConfiguration(dataTable.getWidgetConfiguration());
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(eltSortName.findElement(By.className("ui-sortable-column-icon")), "ui-icon-triangle-1-s"));
 
@@ -98,7 +100,8 @@ public class DataTable003Test extends AbstractDataTableTest {
     }
 
     private void logColumnIconCssClasses(WebElement eltSortName, WebElement eltSortFirstAppeared) {
-        System.out.println("eltSortFirstAppeared; css-classes: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
+        System.out.println(
+                    "eltSortFirstAppeared; css-classes: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
         System.out.println("eltSortName; css-classes: " + eltSortName.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
     }
 

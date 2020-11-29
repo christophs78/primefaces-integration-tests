@@ -68,6 +68,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         // Assert
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
         Assertions.assertEquals("1,2,5", page.messages.getMessage(0).getDetail());
+        assertConfiguration(page.dataTable.getWidgetConfiguration());
     }
 
     @Test
@@ -111,6 +112,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         // Assert
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
         Assertions.assertEquals("1,3,5", page.messages.getMessage(0).getDetail());
+        assertConfiguration(page.dataTable.getWidgetConfiguration());
     }
 
     @Test
@@ -135,6 +137,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         // Assert
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
         Assertions.assertEquals("3,5", page.messages.getMessage(0).getDetail());
+        assertConfiguration(page.dataTable.getWidgetConfiguration());
     }
 
     private void assertConfiguration(JSONObject cfg) {

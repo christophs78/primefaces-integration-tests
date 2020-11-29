@@ -15,20 +15,18 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
-
-import java.util.List;
 
 public class DataTable006Test extends AbstractDataTableTest {
 
@@ -65,6 +63,7 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.button.click();
 
         // Assert
+        assertConfiguration(dataTable.getWidgetConfiguration());
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
         Assertions.assertEquals("1,2,3,4", page.messages.getMessage(0).getDetail());
     }

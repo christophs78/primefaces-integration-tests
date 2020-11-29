@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -173,31 +176,12 @@ public class DataTable001Test extends AbstractDataTableTest {
         dataTable.filter("Name", "Java");
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
         PrimeSelenium.guardAjax(page.buttonResetTable).click();
-        // following lines should not be necessary...
-        // ... compensate for https://github.com/primefaces/primefaces/issues/5481
-        /*
-        dataTable.filter("Name", "x");
-        dataTable.getHeader().getCell("Name").get().getColumnFilter().sendKeys(Keys.BACK_SPACE);
-        try {
-            // default-filter runs delayed - so wait...
-            Thread.sleep(500);
-        }
-        catch (InterruptedException ex) {
-        }
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
-         */
-        // ... compensate for https://github.com/primefaces/primefaces/issues/5465
-        /*
-        selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
-        selectRowsPerPage.selectByVisibleText("3");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
-         */
 
         // Assert
         selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
         Assertions.assertEquals("3", selectRowsPerPage.getFirstSelectedOption().getText());
         Assertions.assertEquals(3, dataTable.getRows().size());
-        assertRows(dataTable, langs.stream().limit(3).collect(Collectors.toList())); //implicit checks reseted sort & filter
+        assertRows(dataTable, langs.stream().limit(3).collect(Collectors.toList())); //implicit checks reset sort & filter
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
