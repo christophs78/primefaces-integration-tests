@@ -64,7 +64,7 @@ public class InputNumber004Test extends AbstractPrimePageTest {
             // Assert
             Assertions.assertEquals(
                         "The value [-5] being set falls outside of the minimumValue [0.0000001] and maximumValue [999999] range set for this element",
-                        StringUtils.substringBetween(ex.getMessage(), ":", "\n"));
+                        StringUtils.substringBetween(ex.getMessage(), ": ", "\n"));
         }
     }
 
@@ -85,7 +85,7 @@ public class InputNumber004Test extends AbstractPrimePageTest {
             // Assert
             Assertions.assertEquals(
                         "The value [23999999] being set falls outside of the minimumValue [0.0000001] and maximumValue [999999] range set for this element",
-                        StringUtils.substringBetween(ex.getMessage(), ":", "\n"));
+                        StringUtils.substringBetween(ex.getMessage(), ": ", "\n"));
         }
     }
 
