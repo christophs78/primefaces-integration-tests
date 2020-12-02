@@ -41,6 +41,7 @@ public class InputNumber004Test extends AbstractPrimePageTest {
 
         // Act
         inputNumber.setValue("87.31");
+        page.button.click();
 
         // Assert
         Assertions.assertEquals("87", inputNumber.getValue());
