@@ -123,6 +123,13 @@ public class DataTable001Test extends AbstractDataTableTest {
                     .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
 
+
+        // Act
+        page.buttonUpdate.click();
+
+        // Assert - filter must not be lost after update
+        assertRows(dataTable, langsSorted);
+
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
@@ -145,6 +152,12 @@ public class DataTable001Test extends AbstractDataTableTest {
                     .filter(l -> l.getName().startsWith("Java"))
                     .limit(3)
                     .collect(Collectors.toList());
+        assertRows(dataTable, langsFiltered);
+
+        // Act
+        page.buttonUpdate.click();
+
+        // Assert - sort must not be lost after update
         assertRows(dataTable, langsFiltered);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -198,6 +211,9 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:button")
         CommandButton button;
+
+        @FindBy(id = "form:buttonUpdate")
+        CommandButton buttonUpdate;
 
         @FindBy(id = "form:buttonResetTable")
         CommandButton buttonResetTable;

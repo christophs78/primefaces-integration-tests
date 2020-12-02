@@ -53,6 +53,15 @@ public class DataTable005Test extends AbstractDataTableTest {
         assertConfiguration(dataTable.getWidgetConfiguration());
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
         Assertions.assertEquals("1,3,4,5", page.messages.getMessage(0).getDetail());
+
+        // Act
+        page.buttonUpdate.click();
+        page.button.click();
+
+        // Assert - selection must not be lost after update
+        assertConfiguration(dataTable.getWidgetConfiguration());
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
+        Assertions.assertEquals("1,3,4,5", page.messages.getMessage(0).getDetail());
     }
 
     private void assertConfiguration(JSONObject cfg) {
@@ -70,6 +79,9 @@ public class DataTable005Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:button")
         CommandButton button;
+
+        @FindBy(id = "form:buttonUpdate")
+        CommandButton buttonUpdate;
 
         @Override
         public String getLocation() {
