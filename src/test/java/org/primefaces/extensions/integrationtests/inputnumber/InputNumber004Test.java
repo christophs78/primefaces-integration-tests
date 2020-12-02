@@ -101,9 +101,11 @@ public class InputNumber004Test extends AbstractPrimePageTest {
         inputNumber.setValue("3");
         inputNumber.getInput().sendKeys(Keys.BACK_SPACE);
         inputNumber.getInput().sendKeys(Keys.DELETE);
+        Assertions.assertEquals("", inputNumber.getValue());
+        page.button.click();
 
         // Assert
-        Assertions.assertEquals("", inputNumber.getValue());
+        Assertions.assertEquals("3", inputNumber.getValue());
         assertConfiguration(inputNumber.getWidgetConfiguration());
     }
 
