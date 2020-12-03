@@ -12,8 +12,9 @@
     <h:body>
 
         <h:form id="form">
-            <!-- #6590 Long value with bean validation constraints -->
-            <p:inputNumber id="inputnumber" value="#{inputNumber004.value}"/>
+            <!-- #6590 Values with bean validation constraints -->
+            <p:inputNumber id="integer" value="#{inputNumber004.integer}"/>
+            <p:inputNumber id="decimal" value="#{inputNumber004.decimal}"/>
 
             <p:commandButton id="button" update="@form" value="Submit"/>
         </h:form>

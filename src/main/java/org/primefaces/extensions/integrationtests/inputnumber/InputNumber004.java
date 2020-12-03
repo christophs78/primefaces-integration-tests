@@ -13,10 +13,12 @@
 package org.primefaces.extensions.integrationtests.inputnumber;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 
@@ -31,11 +33,16 @@ public class InputNumber004 implements Serializable {
 
     @Positive
     @Max(999999)
-    private Long value;
+    private Integer integer;
+
+    @Positive
+    @DecimalMax("999999.99")
+    private BigDecimal decimal;
 
     @PostConstruct
     public void init() {
-        value = Long.valueOf(66);
+        integer = Integer.valueOf(66);
+        decimal = new BigDecimal("6.78");
     }
 
 }
