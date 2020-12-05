@@ -56,7 +56,7 @@ public class DataTable009 implements Serializable {
                                 }
                     );
 
-        // show actual filtered values (attention: filter is not yet applied - see https://github.com/primefaces/primefaces/issues/1390)
+        // show actual filtered values
         DataTable dataTable = (DataTable) filterEvent.getSource();
         String filterValuesFlat = "null";
         if (dataTable.getFilteredValue() != null) {

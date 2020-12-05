@@ -15,25 +15,18 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable009Test extends AbstractDataTableTest {
 
@@ -55,7 +48,7 @@ public class DataTable009Test extends AbstractDataTableTest {
         Assertions.assertEquals("FilterValue for name", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("Java", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("null", page.messages.getMessage(1).getDetail()); //FilteredValue(s) is always one behind - see https://github.com/primefaces/primefaces/issues/1390
+        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
 
         // Act - do some other filtering
         dataTable.filter("Name", "JavaScript");
@@ -64,7 +57,7 @@ public class DataTable009Test extends AbstractDataTableTest {
         Assertions.assertEquals("FilterValue for name", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("JavaScript", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail()); //FilteredValue(s) is always one behind - see https://github.com/primefaces/primefaces/issues/1390
+        Assertions.assertEquals("JavaScript", page.messages.getMessage(1).getDetail());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
