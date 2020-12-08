@@ -1,12 +1,12 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.HasCapabilities;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
 
 public abstract class AbstractDataTableTest extends AbstractPrimePageTest {
     protected void assertRows(DataTable dataTable, List<ProgrammingLanguage> langs) {
@@ -16,8 +16,11 @@ public abstract class AbstractDataTableTest extends AbstractPrimePageTest {
 
         int row = 0;
         for (ProgrammingLanguage programmingLanguage : langs) {
-            Assertions.assertEquals(programmingLanguage.getId(), Integer.parseInt(rows.get(row).getCell(0).getText()));
-            row++;
+            String rowText = rows.get(row).getCell(0).getText();
+            if (!rowText.equalsIgnoreCase("No records found.")) {
+                Assertions.assertEquals(programmingLanguage.getId(), Integer.parseInt(rowText));
+                row++;
+            }
         }
     }
 
