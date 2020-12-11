@@ -29,11 +29,11 @@ import org.primefaces.extensions.selenium.component.Chips;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
 
-public class Chips001Test extends AbstractPrimePageTest {
+public class Chips002Test extends AbstractPrimePageTest {
 
     @Test
     @Order(1)
-    @DisplayName("Chips: add and remove value using AJAX")
+    @DisplayName("Chips: Test max attribute only allowing max items")
     public void testBasic(Page page) {
         // Arrange
         Chips chips = page.chips;
@@ -45,50 +45,28 @@ public class Chips001Test extends AbstractPrimePageTest {
         Assertions.assertEquals("Defect", values.get(0));
         Assertions.assertEquals("Feature", values.get(1));
 
-        // Act - add value
-        chips.addValue("Question");
-
-        // Assert - itemSelect-event
-        Assertions.assertEquals("itemSelect", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals("Question", page.messages.getMessage(0).getDetail());
+        // Act - add values
+        chips.addValue("Enhancement");
+        chips.addValue("Question"); //should not be added as its over max=3
 
         // Act - submit
         page.button.click();
 
         // Assert
-        Assertions.assertEquals("Defect, Feature, Question", page.messages.getMessage(0).getSummary());
-
-        // Act - remove value
-        chips.removeValue("Defect");
-
-        // Assert - itemSelect-event
-        Assertions.assertEquals("itemUnselect", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals("Defect", page.messages.getMessage(0).getDetail());
-
-        // Act - submit
-        page.button.click();
-
-        // Assert
-        Assertions.assertEquals("Feature, Question", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("Defect, Feature, Enhancement", page.messages.getMessage(0).getSummary());
         values = chips.getValues();
-        Assertions.assertEquals(2, values.size());
-        Assertions.assertEquals("Feature", values.get(0));
-        Assertions.assertEquals("Question", values.get(1));
-
+        Assertions.assertEquals(3, values.size());
+        Assertions.assertEquals("Defect", values.get(0));
+        Assertions.assertEquals("Feature", values.get(1));
+        Assertions.assertEquals("Enhancement", values.get(2));
         assertConfiguration(chips.getWidgetConfiguration());
     }
 
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("Chips Config = " + cfg);
-        if (cfg.has("behaviors")) {
-            JSONObject behaviors = cfg.getJSONObject("behaviors");
-            System.out.println("Behaviors = " + behaviors);
-            Assertions.assertTrue(behaviors.has("itemSelect"));
-            Assertions.assertTrue(behaviors.has("itemUnselect"));
-        }
-
         Assertions.assertTrue(cfg.has("id"));
+        Assertions.assertEquals(3, cfg.getInt("max"));
     }
 
     public static class Page extends AbstractPrimePage {
@@ -103,7 +81,7 @@ public class Chips001Test extends AbstractPrimePageTest {
 
         @Override
         public String getLocation() {
-            return "chips/chips001.xhtml";
+            return "chips/chips002.xhtml";
         }
     }
 }
