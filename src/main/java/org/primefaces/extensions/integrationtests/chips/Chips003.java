@@ -35,7 +35,7 @@ public class Chips003 implements Serializable {
 
     @PostConstruct
     public void init() {
-        values = Arrays.asList("One", "Two");
+        values = Arrays.asList("One", "Two", "One", "Two");
     }
 
     public void submit() {
