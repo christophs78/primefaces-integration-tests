@@ -177,11 +177,16 @@
                 <webdriver.headless>true</webdriver.headless>
             </properties>
         </profile>
-        <!-- Test with chrome instead of firefox -->
         <profile>
             <id>chrome</id>
             <properties>
                 <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEChromeAdapterImpl</primefaces-selenium.adapter>
+            </properties>
+        </profile>
+        <profile>
+            <id>firefox</id>
+            <properties>
+                <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
             </properties>
         </profile>
     </profiles>
