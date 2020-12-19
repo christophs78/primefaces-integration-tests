@@ -16,9 +16,10 @@
 package org.primefaces.extensions.integrationtests.clientwindow;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.SessionStorage;
 import org.openqa.selenium.html5.WebStorage;
@@ -27,6 +28,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
@@ -34,7 +37,9 @@ import org.primefaces.extensions.selenium.component.Messages;
 public class ClientWindow001Test extends AbstractPrimePageTest {
 
     @Test
-    public void test(Page page) {
+    @Order(1)
+    @DisplayName("ClientWindow: Basic check - compare URL-Param, SessionStorage and Postback")
+    public void testBasic(Page page) {
         // Arrange
 
         // Act
@@ -51,6 +56,21 @@ public class ClientWindow001Test extends AbstractPrimePageTest {
 
         Assertions.assertEquals("jfwid", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals(pfWindowId, page.messages.getMessage(0).getDetail());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("ClientWindow: check rendered URLs")
+    public void testRenderedUrls(Page page) {
+        // Arrange
+
+        // Act
+
+        // Assert
+        String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
+        WebElement eltLink2Anotherpage = page.getWebDriver().findElement(By.className("link2Anotherpage"));
+        String href = eltLink2Anotherpage.getAttribute("href");
+        Assertions.assertTrue(href.endsWith(pfWindowId));
     }
 
     public static class Page extends AbstractPrimePage {

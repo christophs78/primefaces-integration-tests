@@ -84,11 +84,22 @@
             <artifactId>tomee-embedded</artifactId>
             <version>${tomee.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <!-- As of 2020-12 TomEE 8.0.5 comes with MyFaces 2.3.6 which has issues with Prime Client Window. So we replace MyFaces. -->
+                <exclusion>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.tomee</groupId>
-            <artifactId>tomee-myfaces</artifactId>
-            <version>${tomee.version}</version>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-impl</artifactId>
+            <version>${myfaces.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
