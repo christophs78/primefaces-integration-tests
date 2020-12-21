@@ -13,12 +13,14 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import lombok.Data;
+import org.primefaces.event.SelectEvent;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
@@ -31,8 +33,15 @@ public class DataTable002 implements Serializable {
     private ProgrammingLanguageLazyDataModel lazyDataModel;
     private List<ProgrammingLanguage> filteredProgLanguages;
 
+    private ProgrammingLanguage selectedProgrammingLanguage;
+
     @PostConstruct
     public void init() {
         lazyDataModel = new ProgrammingLanguageLazyDataModel();
+    }
+
+    public void onRowSelect(SelectEvent<ProgrammingLanguage> event) {
+        FacesMessage msg = new FacesMessage("ProgrammingLanguage Selected", event.getObject().getId() + " - " + event.getObject().getName());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

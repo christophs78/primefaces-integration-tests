@@ -12,7 +12,15 @@
     <h:body>
 
         <h:form id="form">
-            <p:dataTable id="datatable" value="#{dataTable002.lazyDataModel}" var="lang" paginator="true" rows="10" filteredValue="#{dataTable002.filteredProgLanguages}" lazy="true">
+            <p:messages id="msgs" showDetail="true">
+                <p:autoUpdate />
+            </p:messages>
+
+            <p:dataTable id="datatable" value="#{dataTable002.lazyDataModel}" var="lang" paginator="true" rows="10"
+                         filteredValue="#{dataTable002.filteredProgLanguages}" lazy="true"
+                         selectionMode="single" selection="#{dataTable002.selectedProgrammingLanguage}">
+                <p:ajax event="rowSelect" listener="#{dataTable002.onRowSelect}" />
+
                 <p:column headerText="ID" sortBy="#{lang.id}">
                     <h:outputText value="#{lang.id}" />
                 </p:column>

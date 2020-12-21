@@ -27,6 +27,7 @@ import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
+import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.base.ComponentUtils;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
@@ -153,6 +154,26 @@ public class DataTable002Test extends AbstractPrimePageTest {
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("DataTable: Lazy: rowSelect")
+    public void testLazyRowSelect(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act
+        PrimeSelenium.guardAjax(dataTable.getRow(3).getCell(0).getWebElement()).click();
+
+        // Assert
+        Assertions.assertEquals(1, page.messages.getAllMessages().size());
+        Assertions.assertEquals("ProgrammingLanguage Selected", page.messages.getMessage(0).getSummary());
+        String row3ProgLang = dataTable.getRow(3).getCell(0).getText() + " - " + dataTable.getRow(3).getCell(1).getText();
+        Assertions.assertEquals(row3ProgLang, page.messages.getMessage(0).getDetail());
+
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
@@ -160,6 +181,9 @@ public class DataTable002Test extends AbstractPrimePageTest {
     }
 
     public static class Page extends AbstractPrimePage {
+        @FindBy(id = "form:msgs")
+        Messages messages;
+
         @FindBy(id = "form:datatable")
         DataTable dataTable;
 
