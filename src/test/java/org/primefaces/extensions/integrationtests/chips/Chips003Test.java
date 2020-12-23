@@ -34,7 +34,7 @@ public class Chips003Test extends AbstractPrimePageTest {
     @Test
     @Order(1)
     @DisplayName("Chips: GitHub #6643 Test unique attribute only allowing distinct items")
-    public void testBasic(Page page) {
+    public void testUnique(Page page) {
         // Arrange
         Chips chips = page.chips;
 
