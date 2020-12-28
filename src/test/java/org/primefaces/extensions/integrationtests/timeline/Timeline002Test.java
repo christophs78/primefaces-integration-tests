@@ -57,7 +57,7 @@ public class Timeline002Test extends AbstractPrimePageTest {
         Assertions.assertTrue(cfg.has("data"));
         JSONArray data = cfg.getJSONArray("data");
         JSONObject event = data.getJSONObject(0);
-        Assertions.assertEquals("-000164-06-12T04:56:02.000Z", event.get("start"));
+        Assertions.assertEquals("-000164-06-12T00:00:00.000Z", event.get("start"));
         Assertions.assertEquals("164 B.C.", event.get("content"));
     }
 
