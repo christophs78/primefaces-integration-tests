@@ -36,7 +36,7 @@ public class Timeline002Test extends AbstractPrimePageTest {
     @Test
     @Order(1)
     @DisplayName("Timeline: GitHub #6721 B.C. Dates show and check for JS-errors")
-    public void testBasic(Page page) {
+    public void testBCDates_6721(Page page) {
         // Arrange
         AbstractComponent timeline = page.timeline;
 
