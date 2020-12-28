@@ -67,7 +67,7 @@ public class DataTable011Test extends AbstractDataTableTest {
 
         // Act
         dataTable.sort("Name");
-        dataTable.getRow(1).getCell(3).getWebElement().findElement(By.tagName("button")).click();
+        PrimeSelenium.guardAjax(dataTable.getRow(1).getCell(3).getWebElement().findElement(By.tagName("button"))).click();
 
         // Assert
         page.dataTable.getRows()
