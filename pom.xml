@@ -186,7 +186,7 @@
 
     <profiles>
         <profile>
-            <id>headless-mode</id>
+            <id>headless</id>
             <properties>
                 <webdriver.headless>true</webdriver.headless>
             </properties>
@@ -210,7 +210,7 @@
             </properties>
         </profile>
         <profile>
-            <id>theme-nova-light</id>
+            <id>theme-nova</id>
             <properties>
                 <primefaces.THEME>nova-light</primefaces.THEME>
             </properties>
