@@ -12,4 +12,10 @@ public class ProgrammingLanguage implements Serializable {
     private Integer id;
     private String name;
     private Integer firstAppeared;
+    private ProgrammingLanguageType type;
+
+    enum ProgrammingLanguageType {
+        COMPILED,
+        INTERPRETED
+    }
 }

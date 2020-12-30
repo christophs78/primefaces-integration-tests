@@ -19,7 +19,7 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
     public ProgrammingLanguageLazyDataModel() {
         langs = new ArrayList<>();
         for (int i = 1; i <= 75; i++) {
-            langs.add(new ProgrammingLanguage(i, "Language " + i, 1990 + (i % 10)));
+            langs.add(new ProgrammingLanguage(i, "Language " + i, 1990 + (i % 10), ProgrammingLanguage.ProgrammingLanguageType.COMPILED));
         }
     }
 

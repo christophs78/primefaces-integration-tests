@@ -11,6 +11,10 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 public abstract class AbstractDataTableTest extends AbstractPrimePageTest {
     protected void assertRows(DataTable dataTable, List<ProgrammingLanguage> langs) {
         List<Row> rows = dataTable.getRows();
+        assertRows(rows, langs);
+    }
+
+    protected void assertRows(List<Row> rows, List<ProgrammingLanguage> langs) {
         Assertions.assertNotNull(rows);
         Assertions.assertEquals(langs.size(), rows.size());
 
