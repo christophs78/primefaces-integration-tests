@@ -15,18 +15,17 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.json.JSONObject;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.DataTable;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable013Test extends AbstractDataTableTest {
 
@@ -41,7 +40,6 @@ public class DataTable013Test extends AbstractDataTableTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-
 
         // Assert - initial sorting
         List<ProgrammingLanguage> langsSorted = langs.stream()
@@ -60,12 +58,6 @@ public class DataTable013Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
-
-        @FindBy(id = "form:buttonResetTable")
-        CommandButton buttonResetTable;
 
         @Override
         public String getLocation() {

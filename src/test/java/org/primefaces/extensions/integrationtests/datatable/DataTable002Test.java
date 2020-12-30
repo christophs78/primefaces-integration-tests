@@ -15,6 +15,10 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,17 +27,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable002Test extends AbstractPrimePageTest {
 
@@ -94,7 +91,8 @@ public class DataTable002Test extends AbstractPrimePageTest {
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
         List<ProgrammingLanguage> langsAsc = langs.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName)).collect(Collectors.toList());
-        List<ProgrammingLanguage> langsDesc = langs.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName).reversed()).collect(Collectors.toList());
+        List<ProgrammingLanguage> langsDesc = langs.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName).reversed())
+                    .collect(Collectors.toList());
 
         // Act - ascending
         dataTable.selectPage(1);
@@ -132,9 +130,9 @@ public class DataTable002Test extends AbstractPrimePageTest {
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
         List<ProgrammingLanguage> langsFiltered = langs.getLangs().stream()
-                .filter(l -> l.getFirstAppeared() >= 1998)
-                .sorted(Comparator.comparingInt(ProgrammingLanguage::getFirstAppeared))
-                .collect(Collectors.toList());
+                    .filter(l -> l.getFirstAppeared() >= 1998)
+                    .sorted(Comparator.comparingInt(ProgrammingLanguage::getFirstAppeared))
+                    .collect(Collectors.toList());
 
         // Act
         dataTable.selectPage(1);
@@ -163,12 +161,12 @@ public class DataTable002Test extends AbstractPrimePageTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-        PrimeSelenium.guardAjax(dataTable.getRow(3).getCell(0).getWebElement()).click();
+        PrimeSelenium.guardAjax(dataTable.getCell(3, 0).getWebElement()).click();
 
         // Assert
         Assertions.assertEquals(1, page.messages.getAllMessages().size());
         Assertions.assertEquals("ProgrammingLanguage Selected", page.messages.getMessage(0).getSummary());
-        String row3ProgLang = dataTable.getRow(3).getCell(0).getText() + " - " + dataTable.getRow(3).getCell(1).getText();
+        String row3ProgLang = dataTable.getRow(3).getCell(0).getText() + " - " + dataTable.getCell(3, 1).getText();
         Assertions.assertEquals(row3ProgLang, page.messages.getMessage(0).getDetail());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -186,9 +184,6 @@ public class DataTable002Test extends AbstractPrimePageTest {
 
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @Override
         public String getLocation() {

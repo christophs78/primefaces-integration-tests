@@ -15,26 +15,19 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.base.ComponentUtils;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
-import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable011Test extends AbstractDataTableTest {
 
@@ -54,7 +47,7 @@ public class DataTable011Test extends AbstractDataTableTest {
 
         // Assert
         page.dataTable.getRows()
-                .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
+                    .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
     }
 
     @Test
@@ -67,11 +60,11 @@ public class DataTable011Test extends AbstractDataTableTest {
 
         // Act
         dataTable.sort("Name");
-        PrimeSelenium.guardAjax(dataTable.getRow(1).getCell(3).getWebElement().findElement(By.tagName("button"))).click();
+        PrimeSelenium.guardAjax(dataTable.getCell(1, 3).getWebElement().findElement(By.tagName("button"))).click();
 
         // Assert
         page.dataTable.getRows()
-                .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
+                    .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
     }
 
     private void assertConfiguration(JSONObject cfg) {
@@ -83,9 +76,6 @@ public class DataTable011Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @FindBy(id = "form:buttonDeleteId1")
         CommandButton buttonDeleteId1;

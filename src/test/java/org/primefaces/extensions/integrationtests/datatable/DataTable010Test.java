@@ -44,7 +44,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         Actions actions = new Actions(page.getWebDriver());
 
         // Act
-        dataTable.getRow(0).getCell(0).getWebElement().click();
+        dataTable.getCell(0, 0).getWebElement().click();
         page.buttonSubmit.click();
 
         // Assert
@@ -53,7 +53,7 @@ public class DataTable010Test extends AbstractDataTableTest {
 
         // Act
         dataTable.selectPage(2);
-        actions.keyDown(Keys.META).click(dataTable.getRow(1).getCell(0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.META).click(dataTable.getCell(1, 0).getWebElement()).keyUp(Keys.META).perform();
         page.buttonSubmit.click();
 
         // Assert
@@ -62,7 +62,7 @@ public class DataTable010Test extends AbstractDataTableTest {
 
         // Act
         dataTable.selectPage(1);
-        actions.keyDown(Keys.META).click(dataTable.getRow(1).getCell(0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.META).click(dataTable.getCell(1, 0).getWebElement()).keyUp(Keys.META).perform();
         page.buttonSubmit.click();
 
         // Assert
@@ -81,7 +81,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         Actions actions = new Actions(page.getWebDriver());
 
         // Act
-        dataTable.getRow(0).getCell(0).getWebElement().click();
+        dataTable.getCell(0, 0).getWebElement().click();
         page.buttonSubmit.click();
 
         // Assert
@@ -90,7 +90,7 @@ public class DataTable010Test extends AbstractDataTableTest {
 
         // Act
         dataTable.selectPage(2);
-        actions.keyDown(Keys.META).click(dataTable.getRow(1).getCell(0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.META).click(dataTable.getCell(1, 0).getWebElement()).keyUp(Keys.META).perform();
         page.buttonSubmit.click();
 
         // Assert
@@ -106,7 +106,7 @@ public class DataTable010Test extends AbstractDataTableTest {
         Assertions.assertEquals("1,5", page.messages.getMessage(0).getDetail());
 
         // Act
-        actions.keyDown(Keys.META).click(dataTable.getRow(1).getCell(0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.META).click(dataTable.getCell(1, 0).getWebElement()).keyUp(Keys.META).perform();
         page.buttonSubmit.click();
 
         // Assert
@@ -128,8 +128,8 @@ public class DataTable010Test extends AbstractDataTableTest {
         /*
             https://code.google.com/archive/p/primefaces/issues/7132 still seems to be there as of 09/2020
          */
-        Assertions.assertEquals("Java", page.dataTable.getRow(0).getCell(1).getText());
-        Assertions.assertEquals("JavaScript", page.dataTable.getRow(1).getCell(1).getText());
+        Assertions.assertEquals("Java", page.dataTable.getCell(0, 1).getText());
+        Assertions.assertEquals("JavaScript", page.dataTable.getCell(1, 1).getText());
 
         // Act
         page.buttonSubmit.click();

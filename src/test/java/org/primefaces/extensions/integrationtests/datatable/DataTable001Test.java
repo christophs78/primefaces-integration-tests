@@ -123,7 +123,6 @@ public class DataTable001Test extends AbstractDataTableTest {
                     .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
 
-
         // Act
         page.buttonUpdate.click();
 
@@ -208,9 +207,6 @@ public class DataTable001Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @FindBy(id = "form:buttonUpdate")
         CommandButton buttonUpdate;

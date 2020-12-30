@@ -41,9 +41,9 @@ public class DataTable006Test extends AbstractDataTableTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-        dataTable.getRow(0).getCell(0).getWebElement().click();
-        dataTable.getRow(2).getCell(0).getWebElement().click();
-        dataTable.getRow(4).getCell(0).getWebElement().click();
+        dataTable.getCell(0, 0).getWebElement().click();
+        dataTable.getCell(2, 0).getWebElement().click();
+        dataTable.getCell(4, 0).getWebElement().click();
         page.button.click();
 
         // Assert
@@ -59,7 +59,7 @@ public class DataTable006Test extends AbstractDataTableTest {
         Assertions.assertEquals("1,2,3,4,5", page.messages.getMessage(0).getDetail());
 
         // Act - unselect one row
-        dataTable.getRow(4).getCell(0).getWebElement().click();
+        dataTable.getCell(4, 0).getWebElement().click();
         page.button.click();
 
         // Assert

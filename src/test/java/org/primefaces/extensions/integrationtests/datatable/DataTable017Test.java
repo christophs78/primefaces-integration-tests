@@ -15,20 +15,18 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
 
 public class DataTable017Test extends AbstractDataTableTest {
 
@@ -56,10 +54,10 @@ public class DataTable017Test extends AbstractDataTableTest {
         Assertions.assertNotNull(rows);
         Assertions.assertEquals(langs.size(), rows.size());
 
-        Assertions.assertEquals("2", dataTable.getRow(0).getCell(0).getWebElement().getAttribute("rowspan"));
-        Assertions.assertEquals("COMPILED", dataTable.getRow(0).getCell(0).getText());
-        Assertions.assertEquals("3", dataTable.getRow(2).getCell(0).getWebElement().getAttribute("rowspan"));
-        Assertions.assertEquals("INTERPRETED", dataTable.getRow(2).getCell(0).getText());
+        Assertions.assertEquals("2", dataTable.getCell(0, 0).getWebElement().getAttribute("rowspan"));
+        Assertions.assertEquals("COMPILED", dataTable.getCell(0, 0).getText());
+        Assertions.assertEquals("3", dataTable.getCell(2, 0).getWebElement().getAttribute("rowspan"));
+        Assertions.assertEquals("INTERPRETED", dataTable.getCell(2, 0).getText());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
@@ -73,15 +71,6 @@ public class DataTable017Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
-
-        @FindBy(id = "form:buttonUpdate")
-        CommandButton buttonUpdate;
-
-        @FindBy(id = "form:buttonResetTable")
-        CommandButton buttonResetTable;
 
         @Override
         public String getLocation() {

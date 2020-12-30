@@ -15,25 +15,21 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.json.JSONObject;
-import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
-import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
-import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.json.JSONObject;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeSelenium;
+import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable012Test extends AbstractDataTableTest {
 
@@ -48,7 +44,6 @@ public class DataTable012Test extends AbstractDataTableTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-
 
         // Assert - ascending (initial)
         List<ProgrammingLanguage> langsSorted = langs.stream()
@@ -77,11 +72,10 @@ public class DataTable012Test extends AbstractDataTableTest {
 
         // Act
 
-
         // Assert - ascending (initial)
         List<ProgrammingLanguage> langsSorted = langs.stream()
-                .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                .collect(Collectors.toList());
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
 
         // Act - descending
@@ -104,20 +98,8 @@ public class DataTable012Test extends AbstractDataTableTest {
         @FindBy(id = "form1:datatable1")
         DataTable dataTable1;
 
-        @FindBy(id = "form1:button1")
-        CommandButton button1;
-
-        @FindBy(id = "form1:buttonResetTable1")
-        CommandButton buttonResetTable1;
-
         @FindBy(id = "form2:datatable2")
         DataTable dataTable2;
-
-        @FindBy(id = "form2:button2")
-        CommandButton button2;
-
-        @FindBy(id = "form2:buttonResetTable2")
-        CommandButton buttonResetTable2;
 
         @Override
         public String getLocation() {

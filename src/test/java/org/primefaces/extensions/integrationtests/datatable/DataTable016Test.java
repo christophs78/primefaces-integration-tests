@@ -15,6 +15,8 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,18 +25,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable016Test extends AbstractDataTableTest {
 
@@ -63,20 +56,20 @@ public class DataTable016Test extends AbstractDataTableTest {
         Assertions.assertEquals(langs.size() + 2 + 2, rows.size()); //plus 2 header-rows plus 2 summary-rows
 
         //check header-rows
-        Assertions.assertEquals("4", dataTable.getRow(0).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("COMPILED", dataTable.getRow(0).getCell(0).getText());
-        Assertions.assertEquals(1, dataTable.getRow(0).getCell(0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
-        Assertions.assertEquals("4", dataTable.getRow(4).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("INTERPRETED", dataTable.getRow(4).getCell(0).getText());
-        Assertions.assertEquals(1, dataTable.getRow(4).getCell(0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
+        Assertions.assertEquals("4", dataTable.getCell(0, 0).getWebElement().getAttribute("colspan"));
+        Assertions.assertEquals("COMPILED", dataTable.getCell(0, 0).getText());
+        Assertions.assertEquals(1, dataTable.getCell(0, 0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
+        Assertions.assertEquals("4", dataTable.getCell(4, 0).getWebElement().getAttribute("colspan"));
+        Assertions.assertEquals("INTERPRETED", dataTable.getCell(4, 0).getText());
+        Assertions.assertEquals(1, dataTable.getCell(4, 0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
 
         //check summary-rows
-        Assertions.assertEquals("3", dataTable.getRow(3).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("Total programming languages:", dataTable.getRow(3).getCell(0).getText());
-        Assertions.assertEquals("2", dataTable.getRow(3).getCell(1).getText());
-        Assertions.assertEquals("3", dataTable.getRow(8).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("Total programming languages:", dataTable.getRow(8).getCell(0).getText());
-        Assertions.assertEquals("3", dataTable.getRow(8).getCell(1).getText());
+        Assertions.assertEquals("3", dataTable.getCell(3, 0).getWebElement().getAttribute("colspan"));
+        Assertions.assertEquals("Total programming languages:", dataTable.getCell(3, 0).getText());
+        Assertions.assertEquals("2", dataTable.getCell(3, 1).getText());
+        Assertions.assertEquals("3", dataTable.getCell(8, 0).getWebElement().getAttribute("colspan"));
+        Assertions.assertEquals("Total programming languages:", dataTable.getCell(8, 0).getText());
+        Assertions.assertEquals("3", dataTable.getCell(8, 1).getText());
 
         //remove header- and summary-rows
         rows.remove(8); //second summary-row
@@ -98,15 +91,6 @@ public class DataTable016Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
-
-        @FindBy(id = "form:buttonUpdate")
-        CommandButton buttonUpdate;
-
-        @FindBy(id = "form:buttonResetTable")
-        CommandButton buttonResetTable;
 
         @Override
         public String getLocation() {

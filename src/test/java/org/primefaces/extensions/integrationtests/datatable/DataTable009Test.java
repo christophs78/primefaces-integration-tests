@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
 
@@ -74,9 +73,6 @@ public class DataTable009Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @Override
         public String getLocation() {

@@ -43,10 +43,10 @@ public class DataTable005Test extends AbstractDataTableTest {
         Assertions.assertNotNull(dataTable);
 
         // Act
-        dataTable.getRow(0).getCell(0).getWebElement().click();
+        dataTable.getCell(0, 0).getWebElement().click();
         Actions actions = new Actions(page.getWebDriver());
-        actions.keyDown(Keys.META).click(dataTable.getRow(2).getCell(0).getWebElement()).keyUp(Keys.META).perform();
-        actions.keyDown(Keys.SHIFT).click(dataTable.getRow(4).getCell(0).getWebElement()).keyUp(Keys.SHIFT).perform();
+        actions.keyDown(Keys.META).click(dataTable.getCell(2, 0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.SHIFT).click(dataTable.getCell(4, 0).getWebElement()).keyUp(Keys.SHIFT).perform();
         page.button.click();
 
         // Assert

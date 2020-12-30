@@ -31,7 +31,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeSelenium;
-import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable003Test extends AbstractDataTableTest {
@@ -101,28 +100,6 @@ public class DataTable003Test extends AbstractDataTableTest {
         assertRows(dataTable, langsSorted);
     }
 
-    private void assertHeaderSorted(WebElement header, String sortDirection, int sortPriority) {
-        String directionClass = null;
-        switch (sortDirection) {
-            case "ASC":
-                directionClass = "ui-icon-triangle-1-n";
-                break;
-            case "DESC":
-                directionClass = "ui-icon-triangle-1-s";
-                break;
-            default:
-                break;
-        }
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(header.findElement(By.className("ui-sortable-column-icon")), directionClass));
-        WebElement badge = header.findElement(By.className("ui-sortable-column-badge"));
-        if (sortPriority > 0) {
-            Assertions.assertEquals(sortPriority, Integer.parseInt(badge.getText()));
-        }
-        else {
-            Assertions.assertEquals("", badge.getText());
-        }
-    }
-
     private void logColumnIconCssClasses(WebElement eltSortName, WebElement eltSortFirstAppeared) {
         System.out.println(
                     "eltSortFirstAppeared; css-classes: " + eltSortFirstAppeared.findElement(By.className("ui-sortable-column-icon")).getAttribute("class"));
@@ -139,9 +116,6 @@ public class DataTable003Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
 
         @Override
         public String getLocation() {

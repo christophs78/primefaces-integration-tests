@@ -15,26 +15,19 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
-import org.primefaces.extensions.selenium.component.model.datatable.Row;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTable015Test extends AbstractDataTableTest {
 
@@ -56,10 +49,10 @@ public class DataTable015Test extends AbstractDataTableTest {
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = langs.stream()
-                .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                .filter(l -> l.getName().startsWith("Java"))
-                .limit(3)
-                .collect(Collectors.toList());
+                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .filter(l -> l.getName().startsWith("Java"))
+                    .limit(3)
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsFiltered);
 
         // Act
@@ -102,12 +95,6 @@ public class DataTable015Test extends AbstractDataTableTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
-
-        @FindBy(id = "form:button")
-        CommandButton button;
-
-        @FindBy(id = "form:buttonUpdate")
-        CommandButton buttonUpdate;
 
         @FindBy(id = "form:buttonClearTableState")
         CommandButton buttonClearTableState;
