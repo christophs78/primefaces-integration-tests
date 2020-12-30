@@ -26,7 +26,7 @@ import java.util.List;
 @Named
 @ViewScoped
 @Data
-public class DataTable016 implements Serializable {
+public class DataTable017 implements Serializable {
 
     private static final long serialVersionUID = -7518459955779385834L;
 

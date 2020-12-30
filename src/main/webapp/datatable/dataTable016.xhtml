@@ -24,6 +24,15 @@
                 <p:column field="name" headerText="Name" filterMatchMode="contains"/>
                 <p:column field="firstAppeared" headerText="First appeared" filterMatchMode="gte"/>
                 <p:column field="type" headerText="Type" filterable="false" sortable="false"/>
+
+                <p:summaryRow>
+                    <p:column colspan="3" style="text-align:right">
+                        <h:outputText value="Total programming languages:"/>
+                    </p:column>
+                    <p:column>
+                        <h:outputText value="#{dataTable016.getTotalCount(lang.type)}"/>
+                    </p:column>
+                </p:summaryRow>
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form"/>

@@ -23,26 +23,20 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-import org.primefaces.extensions.selenium.component.model.data.Paginator;
-import org.primefaces.extensions.selenium.component.model.datatable.Header;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class DataTable016Test extends AbstractDataTableTest {
+public class DataTable017Test extends AbstractDataTableTest {
 
     private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)
-    @DisplayName("DataTable: RowGroup - header row and summary row")
+    @DisplayName("DataTable: RowGroup - rowspan")
     public void testRowGroup(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -56,35 +50,16 @@ public class DataTable016Test extends AbstractDataTableTest {
 
         List<WebElement> rowElts = dataTable.getRowsWebElement();
         Assertions.assertNotNull(rowElts);
-        Assertions.assertEquals(langs.size() + 2 + 2, rowElts.size()); //plus 2 header-rows plus 2 summary-rows
+        Assertions.assertEquals(langs.size(), rowElts.size());
 
         List<Row> rows = dataTable.getRows();
         Assertions.assertNotNull(rows);
-        Assertions.assertEquals(langs.size() + 2 + 2, rows.size()); //plus 2 header-rows plus 2 summary-rows
+        Assertions.assertEquals(langs.size(), rows.size());
 
-        //check header-rows
-        Assertions.assertEquals("4", dataTable.getRow(0).getCell(0).getWebElement().getAttribute("colspan"));
+        Assertions.assertEquals("2", dataTable.getRow(0).getCell(0).getWebElement().getAttribute("rowspan"));
         Assertions.assertEquals("COMPILED", dataTable.getRow(0).getCell(0).getText());
-        Assertions.assertEquals(1, dataTable.getRow(0).getCell(0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
-        Assertions.assertEquals("4", dataTable.getRow(4).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("INTERPRETED", dataTable.getRow(4).getCell(0).getText());
-        Assertions.assertEquals(1, dataTable.getRow(4).getCell(0).getWebElement().findElements(By.className("ui-rowgroup-toggler")).size());
-
-        //check summary-rows
-        Assertions.assertEquals("3", dataTable.getRow(3).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("Total programming languages:", dataTable.getRow(3).getCell(0).getText());
-        Assertions.assertEquals("2", dataTable.getRow(3).getCell(1).getText());
-        Assertions.assertEquals("3", dataTable.getRow(8).getCell(0).getWebElement().getAttribute("colspan"));
-        Assertions.assertEquals("Total programming languages:", dataTable.getRow(8).getCell(0).getText());
-        Assertions.assertEquals("3", dataTable.getRow(8).getCell(1).getText());
-
-        //remove header- and summary-rows
-        rows.remove(8); //second summary-row
-        rows.remove(4); //second header-row
-        rows.remove(3); //first summary-row
-        rows.remove(0); //first header-row
-
-        assertRows(rows, langs);
+        Assertions.assertEquals("3", dataTable.getRow(2).getCell(0).getWebElement().getAttribute("rowspan"));
+        Assertions.assertEquals("INTERPRETED", dataTable.getRow(2).getCell(0).getText());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
@@ -110,7 +85,7 @@ public class DataTable016Test extends AbstractDataTableTest {
 
         @Override
         public String getLocation() {
-            return "datatable/dataTable016.xhtml";
+            return "datatable/dataTable017.xhtml";
         }
     }
 }
