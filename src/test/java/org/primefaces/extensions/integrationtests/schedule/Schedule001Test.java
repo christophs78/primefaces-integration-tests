@@ -20,15 +20,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.AbstractComponent;
+import org.primefaces.extensions.selenium.component.Schedule;
 import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class Schedule001Test extends AbstractPrimePageTest {
@@ -38,11 +36,13 @@ public class Schedule001Test extends AbstractPrimePageTest {
     @DisplayName("Schedule: show and check for JS-errors")
     public void testBasic(Page page) {
         // Arrange
+        Schedule schedule = page.schedule;
 
         // Act
+        schedule.update(); // widget method
 
         // Assert
-        assertConfiguration(page.schedule.getWidgetConfiguration());
+        assertConfiguration(schedule.getWidgetConfiguration(), "en");
     }
 
     @Test
@@ -50,13 +50,14 @@ public class Schedule001Test extends AbstractPrimePageTest {
     @DisplayName("Schedule: dateSelect")
     public void testDateSelect(Page page) {
         // Arrange
+        Schedule schedule = page.schedule;
 
         // Act
-        PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-day-top"))).click();
+        schedule.select("fc-daygrid-day-top");
 
         // Assert
         assertMessage(page, "Date selected");
-        assertConfiguration(page.schedule.getWidgetConfiguration());
+        assertConfiguration(schedule.getWidgetConfiguration(), "en");
     }
 
     @Test
@@ -64,13 +65,14 @@ public class Schedule001Test extends AbstractPrimePageTest {
     @DisplayName("Schedule: eventSelect")
     public void testEventSelect(Page page) {
         // Arrange
+        Schedule schedule = page.schedule;
 
         // Act
-        PrimeSelenium.guardAjax(page.schedule.findElement(By.className("fc-daygrid-event"))).click();
+        schedule.select("fc-daygrid-event");
 
         // Assert
         assertMessage(page, "Event selected");
-        assertConfiguration(page.schedule.getWidgetConfiguration());
+        assertConfiguration(schedule.getWidgetConfiguration(), "en");
     }
 
     @Test
@@ -78,24 +80,29 @@ public class Schedule001Test extends AbstractPrimePageTest {
     @DisplayName("Schedule: GitHub #6496 locale switching")
     public void testLocales(Page page) {
         // Arrange
-        assertButton(page, "fc-today-button", "Current Date");
-        assertButton(page, "fc-dayGridMonth-button", "Month");
-        assertButton(page, "fc-timeGridWeek-button", "Week");
-        assertButton(page, "fc-timeGridDay-button", "Day");
+        Schedule schedule = page.schedule;
+
+        // Act
+        page.buttonEnglish.click();
+
+        // Assert
+        assertButton(schedule.getTodayButton(), "Current Date");
+        assertButton(schedule.getMonthButton(), "Month");
+        assertButton(schedule.getWeekButton(), "Week");
+        assertButton(schedule.getDayButton(), "Day");
 
         // Act
         page.buttonFrench.click();
 
         // Assert
-        assertButton(page, "fc-today-button", "Aujourd'hui");
-        assertButton(page, "fc-dayGridMonth-button", "Mois");
-        assertButton(page, "fc-timeGridWeek-button", "Semaine");
-        assertButton(page, "fc-timeGridDay-button", "Jour");
-        assertConfiguration(page.schedule.getWidgetConfiguration());
+        assertButton(schedule.getTodayButton(), "Aujourd'hui");
+        assertButton(schedule.getMonthButton(), "Mois");
+        assertButton(schedule.getWeekButton(), "Semaine");
+        assertButton(schedule.getDayButton(), "Jour");
+        assertConfiguration(schedule.getWidgetConfiguration(), "fr");
     }
 
-    private void assertButton(Page page, String buttonClass, String text) {
-        WebElement button = page.schedule.findElement(By.className(buttonClass));
+    private void assertButton(WebElement button, String text) {
         Assertions.assertEquals(text, button.getText());
     }
 
@@ -106,10 +113,10 @@ public class Schedule001Test extends AbstractPrimePageTest {
         Assertions.assertTrue(msg.getSummary().contains(message));
     }
 
-    private void assertConfiguration(JSONObject cfg) {
+    private void assertConfiguration(JSONObject cfg, String locale) {
         assertNoJavascriptErrors();
-        System.out.println("Schedule Config = " + cfg);
         Assertions.assertEquals("form", cfg.getString("formId"));
+        Assertions.assertEquals(locale, cfg.getString("locale"));
     }
 
     public static class Page extends AbstractPrimePage {
@@ -117,7 +124,7 @@ public class Schedule001Test extends AbstractPrimePageTest {
         Messages messages;
 
         @FindBy(id = "form:schedule")
-        AbstractComponent schedule;
+        Schedule schedule;
 
         @FindBy(id = "form:btnEnglish")
         CommandButton buttonEnglish;
