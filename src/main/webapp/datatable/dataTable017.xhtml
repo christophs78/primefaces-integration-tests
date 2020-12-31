@@ -13,8 +13,8 @@
 
         <h:form id="form">
             <p:dataTable id="datatable" value="#{dataTable017.progLanguages}" var="lang" filteredValue="#{dataTable017.filteredProgLanguages}">
-                <p:column headerText="Type" groupRow="true" sortBy="lang.type">
-                    <h:outputText value="#{lang.type}" />
+                <p:column headerText="Type" groupRow="true" sortBy="#{lang.type}">
+                    <h:outputText value="#{lang.type}"/>
                 </p:column>
 
                 <p:column field="id" headerText="ID" filterable="false"/>
@@ -24,8 +24,8 @@
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form"/>
-            <p:commandButton id="buttonUpdate" value="Update" update="datatable" />
-            <p:commandButton id="buttonResetTable" value="reset table" update="@form" action="#{dataTable017.resetTable()}" />
+            <p:commandButton id="buttonUpdate" value="Update" update="datatable"/>
+            <p:commandButton id="buttonResetTable" value="reset table" update="@form" action="#{dataTable017.resetTable()}"/>
         </h:form>
 
     </h:body>
