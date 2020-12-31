@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.Spinner;
 
 public class Spinner003Test extends AbstractPrimePageTest {
@@ -37,7 +38,7 @@ public class Spinner003Test extends AbstractPrimePageTest {
         Assertions.assertEquals("0", spinner.getValue());
 
         // Act
-        spinner.getButtonDown().click();
+        PrimeSelenium.guardAjax(spinner.getButtonDown()).click();
 
         // Assert
         Assertions.assertEquals("2", spinner.getValue());
@@ -54,11 +55,11 @@ public class Spinner003Test extends AbstractPrimePageTest {
         Assertions.assertEquals("0", spinner.getValue());
 
         // Act
-        spinner.getButtonUp().click();
+        PrimeSelenium.guardAjax(spinner.getButtonUp()).click();
         assertOutputLabel(page, "1");
-        spinner.getButtonUp().click();
+        PrimeSelenium.guardAjax(spinner.getButtonUp()).click();
         assertOutputLabel(page, "2");
-        spinner.getButtonUp().click();
+        PrimeSelenium.guardAjax(spinner.getButtonUp()).click();
 
         // Assert
         Assertions.assertEquals("0", spinner.getValue());
