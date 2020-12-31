@@ -21,14 +21,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.AbstractComponent;
+import org.primefaces.extensions.selenium.component.Timeline;
 import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class Timeline002Test extends AbstractPrimePageTest {
@@ -38,10 +37,10 @@ public class Timeline002Test extends AbstractPrimePageTest {
     @DisplayName("Timeline: GitHub #6721 B.C. Dates show and check for JS-errors")
     public void testBCDates_6721(Page page) {
         // Arrange
-        AbstractComponent timeline = page.timeline;
+        Timeline timeline = page.timeline;
 
         // Act
-        PrimeSelenium.guardAjax(timeline.findElement(By.className("vis-item-content"))).click();
+        timeline.select("vis-item-content");
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
 
         // Assert
@@ -66,7 +65,7 @@ public class Timeline002Test extends AbstractPrimePageTest {
         Messages messages;
 
         @FindBy(id = "form:timeline")
-        AbstractComponent timeline;
+        Timeline timeline;
 
         @Override
         public String getLocation() {

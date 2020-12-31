@@ -20,17 +20,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.base.AbstractComponent;
+import org.primefaces.extensions.selenium.component.Timeline;
 
 public class Timeline001Test extends AbstractPrimePageTest {
 
@@ -39,10 +36,14 @@ public class Timeline001Test extends AbstractPrimePageTest {
     @DisplayName("Timeline: show and check for JS-errors")
     public void testBasic(Page page) {
         // Arrange
+        Timeline timeline = page.timeline;
 
         // Act
+        timeline.update();
 
         // Assert
+        long eventCount = timeline.getNumberOfEvents();
+        Assertions.assertEquals(15, eventCount);
         assertConfiguration(page.timeline.getWidgetConfiguration());
     }
 
@@ -51,9 +52,10 @@ public class Timeline001Test extends AbstractPrimePageTest {
     @DisplayName("Timeline: select-event")
     public void testSelect(Page page) {
         // Arrange
+        Timeline timeline = page.timeline;
 
         // Act
-        PrimeSelenium.guardAjax(page.timeline.findElement(By.className("vis-item-content"))).click();
+        timeline.select("vis-item-content");
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
 
         // Assert
@@ -75,7 +77,7 @@ public class Timeline001Test extends AbstractPrimePageTest {
         CommandButton button;
 
         @FindBy(id = "form:timeline")
-        AbstractComponent timeline;
+        Timeline timeline;
 
         @Override
         public String getLocation() {
