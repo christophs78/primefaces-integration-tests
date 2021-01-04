@@ -12,38 +12,43 @@
     <h:body>
 
         <h:form id="form">
-            <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
-            </p:messages>
+            <p:messages id="msgs" showDetail="true"/>
 
-            <p:dataTable id="datatable" value="#{dataTable007.progLanguages}" var="lang" editable="true" filteredValue="#{dataTable001.filteredProgLanguages}">
-                <p:ajax event="rowEdit" listener="#{dataTable007.onRowEdit}"/>
-                <p:ajax event="rowEditCancel" listener="#{dataTable007.onRowCancel}"/>
+            <p:dataTable id="datatable" widgetVar="wgtTable" value="#{dataTable007.progLanguages}" var="lang" editable="true"
+                         filteredValue="#{dataTable001.filteredProgLanguages}">
+                <p:ajax event="rowEdit" listener="#{dataTable007.onRowEdit}" update="form:msgs"/>
+                <p:ajax event="rowEditCancel" listener="#{dataTable007.onRowCancel}" update="form:msgs"/>
 
                 <p:column headerText="ID" sortBy="#{lang.id}">
-                      <h:outputText value="#{lang.id}" />
+                    <h:outputText value="#{lang.id}"/>
                 </p:column>
 
                 <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{lang.name}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{lang.name}" style="width:100%" label="Name" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{lang.name}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{lang.name}" style="width:100%" label="Name"/></f:facet>
                     </p:cellEditor>
                 </p:column>
 
                 <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}">
                     <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{lang.firstAppeared}" /></f:facet>
-                        <f:facet name="input"><p:inputText value="#{lang.firstAppeared}" style="width:100%" label="First appeared" converter="javax.faces.Integer" /></f:facet>
+                        <f:facet name="output"><h:outputText value="#{lang.firstAppeared}"/></f:facet>
+                        <f:facet name="input"><p:inputText value="#{lang.firstAppeared}" style="width:100%" label="First appeared"
+                                                           converter="javax.faces.Integer"/></f:facet>
                     </p:cellEditor>
                 </p:column>
 
                 <p:column style="width:35px">
-                    <p:rowEditor />
+                    <p:rowEditor/>
                 </p:column>
             </p:dataTable>
 
-            <p:commandButton id="button" value="Submit" update="@form" action="#{dataTable007.submit}"/>
+            <br/>
+            <p:commandButton id="btnSubmit" value="Submit" update="@form" action="#{dataTable007.submit}"/>
+            <p:commandButton id="btnAddRow" value="Add new row"
+                             action="#{dataTable007.onAddNew()}"
+                             oncomplete="PF('wgtTable').addRow();"
+                             process="@this" update="form:msgs" ignoreAutoUpdate="true"/>
         </h:form>
 
     </h:body>

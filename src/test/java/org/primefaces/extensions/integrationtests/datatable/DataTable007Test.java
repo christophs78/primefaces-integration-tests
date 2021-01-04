@@ -37,6 +37,31 @@ public class DataTable007Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
+    @DisplayName("DataTable: Add-Row")
+    public void testAddRow(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        List<Row> rows = dataTable.getRows();
+        Assertions.assertEquals(5, rows.size()); // only 5 rows to start
+
+        // Act
+        page.btnAddRow.click();
+
+        // Assert
+        rows = dataTable.getRows();
+        Assertions.assertEquals(6, rows.size()); // now has 6 after row added
+        Row row = dataTable.getRow(5);
+        Assertions.assertTrue(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")).isDisplayed());
+        Assertions.assertFalse(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")).isDisplayed());
+        Assertions.assertEquals("Smalltalk", row.getCell(1).getText());
+        Assertions.assertEquals("6", row.getCell(0).getText());
+        Assertions.assertEquals("New Language added", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("Smalltalk", page.messages.getMessage(0).getDetail());
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(2)
     @DisplayName("DataTable: Edit-Row")
     public void testEditRow(Page page) {
         // Arrange
@@ -80,7 +105,7 @@ public class DataTable007Test extends AbstractDataTableTest {
         Assertions.assertEquals(Integer.toString(langs.get(2).getId()), page.messages.getMessage(0).getDetail());
 
         // Act - submit
-        page.button.click();
+        page.btnSubmit.click();
 
         // Assert
         row = dataTable.getRow(2);
@@ -91,8 +116,8 @@ public class DataTable007Test extends AbstractDataTableTest {
     }
 
     @Test
-    @Order(2)
-    @DisplayName("DataTable: Filter combined with Edit-Row; https://github.com/primefaces/primefaces/issues/1442")
+    @Order(3)
+    @DisplayName("DataTable: GitHub #1442 Filter combined with Edit-Row; https://github.com/primefaces/primefaces/issues/1442")
     public void testFilterAndEditRow_1442(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -115,7 +140,7 @@ public class DataTable007Test extends AbstractDataTableTest {
         dataTable.removeFilter("Name");
 
         // Act - submit
-        page.button.click();
+        page.btnSubmit.click();
 
         // Assert
         row = dataTable.getRow(2);
@@ -138,8 +163,11 @@ public class DataTable007Test extends AbstractDataTableTest {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
 
-        @FindBy(id = "form:button")
-        CommandButton button;
+        @FindBy(id = "form:btnSubmit")
+        CommandButton btnSubmit;
+
+        @FindBy(id = "form:btnAddRow")
+        CommandButton btnAddRow;
 
         @Override
         public String getLocation() {

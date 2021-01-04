@@ -1,9 +1,10 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 
 @Named
 @ApplicationScoped
@@ -18,5 +19,9 @@ public class ProgrammingLanguageService {
         progLanguages.add(new ProgrammingLanguage(5, "Python", 1990, ProgrammingLanguage.ProgrammingLanguageType.INTERPRETED));
 
         return progLanguages;
+    }
+
+    public ProgrammingLanguage create(Integer id, String language) {
+        return new ProgrammingLanguage(id, language, 1987, ProgrammingLanguage.ProgrammingLanguageType.INTERPRETED);
     }
 }

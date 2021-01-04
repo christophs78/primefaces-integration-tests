@@ -12,8 +12,8 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import lombok.Data;
-import org.primefaces.event.RowEditEvent;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -21,8 +21,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
+
+import org.primefaces.event.RowEditEvent;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -49,6 +51,14 @@ public class DataTable007 implements Serializable {
 
     public void onRowCancel(RowEditEvent<ProgrammingLanguage> event) {
         FacesMessage msg = new FacesMessage("Edit Cancelled", Integer.toString(event.getObject().getId()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onAddNew() {
+        // Add one new car to the table:
+        ProgrammingLanguage entity2Add = service.create(6, "Smalltalk");
+        progLanguages.add(entity2Add);
+        FacesMessage msg = new FacesMessage("New Language added", entity2Add.getName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
