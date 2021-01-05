@@ -13,26 +13,37 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
-            <p:dataTable id="datatable" value="#{dataTable006.progLanguages}" var="lang" selection="#{dataTable006.selectedProgLanguages}" rowKey="#{lang.id}">
-                <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+            <p:dataTable id="datatable"
+                         value="#{dataTable006.lazy ? dataTable006.lazyDataModel: dataTable006.progLanguages}"
+                         lazy="#{dataTable006.lazy}"
+                         var="lang"
+                         selection="#{dataTable006.selectedProgLanguages}"
+                         rowKey="#{lang.id}"
+                         paginator="true"
+                         rows="3"
+                         selectionPageOnly="#{dataTable006.selectionPageOnly}"
+            >
+                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
                 <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}" />
+                    <h:outputText value="#{lang.id}"/>
                 </p:column>
 
                 <p:column headerText="Name" sortBy="#{lang.name}">
-                    <h:outputText value="#{lang.name}" />
+                    <h:outputText value="#{lang.name}"/>
                 </p:column>
 
                 <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}">
-                    <h:outputText value="#{lang.firstAppeared}" />
+                    <h:outputText value="#{lang.firstAppeared}"/>
                 </p:column>
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form" action="#{dataTable006.submit}"/>
+            <p:commandButton id="toggleSelectPageOnly" value="Selection Page Only" update="@form" action="#{dataTable006.toggleSelectPageOnly}"/>
+            <p:commandButton id="toggleLazyMode" value="Lazy Mode" update="@form" action="#{dataTable006.toggleLazyMode}"/>
         </h:form>
 
     </h:body>

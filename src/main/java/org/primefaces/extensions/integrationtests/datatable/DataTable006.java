@@ -12,7 +12,9 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import lombok.Data;
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,9 +22,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -31,8 +32,11 @@ public class DataTable006 implements Serializable {
 
     private static final long serialVersionUID = -7518459955779385834L;
 
+    private ProgrammingLanguageLazyDataModel lazyDataModel;
     private List<ProgrammingLanguage> progLanguages;
     private List<ProgrammingLanguage> selectedProgLanguages;
+    private boolean selectionPageOnly = true;
+    private boolean lazy = false;
 
     @Inject
     private ProgrammingLanguageService service;
@@ -40,15 +44,24 @@ public class DataTable006 implements Serializable {
     @PostConstruct
     public void init() {
         progLanguages = service.getLangs();
+        lazyDataModel = new ProgrammingLanguageLazyDataModel();
     }
 
     public void submit() {
         if (selectedProgLanguages != null) {
             FacesMessage msg = new FacesMessage("Selected ProgrammingLanguage(s)", selectedProgLanguages.stream()
-                    .sorted((l1, l2) -> l1.getId().compareTo(l2.getId()))
-                    .map(lang -> ((Integer)lang.getId()).toString())
-                    .collect(Collectors.joining(",")));
+                        .sorted((l1, l2) -> l1.getId().compareTo(l2.getId()))
+                        .map(lang -> ((Integer) lang.getId()).toString())
+                        .collect(Collectors.joining(",")));
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
+    }
+
+    public void toggleSelectPageOnly() {
+        setSelectionPageOnly(!isSelectionPageOnly());
+    }
+
+    public void toggleLazyMode() {
+        setLazy(!isLazy());
     }
 }
