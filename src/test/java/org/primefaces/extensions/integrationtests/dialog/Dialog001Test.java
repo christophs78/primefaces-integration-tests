@@ -43,7 +43,7 @@ public class Dialog001Test extends AbstractPrimePageTest {
 
         // Act
         page.inputText2Dialog.setValue("test123");
-        PrimeSelenium.guardAjax(page.buttonDlgOk).click();
+        page.buttonDlgOk.click();
 
         // Assert
         Assertions.assertFalse(PrimeSelenium.isElementDisplayed(page.dialog));
@@ -76,7 +76,7 @@ public class Dialog001Test extends AbstractPrimePageTest {
 
         // Act
         page.inputText2Dialog.setValue("testabc");
-        PrimeSelenium.guardAjax(page.buttonDlgCancel).click();
+        page.buttonDlgCancel.click();
 
         // Assert
         Assertions.assertFalse(PrimeSelenium.isElementDisplayed(page.dialog));
