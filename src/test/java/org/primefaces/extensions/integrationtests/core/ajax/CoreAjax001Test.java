@@ -62,11 +62,10 @@ public class CoreAjax001Test extends AbstractPrimePageTest {
             Thread.sleep(300); //we have a timing issue on Github Actions - not sure why because CommandButton#click does PrimeSelenium.guardAjax internal
         }
         catch (Exception ex) {
-            ;
         }
         Assertions.assertEquals(page.inputtext.getInput().getAttribute("id"), page.getWebDriver().switchTo().activeElement().getAttribute("id"));
         scrollTop = PrimeSelenium.executeScript("return $(document).scrollTop();");
-        Assertions.assertTrue(scrollTop>200);
+        Assertions.assertTrue(scrollTop > 200);
         assertNoJavascriptErrors();
     }
 
