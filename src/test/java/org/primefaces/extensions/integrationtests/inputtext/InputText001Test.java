@@ -17,6 +17,7 @@ package org.primefaces.extensions.integrationtests.inputtext;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
@@ -24,12 +25,13 @@ import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 
+@Tag("SafariBasic") //example-tag used together with profile/properties/groups in pom.xml to run only tests with this tag
 public class InputText001Test extends AbstractPrimePageTest {
 
     @Test
-    public void test(Page page) {
+    public void testInputTextWithAjax(Page page) {
         // Arrange
-        InputText inputText = page.inputtext;
+        InputText inputText = page.inputtext1;
         Assertions.assertEquals("byebye!", inputText.getValue());
 
         // Act
@@ -41,6 +43,21 @@ public class InputText001Test extends AbstractPrimePageTest {
         assertConfiguration(inputText.getWidgetConfiguration());
     }
 
+    @Test
+    public void testInputTextWithoutAjax(Page page) {
+        // Arrange
+        InputText inputText = page.inputtext2;
+        Assertions.assertEquals("safari", inputText.getValue());
+
+        // Act
+        inputText.setValue("hello safari!");
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals("hello safari!", inputText.getValue());
+        assertConfiguration(inputText.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("InputText Config = " + cfg);
@@ -48,8 +65,11 @@ public class InputText001Test extends AbstractPrimePageTest {
     }
 
     public static class Page extends AbstractPrimePage {
-        @FindBy(id = "form:inputtext")
-        InputText inputtext;
+        @FindBy(id = "form:inputtext1")
+        InputText inputtext1;
+
+        @FindBy(id = "form:inputtext2")
+        InputText inputtext2;
 
         @FindBy(id = "form:button")
         CommandButton button;

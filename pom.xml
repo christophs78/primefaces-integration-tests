@@ -18,6 +18,7 @@
         <webdriver.headless>false</webdriver.headless>
         <primefaces.CSP>false</primefaces.CSP>
         <primefaces.THEME>saga</primefaces.THEME>
+        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
         <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -166,7 +167,7 @@
                         <webdriver.headless>${webdriver.headless}</webdriver.headless>
                         <primefaces.CSP>${primefaces.CSP}</primefaces.CSP>
                         <primefaces.THEME>${primefaces.THEME}</primefaces.THEME>
-                        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
+                        <junit.jupiter.execution.parallel.enabled>${junit.jupiter.execution.parallel.enabled}</junit.jupiter.execution.parallel.enabled>
                         <junit.jupiter.execution.parallel.mode.default>same_thread</junit.jupiter.execution.parallel.mode.default>
                         <junit.jupiter.execution.parallel.mode.classes.default>concurrent</junit.jupiter.execution.parallel.mode.classes.default>
                         <junit.jupiter.execution.parallel.config.dynamic.factor>1</junit.jupiter.execution.parallel.config.dynamic.factor>
@@ -201,6 +202,17 @@
             <id>firefox</id>
             <properties>
                 <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
+            </properties>
+        </profile>
+        <profile>
+            <id>safari</id>
+            <properties>
+                <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEESafariAdapterImpl</primefaces-selenium.adapter>
+                <!-- optionally only run tests with specific @Tag -->
+                <!--
+                <groups>SafariBasic</groups>
+                -->
+                <junit.jupiter.execution.parallel.enabled>false</junit.jupiter.execution.parallel.enabled>
             </properties>
         </profile>
         <profile>

@@ -9,12 +9,14 @@ on:
 jobs:
   build:
     if: (github.event_name == 'schedule' && github.repository == 'primefaces-extensions/primefaces-integration-tests') || (github.event_name != 'schedule')
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
       matrix:
         java: [ 8, 11 ]
         profile: [ 'headless,firefox,theme-saga', 'headless,chrome,theme-saga', 'headless,chrome,csp,theme-nova' ]
+# we disable safari-integration-tests until PF-Safari-issues are fixed
+#        profile: [ 'headless,firefox,theme-saga', 'headless,chrome,theme-saga', 'headless,chrome,csp,theme-nova', 'headless,safari,theme-saga' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -43,4 +45,6 @@ jobs:
       - name: Build PrimeFaces Selenium
         run: cd primefaces-selenium && mvn install && cd ..
       - name: Run Integration Tests
-        run: mvn -B -V clean install -P${{ matrix.profile }}
+        run: |
+          sudo safaridriver --enable
+          mvn -B -V clean install -P${{ matrix.profile }}

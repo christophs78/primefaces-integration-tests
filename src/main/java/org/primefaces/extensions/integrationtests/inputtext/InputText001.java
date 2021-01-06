@@ -26,11 +26,13 @@ import lombok.Data;
 public class InputText001 implements Serializable {
 
     private static final long serialVersionUID = -7518459955779385834L;
-    private String value;
+    private String value1;
+    private String value2;
 
     @PostConstruct
     public void init() {
-        value = "byebye!";
+        value1 = "byebye!";
+        value2 = "safari";
     }
 
 }
