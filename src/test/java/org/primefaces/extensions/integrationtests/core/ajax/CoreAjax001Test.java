@@ -59,7 +59,7 @@ public class CoreAjax001Test extends AbstractPrimePageTest {
 
         // Assert
         try {
-            Thread.sleep(300); //we have a timing issue on Github Actions - not sure why because CommandButton#click does PrimeSelenium.guardAjax internal
+            Thread.sleep(300); //PrimeFaces.focus() has a 50ms setTimeout() so we need to delay here
         }
         catch (Exception ex) {
         }
