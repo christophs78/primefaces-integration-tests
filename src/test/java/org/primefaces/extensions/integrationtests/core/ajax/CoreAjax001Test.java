@@ -22,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
@@ -39,6 +40,7 @@ public class CoreAjax001Test extends AbstractPrimePageTest {
         PrimeSelenium.executeScript("$(document).scrollTop(200);");
 
         // Act
+        PrimeSelenium.disableAnimations();
         page.selectOneMenu.select(2);
 
         // Assert
@@ -58,11 +60,10 @@ public class CoreAjax001Test extends AbstractPrimePageTest {
         page.button2.click(); //does PrimeFaces.current().focus("form:inputtext"); --> vertical scroll position changes
 
         // Assert
-        try {
-            Thread.sleep(300); //PrimeFaces.focus() has a 50ms setTimeout() so we need to delay here
-        }
-        catch (Exception ex) {
-        }
+        //PrimeFaces.focus() has a 50ms setTimeout() so we need to delay here
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleInViewport(page.inputtext.getInput()));
+
+        PrimeSelenium.enableAnimations();
         Assertions.assertEquals(page.inputtext.getInput().getAttribute("id"), page.getWebDriver().switchTo().activeElement().getAttribute("id"));
         scrollTop = PrimeSelenium.executeScript("return $(document).scrollTop();");
         Assertions.assertTrue(scrollTop > 200);
