@@ -41,7 +41,7 @@ public class Password003Test extends AbstractPrimePageTest {
         // Assert
         WebElement feedback = password.getFeedbackPanel();
         Assertions.assertEquals("block", feedback.getCssValue("display"));
-        Assertions.assertEquals("Lütfen şifre giriniz", feedback.getText().trim());
+        assertText(feedback, "Lütfen şifre giriniz");
         assertConfiguration(password.getWidgetConfiguration());
     }
 
@@ -58,7 +58,7 @@ public class Password003Test extends AbstractPrimePageTest {
 
         // Assert
         WebElement feedback = password.getFeedbackPanel();
-        Assertions.assertEquals("Zayıf", feedback.getText().trim());
+        assertText(feedback, "Zayıf");
         assertConfiguration(password.getWidgetConfiguration());
     }
 
@@ -75,7 +75,7 @@ public class Password003Test extends AbstractPrimePageTest {
 
         // Assert
         WebElement feedback = password.getFeedbackPanel();
-        Assertions.assertEquals("Orta seviye", feedback.getText().trim());
+        assertText(feedback, "Orta seviye");
         assertConfiguration(password.getWidgetConfiguration());
     }
 
@@ -92,7 +92,7 @@ public class Password003Test extends AbstractPrimePageTest {
 
         // Assert
         WebElement feedback = password.getFeedbackPanel();
-        Assertions.assertEquals("Güçlü", feedback.getText().trim());
+        assertText(feedback, "Güçlü");
         assertConfiguration(password.getWidgetConfiguration());
     }
 

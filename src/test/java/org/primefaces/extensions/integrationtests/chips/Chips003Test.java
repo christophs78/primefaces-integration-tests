@@ -39,7 +39,7 @@ public class Chips003Test extends AbstractPrimePageTest {
         Chips chips = page.chips;
 
         // Assert initial state
-        Assertions.assertEquals("One\nTwo", chips.getText());
+        assertText(chips, "One\nTwo");
         List<String> values = chips.getValues();
         Assertions.assertEquals(2, values.size());
         Assertions.assertEquals("One", values.get(0));
