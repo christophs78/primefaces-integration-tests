@@ -77,7 +77,6 @@ public class Chips004Test extends AbstractPrimePageTest {
         chips.addValue("Excel");
         chips.addValue("Outlook");
         chips.addValue("Word");
-        assertText(chips, "Excel\nOutlook\nWord");
         chips.toggleEditor();
 
         // Assert (editing mode)
