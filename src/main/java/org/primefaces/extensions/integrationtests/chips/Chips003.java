@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 
 import lombok.Data;
 
@@ -39,8 +39,7 @@ public class Chips003 implements Serializable {
     }
 
     public void submit() {
-        FacesMessage msg = new FacesMessage(String.join(", ", values));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        TestUtils.addMessage(TestUtils.join(values));
     }
 
 }
