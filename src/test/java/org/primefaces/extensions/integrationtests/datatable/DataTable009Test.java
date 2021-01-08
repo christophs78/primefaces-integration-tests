@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
 
@@ -42,6 +43,7 @@ public class DataTable009Test extends AbstractDataTableTest {
         // Act - do some filtering
         dataTable.sort("Name");
         dataTable.filter("Name", "Java");
+        PrimeExpectedConditions.visibleAndAnimationComplete(page.messages);
 
         // Assert
         Assertions.assertEquals("FilterValue for name", page.messages.getMessage(0).getSummary());
