@@ -15,21 +15,12 @@
  */
 package org.primefaces.extensions.integrationtests.clientwindow;
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.html5.LocalStorage;
-import org.openqa.selenium.html5.SessionStorage;
-import org.openqa.selenium.html5.WebStorage;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
@@ -49,13 +40,16 @@ public class ClientWindow001Test extends AbstractPrimePageTest {
         String url = page.getWebDriver().getCurrentUrl();
         Assertions.assertTrue(url.contains("jfwid="));
 
-        String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
-        Assertions.assertNotNull(pfWindowId);
-        Assertions.assertTrue(pfWindowId.length()>0);
-        Assertions.assertTrue(url.endsWith(pfWindowId));
+        if (page.getWebStorage() != null) {
+            String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
+            Assertions.assertNotNull(pfWindowId);
+            Assertions.assertTrue(pfWindowId.length() > 0);
+            Assertions.assertTrue(url.endsWith(pfWindowId));
+
+            Assertions.assertEquals(pfWindowId, page.messages.getMessage(0).getDetail());
+        }
 
         Assertions.assertEquals("jfwid", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals(pfWindowId, page.messages.getMessage(0).getDetail());
     }
 
     @Test
@@ -67,10 +61,12 @@ public class ClientWindow001Test extends AbstractPrimePageTest {
         // Act
 
         // Assert
-        String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
-        WebElement eltLink2Anotherpage = page.getWebDriver().findElement(By.className("link2Anotherpage"));
-        String href = eltLink2Anotherpage.getAttribute("href");
-        Assertions.assertTrue(href.endsWith(pfWindowId));
+        if (page.getWebStorage() != null) {
+            String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
+            WebElement eltLink2Anotherpage = page.getWebDriver().findElement(By.className("link2Anotherpage"));
+            String href = eltLink2Anotherpage.getAttribute("href");
+            Assertions.assertTrue(href.endsWith(pfWindowId));
+        }
     }
 
     public static class Page extends AbstractPrimePage {
