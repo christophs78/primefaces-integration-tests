@@ -19,10 +19,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 
 import lombok.Data;
 
@@ -46,7 +46,11 @@ public class DatePicker006 implements Serializable {
     }
 
     public void submit() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "SQL Date", localDate.toString()));
+        String message = "";
+        if (localDate != null) {
+            message = localDate.toString();
+        }
+        TestUtils.addMessage("SQL Date", message);
     }
 
 }

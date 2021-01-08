@@ -16,8 +16,14 @@ public class TestUtils {
         return result;
     }
 
-    public static FacesMessage addMessage(String message) {
-        FacesMessage msg = new FacesMessage(message);
+    public static FacesMessage addMessage(String detail) {
+        FacesMessage msg = new FacesMessage(detail);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        return msg;
+    }
+
+    public static FacesMessage addMessage(String summary, String detail) {
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return msg;
     }
