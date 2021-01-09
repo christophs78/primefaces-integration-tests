@@ -60,6 +60,7 @@ public class InputText002Test extends AbstractPrimePageTest {
 
         // Act
         inputText.setValue("filled");
+        page.button.click();
 
         // Assert
         assertNoJavascriptErrors();
