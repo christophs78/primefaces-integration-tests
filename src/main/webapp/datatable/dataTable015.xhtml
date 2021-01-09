@@ -12,25 +12,26 @@
     <h:body>
 
         <h:form id="form">
-            <p:dataTable id="datatable" value="#{dataTable015.progLanguages}" var="lang" paginator="true" rows="3" filteredValue="#{dataTable015.filteredProgLanguages}"
+            <p:dataTable id="datatable" value="#{dataTable015.progLanguages}" var="lang" paginator="true" rows="3"
+                         filteredValue="#{dataTable015.filteredProgLanguages}" filterEvent="enter"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="2,3,5,10" multiViewState="true">
                 <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}" />
+                    <h:outputText value="#{lang.id}"/>
                 </p:column>
 
                 <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
-                    <h:outputText value="#{lang.name}" />
+                    <h:outputText value="#{lang.name}"/>
                 </p:column>
 
                 <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}" filterMatchMode="gte">
-                    <h:outputText value="#{lang.firstAppeared}" />
+                    <h:outputText value="#{lang.firstAppeared}"/>
                 </p:column>
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form"/>
-            <p:commandButton id="buttonUpdate" value="Update" update="datatable" />
-            <p:commandButton id="buttonClearTableState" value="clear table state" update="@form" action="#{dataTable015.clearTableState()}" />
+            <p:commandButton id="buttonUpdate" value="Update" update="datatable"/>
+            <p:commandButton id="buttonClearTableState" value="clear table state" update="@form" action="#{dataTable015.clearTableState()}"/>
         </h:form>
 
     </h:body>

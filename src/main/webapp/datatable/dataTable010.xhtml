@@ -13,20 +13,21 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
-            <p:dataTable id="datatable" value="#{dataTable010.progLanguages}" var="lang" paginator="true" rows="3" selectionMode="multiple" selection="#{dataTable010.selectedProgLanguages}" rowKey="#{lang.id}">
+            <p:dataTable id="datatable" value="#{dataTable010.progLanguages}" var="lang" paginator="true" rows="3" selectionMode="multiple"
+                         selection="#{dataTable010.selectedProgLanguages}" rowKey="#{lang.id}" filterEvent="enter">
                 <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}" />
+                    <h:outputText value="#{lang.id}"/>
                 </p:column>
 
                 <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
-                    <h:outputText value="#{lang.name}" />
+                    <h:outputText value="#{lang.name}"/>
                 </p:column>
 
                 <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}" filterMatchMode="gte">
-                    <h:outputText value="#{lang.firstAppeared}" />
+                    <h:outputText value="#{lang.firstAppeared}"/>
                 </p:column>
             </p:dataTable>
 

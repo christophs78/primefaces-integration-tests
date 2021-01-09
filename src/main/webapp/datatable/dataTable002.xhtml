@@ -13,24 +13,24 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
             <p:dataTable id="datatable" value="#{dataTable002.lazyDataModel}" var="lang" paginator="true" rows="10"
-                         filteredValue="#{dataTable002.filteredProgLanguages}" lazy="true"
+                         filteredValue="#{dataTable002.filteredProgLanguages}" filterEvent="enter" lazy="true"
                          selectionMode="single" selection="#{dataTable002.selectedProgrammingLanguage}">
-                <p:ajax event="rowSelect" listener="#{dataTable002.onRowSelect}" />
+                <p:ajax event="rowSelect" listener="#{dataTable002.onRowSelect}"/>
 
                 <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}" />
+                    <h:outputText value="#{lang.id}"/>
                 </p:column>
 
                 <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
-                    <h:outputText value="#{lang.name}" />
+                    <h:outputText value="#{lang.name}"/>
                 </p:column>
 
                 <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}" filterMatchMode="gte">
-                    <h:outputText value="#{lang.firstAppeared}" />
+                    <h:outputText value="#{lang.firstAppeared}"/>
                 </p:column>
             </p:dataTable>
 
