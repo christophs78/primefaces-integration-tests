@@ -21,6 +21,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
@@ -40,14 +41,12 @@ public class ClientWindow001Test extends AbstractPrimePageTest {
         String url = page.getWebDriver().getCurrentUrl();
         Assertions.assertTrue(url.contains("jfwid="));
 
-        if (page.getWebStorage() != null) {
-            String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
-            Assertions.assertNotNull(pfWindowId);
-            Assertions.assertTrue(pfWindowId.length() > 0);
-            Assertions.assertTrue(url.endsWith(pfWindowId));
+        String pfWindowId = PrimeSelenium.executeScript("return sessionStorage.getItem('pf.windowId');");
+        Assertions.assertNotNull(pfWindowId);
+        Assertions.assertTrue(pfWindowId.length() > 0);
+        Assertions.assertTrue(url.endsWith(pfWindowId));
 
-            Assertions.assertEquals(pfWindowId, page.messages.getMessage(0).getDetail());
-        }
+        Assertions.assertEquals(pfWindowId, page.messages.getMessage(0).getDetail());
 
         Assertions.assertEquals("jfwid", page.messages.getMessage(0).getSummary());
     }
@@ -61,12 +60,10 @@ public class ClientWindow001Test extends AbstractPrimePageTest {
         // Act
 
         // Assert
-        if (page.getWebStorage() != null) {
-            String pfWindowId = page.getWebStorage().getSessionStorage().getItem("pf.windowId");
-            WebElement eltLink2Anotherpage = page.getWebDriver().findElement(By.className("link2Anotherpage"));
-            String href = eltLink2Anotherpage.getAttribute("href");
-            Assertions.assertTrue(href.endsWith(pfWindowId));
-        }
+        String pfWindowId = PrimeSelenium.executeScript("return sessionStorage.getItem('pf.windowId');");
+        WebElement eltLink2Anotherpage = page.getWebDriver().findElement(By.className("link2Anotherpage"));
+        String href = eltLink2Anotherpage.getAttribute("href");
+        Assertions.assertTrue(href.endsWith(pfWindowId));
     }
 
     public static class Page extends AbstractPrimePage {
