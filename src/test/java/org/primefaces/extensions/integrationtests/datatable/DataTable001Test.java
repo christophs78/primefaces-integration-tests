@@ -15,6 +15,7 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,7 +109,7 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         // Assert
         List<ProgrammingLanguage> langsSorted = langs.stream()
-                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
                     .limit(3)
                     .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
@@ -147,7 +148,7 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
                     .filter(l -> l.getName().startsWith("Java"))
                     .limit(3)
                     .collect(Collectors.toList());

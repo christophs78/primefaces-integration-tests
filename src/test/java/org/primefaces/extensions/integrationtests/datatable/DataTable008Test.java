@@ -44,7 +44,7 @@ public class DataTable008Test extends AbstractDataTableTest {
         // Act - do some filtering
         dataTable.selectPage(1);
         dataTable.sort("Name");
-        dataTable.getHeader().getCell("First appeared").get().setFilterValue("2010", true);
+        dataTable.getHeader().getCell("First appeared").get().setFilterValue("2010", "change", 0);
 
         // Assert
         Assertions.assertEquals("2010", getFirstAppearedFilterElt(dataTable).getAttribute("value"));
