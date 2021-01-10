@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.Chips;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputText;
@@ -36,6 +37,10 @@ public class Chips004Test extends AbstractPrimePageTest {
     @Order(1)
     @DisplayName("Chips: GitHub #1895/#6691: Chips allow pasting of delimited list")
     public void testClipboardPaste(Page page) {
+        // can't get copy and paste working on Safari
+        if (PrimeSelenium.isSafari()) {
+            return;
+        }
         // Arrange
         Chips chips = page.chips;
         InputText clipboard = page.clipboard;
