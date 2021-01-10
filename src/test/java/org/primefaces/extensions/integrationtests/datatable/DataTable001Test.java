@@ -72,8 +72,8 @@ public class DataTable001Test extends AbstractDataTableTest {
         Assertions.assertNotNull(header);
         Assertions.assertNotNull(header.getCells());
         Assertions.assertEquals(3, header.getCells().size());
-        Assertions.assertEquals("ID", header.getCell(0).getText());
-        Assertions.assertEquals("Name", header.getCell(1).getText());
+        Assertions.assertEquals("ID", header.getCell(0). getColumnTitle().getText());
+        Assertions.assertEquals("Name", header.getCell(1).getColumnTitle().getText());
 
         Paginator paginator = dataTable.getPaginator();
         Assertions.assertNotNull(paginator);
