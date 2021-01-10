@@ -41,7 +41,7 @@ public class DatePicker007Test extends AbstractPrimePageTest {
         Assertions.assertEquals(LocalTime.of(12, 4), datePicker.getValue().toLocalTime());
 
         // Act
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel (12:04 AM)
         WebElement panel = datePicker.getPanel();

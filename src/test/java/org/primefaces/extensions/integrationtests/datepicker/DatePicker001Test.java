@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -45,12 +46,13 @@ public class DatePicker001Test extends AbstractPrimePageTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         String text = panel.getText();
+        System.out.println(text);
         Assertions.assertTrue(text.contains("1978"));
         Assertions.assertTrue(text.contains("February"));
 
@@ -67,14 +69,16 @@ public class DatePicker001Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: select date via click on day")
     public void testSelectDate(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
 
         // Act
         datePicker.setValue(value);
-        datePicker.click(); // focus to bring up panel
-        datePicker.getPanel().findElement(By.className("ui-datepicker-next")).click();
-        datePicker.getPanel().findElement(By.linkText("25")).click();
+        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.getPanel();
+        panel.findElement(By.className("ui-datepicker-next")).click();
+        panel.findElement(By.linkText("25")).click();
 
         // Assert selected value
         LocalDate expectedDate = LocalDate.of(1978, 3, 25);
@@ -93,6 +97,7 @@ public class DatePicker001Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: highlight today and selected")
     public void testHighlight(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
 
         // Act

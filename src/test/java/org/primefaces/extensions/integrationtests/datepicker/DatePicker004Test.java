@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
@@ -36,13 +37,14 @@ public class DatePicker004Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: date with time HH:mm:ss. See GitHub #6458 and #6459")
     public void testDateAndTimeWithSeconds(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DatePicker datePicker = page.datePickerSeconds;
         Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
         LocalDateTime value = LocalDateTime.of(1978, 2, 19, 11, 55, 19);
 
         // Act
         datePicker.setValue(value);
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
@@ -70,13 +72,14 @@ public class DatePicker004Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: date with time HH:mm")
     public void testDateAndTimeWithHours(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DatePicker datePicker = page.datePickerHours;
         Assertions.assertEquals(LocalDateTime.of(2020, 10, 31, 13, 13), datePicker.getValue());
         LocalDateTime value = LocalDateTime.of(1978, 2, 19, 11, 55);
 
         // Act
         datePicker.setValue(value);
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();

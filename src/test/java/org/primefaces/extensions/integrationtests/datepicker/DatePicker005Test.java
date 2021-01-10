@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -43,7 +44,7 @@ public class DatePicker005Test extends AbstractPrimePageTest {
         DatePicker datePicker = page.datePicker;
 
         // Act
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
@@ -65,10 +66,11 @@ public class DatePicker005Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: select range")
     public void testSelectRange(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
 
         // Act
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel(); // focus to bring up panel
         WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         panel.findElement(By.linkText("3")).click();
