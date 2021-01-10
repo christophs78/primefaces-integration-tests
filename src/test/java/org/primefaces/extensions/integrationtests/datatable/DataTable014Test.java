@@ -23,6 +23,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -56,7 +57,7 @@ public class DataTable014Test extends AbstractDataTableTest {
         JavascriptExecutor js = (JavascriptExecutor) getWebDriver();
         int scrollDown = 500;
         js.executeScript("window.scrollBy(0," + scrollDown + ")");
-        wait(1000); //compensate weird Firefox (81) timing issue with assigning ui-sticky
+        TestUtils.wait(1000); //compensate weird Firefox (81) timing issue with assigning ui-sticky
 
         // Assert
         Assertions.assertTrue(PrimeSelenium.hasCssClass(dataTableSticky, "ui-sticky"));
@@ -69,7 +70,7 @@ public class DataTable014Test extends AbstractDataTableTest {
 
         // Act
         js.executeScript("window.scrollTo(0,0)");
-        wait(1000); //compensate weird Firefox (81) timing issue with removing ui-sticky
+        TestUtils.wait(1000); //compensate weird Firefox (81) timing issue with removing ui-sticky
 
         // Assert
         Assertions.assertFalse(PrimeSelenium.hasCssClass(dataTableSticky, "ui-sticky"));
@@ -90,15 +91,6 @@ public class DataTable014Test extends AbstractDataTableTest {
         @Override
         public String getLocation() {
             return "datatable/dataTable014.xhtml";
-        }
-    }
-
-    private void wait(int millis) {
-        try {
-            Thread.sleep(millis);
-        }
-        catch (InterruptedException ex) {
-            ;
         }
     }
 }

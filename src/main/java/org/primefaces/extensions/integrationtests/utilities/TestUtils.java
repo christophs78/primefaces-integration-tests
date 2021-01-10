@@ -9,14 +9,23 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class TestUtils {
 
+    /**
+     * Hack for Safari that for some reason we need to wait between tests for the driver to reset?
+     *
+     * @param milliseconds number of millis to pause
+     */
     public static void pause(int milliseconds) {
         if (PrimeSelenium.isSafari()) {
-            try {
-                Thread.sleep(milliseconds);
-            }
-            catch (InterruptedException ex) {
-                System.err.println("Safari pause was interrupted!");
-            }
+            wait(milliseconds);
+        }
+    }
+
+    public static void wait(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        }
+        catch (InterruptedException ex) {
+            System.err.println("Wait was interrupted!");
         }
     }
 

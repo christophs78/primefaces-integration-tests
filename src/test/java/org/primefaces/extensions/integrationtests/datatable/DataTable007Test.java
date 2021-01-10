@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
@@ -65,6 +66,7 @@ public class DataTable007Test extends AbstractDataTableTest {
     @DisplayName("DataTable: Edit-Row")
     public void testEditRow(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
 
@@ -120,6 +122,7 @@ public class DataTable007Test extends AbstractDataTableTest {
     @DisplayName("DataTable: GitHub #1442 Filter combined with Edit-Row; https://github.com/primefaces/primefaces/issues/1442")
     public void testFilterAndEditRow_1442(Page page) {
         // Arrange
+        TestUtils.pause(1000);
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
 
