@@ -11,15 +11,17 @@
 
     <h:body>
 
-        <h:form id="form">
+        <h:form id="form1">
             <!-- Utilizes only Hours and Minutes -->
             <p:datePicker id="dpHours" value="#{datePicker004.localDateTimeHours}" pattern="MM/dd/yyyy"/>
-
+            <p:commandButton id="btnHours" value="Hours" update="@form" />
+        </h:form>
+        <br/>
+        <h:form id="form2">
             <!-- #6458 showSeconds="true" automatically detected because of pattern contains 's' -->
             <!-- #6459 showTime="true" automatically detected because of LocalDateTime -->
             <p:datePicker id="dpSeconds" value="#{datePicker004.localDateTimeSeconds}" pattern="MM/dd/yyyy HH:mm:ss"/>
-
-            <p:commandButton id="button" value="Submit" update="@form"/>
+            <p:commandButton id="btnSeconds" value="Seconds" update="@form"/>
         </h:form>
 
     </h:body>
