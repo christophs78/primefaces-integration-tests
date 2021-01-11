@@ -16,6 +16,7 @@
 package org.primefaces.extensions.integrationtests.datepicker;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
@@ -26,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -40,7 +40,6 @@ public class DatePicker004Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: date with time HH:mm:ss. See GitHub #6458 and #6459")
     public void testDateAndTimeWithSeconds(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DatePicker datePicker = page.datePickerSeconds;
         Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
         LocalDateTime value = LocalDateTime.of(1978, 2, 19, 11, 55, 19);
@@ -64,23 +63,69 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         datePicker.hidePanel();
 
         // Assert Submit Value
-        TestUtils.pause(1000);
-        page.submitSeconds.click();
-        LocalDateTime newValue = datePicker.getValue();
-        Assertions.assertEquals(value, newValue);
-        // #6459 showTime="true" automatically detected because of LocalDateTime
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+        // Assert Submit Value
+        if (PrimeSelenium.isSafari()) {
+            // TODO: Safari gives unexplained NPE on page.submitHours.click();
+            assertNoJavascriptErrors();
+        }
+        else {
+            page.submitSeconds.click();
+            LocalDateTime newValue = datePicker.getValue();
+            Assertions.assertEquals(value, newValue);
+            // #6459 showTime="true" automatically detected because of LocalDateTime
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+        }
     }
 
     @Test
     @Order(2)
-    @DisplayName("DatePicker: date with time HH:mm")
-    public void testDateAndTimeWithHours(Page page) {
+    @DisplayName("DatePicker: date with time HH:mm:ss using widget setDate() API.")
+    public void testSetDateWidgetApi(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePickerSeconds;
+        Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
+        LocalDateTime value = LocalDateTime.of(1978, 2, 19, 11, 55, 19);
+        long millis = value.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        System.out.println(millis);
+
+        // Act
+        datePicker.setDate(millis);
+        datePicker.showPanel(); // focus to bring up panel
+
+        // Assert Panel
+        WebElement panel = datePicker.getPanel();
+        Assertions.assertNotNull(panel);
+        String text = panel.getText();
+        Assertions.assertTrue(text.contains("1978"));
+        Assertions.assertTrue(text.contains("February"));
+
+        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
+        Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
+        Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
+        // #6458 showSeconds="true" automatically detected because of pattern contains 's'
+        Assertions.assertEquals("19", timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText());
+        datePicker.hidePanel();
+
+        // Assert Submit Value
         if (PrimeSelenium.isSafari()) {
             // TODO: Safari gives unexplained NPE on page.submitHours.click();
-            return;
+            assertNoJavascriptErrors();
         }
+        else {
+            page.submitSeconds.click();
+            LocalDateTime newValue = datePicker.getValue();
+            Assertions.assertEquals(value, newValue);
+            // #6459 showTime="true" automatically detected because of LocalDateTime
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+        }
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("DatePicker: date with time HH:mm")
+    public void testDateAndTimeWithHours(Page page) {
         // Arrange
         DatePicker datePicker = page.datePickerHours;
         Assertions.assertEquals(LocalDateTime.of(2020, 10, 31, 13, 13), datePicker.getValue());
@@ -102,13 +147,18 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
         datePicker.hidePanel();
 
-        // Assert Submit Value
-        TestUtils.pause(1000);
-        page.submitHours.click();
-        LocalDateTime newValue = datePicker.getValue();
-        Assertions.assertEquals(value, newValue);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+        if (PrimeSelenium.isSafari()) {
+            // TODO: Safari gives unexplained NPE on page.submitHours.click();
+            assertNoJavascriptErrors();
+        }
+        else {
+            // Assert Submit Value
+            page.submitHours.click();
+            LocalDateTime newValue = datePicker.getValue();
+            Assertions.assertEquals(value, newValue);
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+        }
     }
 
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
