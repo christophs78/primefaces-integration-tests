@@ -16,12 +16,18 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class DataTable006Test extends AbstractDataTableTest {
 
@@ -38,8 +44,8 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,3");
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
     }
 
@@ -57,8 +63,8 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,3");
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
     }
 
@@ -74,17 +80,17 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,2,3", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, true);
+        assertSelections(page.messages, "1,2,3");
 
         // Act - unselect one row
         dataTable.getCell(1, 0).getWebElement().click();
         page.submit.click();
 
         // Assert
+        assertSelectAllCheckbox(dataTable, false);
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3", page.messages.getMessage(0).getDetail());
+        assertSelections(page.messages, "1,3");
     }
 
     @Test
@@ -100,22 +106,46 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,2,3", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, true);
+        assertSelections(page.messages, "1,2,3");
 
         // Act - unselect one row
         dataTable.getCell(1, 0).getWebElement().click();
         page.submit.click();
 
         // Assert
+        assertSelectAllCheckbox(dataTable, false);
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3", page.messages.getMessage(0).getDetail());
+        assertSelections(page.messages, "1,3");
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("DataTable: selection - unselect all for page with selectionPageOnly='true'")
+    public void testUnselectAllPageOnly(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+
+        // Act - select all
+        dataTable.toggleSelectAllCheckBox();
+        page.submit.click();
+
+        // Assert
+        assertSelectAllCheckbox(dataTable, true);
+        assertSelections(page.messages, "1,2,3");
+
+        // Act - unselect all
+        dataTable.toggleSelectAllCheckBox();
+        page.submit.click();
+
+        // Assert
+        assertSelections(page.messages, "");
+        assertSelectAllCheckbox(dataTable, false);
+        assertConfiguration(dataTable.getWidgetConfiguration(), true);
     }
 
     @Test
     @Order(5)
-    @Disabled //TODO: GitHub #6730 fixed
     @DisplayName("DataTable: GitHub #6730 selection - select all rows with selectionPageOnly='false'")
     public void testSelectAllRows(Page page) {
         // Arrange
@@ -127,16 +157,16 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,2,3,4,5", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,2,3,4,5");
 
         // Act - unselect one row
         dataTable.getCell(1, 0).getWebElement().click();
         page.submit.click();
 
         // Assert - only 1 record unselected
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3,4,5", page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,3,4,5");
 
         // Act - reselect all record, unselect one and move to next page
         dataTable.toggleSelectAllCheckBox();
@@ -145,15 +175,12 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert - only 1 record unselected should leave first page selections only
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("2,3", page.messages.getMessage(0).getDetail());
-
+        assertSelections(page.messages, "2,3");
         assertConfiguration(dataTable.getWidgetConfiguration(), false);
     }
 
     @Test
     @Order(6)
-    @Disabled //TODO: GitHub #6730 fixed
     @DisplayName("DataTable: GitHub #6730 selection - Lazy select all rows with selectionPageOnly='false'")
     public void testLazySelectAllRows(Page page) {
         // Arrange
@@ -166,20 +193,17 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals(
-                    "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3",
-                    page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages,
+                    "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3");
 
         // Act - unselect one row
         dataTable.getCell(1, 0).getWebElement().click();
         page.submit.click();
 
         // Assert - only 1 record unselected
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals(
-                    "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3",
-                    page.messages.getMessage(0).getDetail());
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3");
 
         // Act - reselect all record, unselect one and move to next page
         dataTable.toggleSelectAllCheckBox();
@@ -188,9 +212,7 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert - only 1 record unselected should leave first page selections only
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("2,3", page.messages.getMessage(0).getDetail());
-
+        assertSelections(page.messages, "2,3");
         assertConfiguration(dataTable.getWidgetConfiguration(), false);
     }
 
@@ -198,7 +220,19 @@ public class DataTable006Test extends AbstractDataTableTest {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
         Assertions.assertEquals("checkbox", cfg.get("selectionMode"));
-        //TODO: Assertions.assertEquals(selectionPageOnly, cfg.getBoolean("selectionPageOnly"));
+        Assertions.assertEquals(selectionPageOnly, cfg.getBoolean("selectionPageOnly"));
+    }
+
+    private void assertSelectAllCheckbox(DataTable datatable, boolean checked) {
+        WebElement selectAllCheckBox = datatable.getSelectAllCheckBox();
+        WebElement icon = selectAllCheckBox.findElement(By.className("ui-chkbox-icon"));
+        assertCss(icon, checked ? "ui-icon-check" : "ui-icon-blank");
+    }
+
+    private void assertSelections(Messages messages, String selections) {
+        Msg message = messages.getMessage(0);
+        Assertions.assertTrue(message.getSummary().contains("Selected ProgrammingLanguage(s)"));
+        Assertions.assertEquals(selections, message.getDetail());
     }
 
     public static class Page extends AbstractPrimePage {
