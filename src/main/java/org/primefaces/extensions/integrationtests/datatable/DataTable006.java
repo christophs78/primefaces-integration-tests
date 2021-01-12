@@ -13,6 +13,7 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +51,7 @@ public class DataTable006 implements Serializable {
     public void submit() {
         if (selectedProgLanguages != null) {
             FacesMessage msg = new FacesMessage("Selected ProgrammingLanguage(s)", selectedProgLanguages.stream()
-                        .sorted((l1, l2) -> l1.getId().compareTo(l2.getId()))
+                        .sorted(Comparator.comparing(ProgrammingLanguage::getId))
                         .map(lang -> ((Integer) lang.getId()).toString())
                         .collect(Collectors.joining(",")));
             FacesContext.getCurrentInstance().addMessage(null, msg);
