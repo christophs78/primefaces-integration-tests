@@ -64,8 +64,8 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
     }
 
     @Override
-    public Object getRowKey(ProgrammingLanguage object) {
-        return object.getId();
+    public String getRowKey(ProgrammingLanguage object) {
+        return object.getId().toString();
     }
 
     public List<ProgrammingLanguage> getLangs() {

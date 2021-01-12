@@ -16,7 +16,6 @@
 package org.primefaces.extensions.integrationtests.datepicker;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
@@ -86,11 +85,9 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         DatePicker datePicker = page.datePickerSeconds;
         Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
         LocalDateTime value = LocalDateTime.of(1978, 2, 19, 11, 55, 19);
-        long millis = value.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        System.out.println(millis);
 
         // Act
-        datePicker.setDate(millis);
+        datePicker.setDate(value);
         datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
