@@ -16,7 +16,10 @@
 package org.primefaces.extensions.integrationtests.tristatecheckbox;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -62,10 +65,6 @@ public class TriStateCheckbox001Test extends AbstractPrimePageTest {
         // Arrange
         TriStateCheckbox triStateCheckbox = page.triStateCheckbox;
         triStateCheckbox.setValue("1");
-
-        // Act
-
-        // Assert
         Assertions.assertEquals("1", triStateCheckbox.getValue());
         assertConfiguration(triStateCheckbox.getWidgetConfiguration());
 
