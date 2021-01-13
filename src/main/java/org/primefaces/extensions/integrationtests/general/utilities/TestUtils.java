@@ -1,7 +1,8 @@
-package org.primefaces.extensions.integrationtests.utilities;
+package org.primefaces.extensions.integrationtests.general.utilities;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.extensions.selenium.PrimeSelenium;
 
 import lombok.experimental.UtilityClass;
