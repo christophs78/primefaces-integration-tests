@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.utilities.TestUtils;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -112,8 +112,8 @@ public class DatePicker001Test extends AbstractPrimePageTest {
         datePicker.click(); // focus to bring up panel
 
         //Assert panel
-        String currentDayOfMonth = ((Integer)LocalDate.now().getDayOfMonth()).toString();
-        String selectedDayOfMonth = ((Integer)selectedDate.getDayOfMonth()).toString();
+        String currentDayOfMonth = ((Integer) LocalDate.now().getDayOfMonth()).toString();
+        String selectedDayOfMonth = ((Integer) selectedDate.getDayOfMonth()).toString();
         Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(selectedDayOfMonth)), "ui-state-active"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
     }

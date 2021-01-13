@@ -24,7 +24,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
-import org.primefaces.extensions.integrationtests.utilities.TestUtils;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 
 import lombok.Data;
 

@@ -20,7 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.primefaces.extensions.integrationtests.utilities.TestUtils;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 
 import lombok.Data;
 
