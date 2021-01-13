@@ -19,38 +19,3 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.primefaces.extensions.integrationtests.chips;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
-import javax.inject.Named;
-
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
-
-import lombok.Data;
-
-@Named
-@ViewScoped
-@Data
-public class Chips004 implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    private String clipboard;
-    private List<String> values;
-
-    @PostConstruct
-    public void init() {
-        values = new ArrayList<>();
-        clipboard = "apple;orange;banana";
-    }
-
-    public void submit() {
-        TestUtils.addMessage(TestUtils.join(values));
-    }
-
-}
