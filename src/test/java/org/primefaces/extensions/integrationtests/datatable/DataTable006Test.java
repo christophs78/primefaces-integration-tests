@@ -203,7 +203,7 @@ public class DataTable006Test extends AbstractDataTableTest {
 
         // Assert - only 1 record unselected
         assertSelectAllCheckbox(dataTable, false);
-        assertSelections(page.messages, "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3");
+        assertSelections(page.messages, "1,3");
 
         // Act - reselect all record, unselect one and move to next page
         dataTable.toggleSelectAllCheckBox();
