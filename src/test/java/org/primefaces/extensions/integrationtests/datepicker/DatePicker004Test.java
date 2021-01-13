@@ -23,6 +23,8 @@ package org.primefaces.extensions.integrationtests.datepicker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Objects;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -55,19 +57,10 @@ public class DatePicker004Test extends AbstractPrimePageTest {
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
-        Assertions.assertNotNull(panel);
-        String text = panel.getText();
-        Assertions.assertTrue(text.contains("1978"));
-        Assertions.assertTrue(text.contains("February"));
-
-        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
-        Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
-        Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
-        // #6458 showSeconds="true" automatically detected because of pattern contains 's'
-        Assertions.assertEquals("19", timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText());
+        assertDate(panel, "February", "1978");
+        assertTime(panel, "11", "55", "19");
         datePicker.hidePanel();
 
-        // Assert Submit Value
         // Assert Submit Value
         if (PrimeSelenium.isSafari()) {
             // TODO: Safari gives unexplained NPE on page.submitHours.click();
@@ -98,16 +91,8 @@ public class DatePicker004Test extends AbstractPrimePageTest {
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
-        Assertions.assertNotNull(panel);
-        String text = panel.getText();
-        Assertions.assertTrue(text.contains("1978"));
-        Assertions.assertTrue(text.contains("February"));
-
-        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
-        Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
-        Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
-        // #6458 showSeconds="true" automatically detected because of pattern contains 's'
-        Assertions.assertEquals("19", timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText());
+        assertDate(panel, "February", "1978");
+        assertTime(panel, "11", "55", "19");
         datePicker.hidePanel();
 
         // Assert Submit Value
@@ -140,14 +125,8 @@ public class DatePicker004Test extends AbstractPrimePageTest {
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
-        Assertions.assertNotNull(panel);
-        String text = panel.getText();
-        Assertions.assertTrue(text.contains("1978"));
-        Assertions.assertTrue(text.contains("February"));
-
-        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
-        Assertions.assertEquals("11", timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText());
-        Assertions.assertEquals("55", timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText());
+        assertDate(panel, "February", "1978");
+        assertTime(panel, "11", "55", null);
         datePicker.hidePanel();
 
         if (PrimeSelenium.isSafari()) {
@@ -164,6 +143,62 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         }
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("DatePicker: GitHub #6810 showButtonBar='true' Clear button must clear everything.")
+    public void testClearButton(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePickerSeconds;
+        Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
+
+        // Act
+        datePicker.showPanel();
+
+        // Assert Panel
+        WebElement panel = datePicker.getPanel();
+        assertDate(panel, "August", "2020");
+        assertTime(panel, "22", "20", "19");
+        datePicker.hidePanel();
+
+        // Act - click Clear button
+        datePicker.showPanel();
+        datePicker.getClearButton().click();
+
+        // Assert - clear button reset to NOW
+        LocalDateTime now = LocalDateTime.now();
+        assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
+        assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
+        Assertions.assertNull(datePicker.getValue());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("DatePicker: GitHub #6810 showButtonBar='true' Today button must set to now.")
+    public void testTodayButton(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePickerSeconds;
+        Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
+
+        // Act
+        datePicker.showPanel();
+
+        // Assert Panel
+        WebElement panel = datePicker.getPanel();
+        assertDate(panel, "August", "2020");
+        assertTime(panel, "22", "20", "19");
+        datePicker.hidePanel();
+
+        // Act - click Today button
+        datePicker.showPanel();
+        datePicker.getTodayButton().click();
+
+        // Assert - clear button reset to NOW
+        LocalDateTime now = LocalDateTime.now();
+        assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
+        assertTime(panel, "22", "20", "19");
+        Assertions.assertNotNull(datePicker.getValue());
+    }
+
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
         assertNoJavascriptErrors();
         System.out.println("DatePicker Config = " + cfg);
@@ -172,6 +207,28 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         Assertions.assertEquals("single", cfg.getString("selectionMode"));
         Assertions.assertTrue(cfg.getBoolean("showTime"));
         Assertions.assertFalse(cfg.getBoolean("inline"));
+    }
+
+    private void assertDate(WebElement panel, String month, String year) {
+        Assertions.assertNotNull(panel);
+        String text = panel.getText();
+        Assertions.assertTrue(text.contains(year));
+        Assertions.assertTrue(text.toUpperCase(Locale.ROOT).contains(month.toUpperCase(Locale.ROOT)));
+    }
+
+    private void assertTime(WebElement panel, String hours, String minutes, String seconds) {
+        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
+        if (hours != null) {
+            Assertions.assertEquals(Integer.parseInt(hours), Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText()));
+        }
+        if (minutes != null) {
+            Assertions.assertEquals(Integer.parseInt(minutes),
+                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText()));
+        }
+        if (seconds != null) {
+            Assertions.assertEquals(Integer.parseInt(seconds),
+                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText()));
+        }
     }
 
     public static class Page extends AbstractPrimePage {

@@ -13,14 +13,20 @@
 
         <h:form id="form1">
             <!-- Utilizes only Hours and Minutes -->
-            <p:datePicker id="dpHours" value="#{datePicker004.localDateTimeHours}" pattern="MM/dd/yyyy"/>
-            <p:commandButton id="btnHours" value="Hours" update="@form" />
+            <p:datePicker id="dpHours"
+                          value="#{datePicker004.localDateTimeHours}"
+                          pattern="MM/dd/yyyy"/>
+            <p:commandButton id="btnHours" value="Hours" update="@form"/>
         </h:form>
         <br/>
         <h:form id="form2">
             <!-- #6458 showSeconds="true" automatically detected because of pattern contains 's' -->
             <!-- #6459 showTime="true" automatically detected because of LocalDateTime -->
-            <p:datePicker id="dpSeconds" value="#{datePicker004.localDateTimeSeconds}" pattern="MM/dd/yyyy HH:mm:ss"/>
+            <!-- #6810 showButtonBar="true" Clear button not clearing time -->
+            <p:datePicker id="dpSeconds"
+                          value="#{datePicker004.localDateTimeSeconds}"
+                          pattern="MM/dd/yyyy HH:mm:ss"
+                          showButtonBar="true"/>
             <p:commandButton id="btnSeconds" value="Seconds" update="@form"/>
         </h:form>
 
