@@ -36,6 +36,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
@@ -165,6 +166,8 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         datePicker.getClearButton().click();
 
         // Assert - clear button reset to NOW
+        panel = datePicker.getPanel();
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(panel));
         LocalDateTime now = LocalDateTime.now();
         assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
         assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
@@ -212,7 +215,7 @@ public class DatePicker004Test extends AbstractPrimePageTest {
     private void assertDate(WebElement panel, String month, String year) {
         Assertions.assertNotNull(panel);
         String text = panel.getText();
-        Assertions.assertTrue(text.contains(year));
+        Assertions.assertTrue(text.contains(year), "Year " + year + " expected but DatePicker panel contained:" + text);
         Assertions.assertTrue(text.toUpperCase(Locale.ROOT).contains(month.toUpperCase(Locale.ROOT)));
     }
 
