@@ -33,7 +33,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.DataTable;
 
@@ -71,10 +73,11 @@ public class DataTable012Test extends AbstractDataTableTest {
     @Order(2)
     @DisplayName("DataTable: single sort; field on p:column; initial sort via sortBy on dataTable")
     public void testFieldWithDefault(Page page) {
-
+        TestUtils.pause(1000);
         // Arrange
         DataTable dataTable = page.dataTable2;
         Assertions.assertNotNull(dataTable);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
 
         // Act
 
