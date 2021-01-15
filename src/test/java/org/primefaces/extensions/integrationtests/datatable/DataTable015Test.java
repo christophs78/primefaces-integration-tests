@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
@@ -47,6 +48,7 @@ public class DataTable015Test extends AbstractDataTableTest {
         PrimeSelenium.goTo(page);
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
 
         // Act
         dataTable.selectPage(1);
@@ -64,6 +66,7 @@ public class DataTable015Test extends AbstractDataTableTest {
         // Act
         PrimeSelenium.goTo(otherPage);
         PrimeSelenium.goTo(page);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
 
         // Assert - sort and filter must not be lost after navigating to another page and back
         assertRows(dataTable, langsFiltered);
@@ -80,6 +83,7 @@ public class DataTable015Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(page.buttonClearTableState).click();
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
 
         // Act
         dataTable.selectPage(2);
@@ -87,6 +91,7 @@ public class DataTable015Test extends AbstractDataTableTest {
         PrimeSelenium.goTo(page);
 
         // Assert - page must not be lost after navigating to another page and back
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
         Assertions.assertEquals(2, dataTable.getPaginator().getActivePage().getNumber());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
