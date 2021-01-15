@@ -40,6 +40,11 @@ public class CoreAjax001Test extends AbstractPrimePageTest {
     @Order(1)
     @DisplayName("Core-AJAX: keep vertical scroll-position after ajax-update - https://github.com/primefaces/primefaces/issues/6700")
     public void testAjaxScrollPosition(Page page) {
+        if (PrimeSelenium.isSafari()) {
+            System.out.println(
+                        "Test disabled on Safari until Safari fixes the bug: https://github.com/primefaces-extensions/primefaces-integration-tests/issues/100");
+            return;
+        }
         // Arrange
         Long scrollTop = PrimeSelenium.executeScript("return $(document).scrollTop();");
         Assertions.assertEquals(0, scrollTop);
