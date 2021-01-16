@@ -29,13 +29,11 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 
-public class DatePicker002Test extends AbstractPrimePageTest {
+public class DatePicker002Test extends AbstractDatePickerTest {
 
     @Test
     @Order(1)
@@ -69,7 +67,6 @@ public class DatePicker002Test extends AbstractPrimePageTest {
     @Order(2)
     public void testWithShowOtherMonths(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker2;
 
         // Act

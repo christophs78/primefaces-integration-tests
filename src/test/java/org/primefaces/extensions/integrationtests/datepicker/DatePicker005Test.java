@@ -29,15 +29,13 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 import org.primefaces.extensions.selenium.component.Messages;
 
-public class DatePicker005Test extends AbstractPrimePageTest {
+public class DatePicker005Test extends AbstractDatePickerTest {
 
     @Test
     @Order(1)
@@ -69,7 +67,6 @@ public class DatePicker005Test extends AbstractPrimePageTest {
     @DisplayName("DatePicker: select range")
     public void testSelectRange(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
 
         // Act

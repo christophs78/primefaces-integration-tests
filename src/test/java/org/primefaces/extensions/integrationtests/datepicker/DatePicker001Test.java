@@ -32,14 +32,12 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 
-public class DatePicker001Test extends AbstractPrimePageTest {
+public class DatePicker001Test extends AbstractDatePickerTest {
 
     @Test
     @Order(1)
@@ -56,11 +54,7 @@ public class DatePicker001Test extends AbstractPrimePageTest {
 
         // Assert Panel
         WebElement panel = datePicker.getPanel();
-        Assertions.assertNotNull(panel);
-        String text = panel.getText();
-        System.out.println(text);
-        Assertions.assertTrue(text.contains("1978"));
-        Assertions.assertTrue(text.contains("February"));
+        assertDate(panel, "February", "1978");
 
         // Assert Submit Value
         page.button.click();
@@ -72,19 +66,17 @@ public class DatePicker001Test extends AbstractPrimePageTest {
 
     @Test
     @Order(2)
-    @DisplayName("DatePicker: select date via click on day")
-    public void testSelectDate(Page page) {
+    @DisplayName("DatePicker: select date via click on day in the next month")
+    public void testSelectDateNextMonth(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
 
         // Act
         datePicker.setValue(value);
         datePicker.showPanel(); // focus to bring up panel
-        WebElement panel = datePicker.getPanel();
-        panel.findElement(By.className("ui-datepicker-next")).click();
-        panel.findElement(By.linkText("25")).click();
+        datePicker.getNextMonthLink().click();
+        datePicker.selectDay("25");
 
         // Assert selected value
         LocalDate expectedDate = LocalDate.of(1978, 3, 25);
@@ -100,10 +92,35 @@ public class DatePicker001Test extends AbstractPrimePageTest {
 
     @Test
     @Order(3)
+    @DisplayName("DatePicker: select date via click on day in the previous month")
+    public void testSelectDatePreviousMonth(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        LocalDate value = LocalDate.of(1978, 2, 19);
+
+        // Act
+        datePicker.setValue(value);
+        datePicker.showPanel(); // focus to bring up panel
+        datePicker.getPreviousMonthLink().click();
+        datePicker.selectDay("8");
+
+        // Assert selected value
+        LocalDate expectedDate = LocalDate.of(1978, 1, 8);
+        Assertions.assertEquals(expectedDate, datePicker.getValueAsLocalDate());
+
+        // Assert Submit Value
+        page.button.click();
+        LocalDate newValue = datePicker.getValueAsLocalDate();
+        Assertions.assertEquals(expectedDate, newValue);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
+    }
+
+    @Test
+    @Order(4)
     @DisplayName("DatePicker: highlight today and selected")
     public void testHighlight(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DatePicker datePicker = page.datePicker;
 
         // Act

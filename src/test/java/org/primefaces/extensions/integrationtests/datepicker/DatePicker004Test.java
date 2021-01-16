@@ -23,7 +23,6 @@ package org.primefaces.extensions.integrationtests.datepicker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Objects;
 
 import org.json.JSONObject;
@@ -31,17 +30,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 
-public class DatePicker004Test extends AbstractPrimePageTest {
+public class DatePicker004Test extends AbstractDatePickerTest {
 
     @Test
     @Order(1)
@@ -193,27 +190,7 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         Assertions.assertFalse(cfg.getBoolean("inline"));
     }
 
-    private void assertDate(WebElement panel, String month, String year) {
-        Assertions.assertNotNull(panel);
-        String text = panel.getText();
-        Assertions.assertTrue(text.contains(year), "Year " + year + " expected but DatePicker panel contained:" + text);
-        Assertions.assertTrue(text.toUpperCase(Locale.ROOT).contains(month.toUpperCase(Locale.ROOT)));
-    }
 
-    private void assertTime(WebElement panel, String hours, String minutes, String seconds) {
-        WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
-        if (hours != null) {
-            Assertions.assertEquals(Integer.parseInt(hours), Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText()));
-        }
-        if (minutes != null) {
-            Assertions.assertEquals(Integer.parseInt(minutes),
-                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText()));
-        }
-        if (seconds != null) {
-            Assertions.assertEquals(Integer.parseInt(seconds),
-                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText()));
-        }
-    }
 
     public static class Page extends AbstractPrimePage {
 

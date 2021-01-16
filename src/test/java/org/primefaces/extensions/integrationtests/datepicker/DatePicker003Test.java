@@ -29,11 +29,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 
-public class DatePicker003Test extends AbstractPrimePageTest {
+public class DatePicker003Test extends AbstractDatePickerTest {
 
     @Test
     @DisplayName("DatePicker: minDate and maxDate; days outside range should be disabled")

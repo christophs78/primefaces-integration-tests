@@ -30,12 +30,11 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
 import org.primefaces.extensions.selenium.component.Messages;
 
-public class DatePicker006Test extends AbstractPrimePageTest {
+public class DatePicker006Test extends AbstractDatePickerTest {
 
     @Test
     @Order(1)
