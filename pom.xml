@@ -110,7 +110,7 @@
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-selenium-core</artifactId>
             <version>${primefaces-selenium.version}</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
