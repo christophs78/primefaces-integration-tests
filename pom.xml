@@ -14,18 +14,18 @@
     </description>
 
     <properties>
-        <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEEFirefoxAdapterImpl</primefaces-selenium.adapter>
+        <primefaces-selenium.adapter>org.primefaces.extensions.integrationtests.PrimeFacesSeleniumTomEESafariAdapterImpl</primefaces-selenium.adapter>
         <webdriver.headless>false</webdriver.headless>
         <primefaces.CSP>false</primefaces.CSP>
         <primefaces.THEME>saga</primefaces.THEME>
-        <junit.jupiter.execution.parallel.enabled>true</junit.jupiter.execution.parallel.enabled>
+        <junit.jupiter.execution.parallel.enabled>false</junit.jupiter.execution.parallel.enabled>
         <!-- build configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <main.basedir>${project.basedir}</main.basedir>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- dependency versions -->
-        <primefaces.version>10.0-SNAPSHOT</primefaces.version>
+        <primefaces.version>10.0.0-SNAPSHOT</primefaces.version>
         <primefaces-selenium.version>10.0.0-SNAPSHOT</primefaces-selenium.version>
         <hibernate-validator.version>6.1.7.Final</hibernate-validator.version>
         <lombok.version>1.18.16</lombok.version>
