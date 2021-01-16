@@ -24,23 +24,10 @@ package org.primefaces.extensions.integrationtests.general.utilities;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.extensions.selenium.PrimeSelenium;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class TestUtils {
-
-    /**
-     * Hack for Safari that for some reason we need to wait between tests for the driver to reset?
-     *
-     * @param milliseconds number of millis to pause
-     */
-    public static void pause(int milliseconds) {
-        if (PrimeSelenium.isSafari()) {
-            wait(milliseconds);
-        }
-    }
 
     public static void wait(int milliseconds) {
         try {

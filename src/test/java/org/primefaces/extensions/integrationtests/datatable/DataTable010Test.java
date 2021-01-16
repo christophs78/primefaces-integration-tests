@@ -31,7 +31,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -48,7 +47,6 @@ public class DataTable010Test extends AbstractDataTableTest {
     @DisplayName("DataTable: selection - multiple with paging")
     public void testSelectionMultipleWithPaging(Page page) {
         // Arrange
-        TestUtils.pause(1000);
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
         Actions actions = new Actions(page.getWebDriver());
