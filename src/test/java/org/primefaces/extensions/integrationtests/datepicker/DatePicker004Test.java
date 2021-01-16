@@ -63,18 +63,12 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         datePicker.hidePanel();
 
         // Assert Submit Value
-        if (PrimeSelenium.isSafari()) {
-            // TODO: Safari gives unexplained NPE on page.submitHours.click();
-            assertNoJavascriptErrors();
-        }
-        else {
-            page.submitSeconds.click();
-            LocalDateTime newValue = datePicker.getValue();
-            Assertions.assertEquals(value, newValue);
-            // #6459 showTime="true" automatically detected because of LocalDateTime
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
-        }
+        page.submitSeconds.click();
+        LocalDateTime newValue = datePicker.getValue();
+        Assertions.assertEquals(value, newValue);
+        // #6459 showTime="true" automatically detected because of LocalDateTime
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
 
     @Test
@@ -97,18 +91,12 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         datePicker.hidePanel();
 
         // Assert Submit Value
-        if (PrimeSelenium.isSafari()) {
-            // TODO: Safari gives unexplained NPE on page.submitHours.click();
-            assertNoJavascriptErrors();
-        }
-        else {
-            page.submitSeconds.click();
-            LocalDateTime newValue = datePicker.getValue();
-            Assertions.assertEquals(value, newValue);
-            // #6459 showTime="true" automatically detected because of LocalDateTime
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
-            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
-        }
+        page.submitSeconds.click();
+        LocalDateTime newValue = datePicker.getValue();
+        Assertions.assertEquals(value, newValue);
+        // #6459 showTime="true" automatically detected because of LocalDateTime
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
+        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
 
     @Test
@@ -130,18 +118,12 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         assertTime(panel, "11", "55", null);
         datePicker.hidePanel();
 
-        if (PrimeSelenium.isSafari()) {
-            // TODO: Safari gives unexplained NPE on page.submitHours.click();
-            assertNoJavascriptErrors();
-        }
-        else {
-            // Assert Submit Value
-            page.submitHours.click();
-            LocalDateTime newValue = datePicker.getValue();
-            Assertions.assertEquals(value, newValue);
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-            assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
-        }
+        // Assert Submit Value
+        page.submitHours.click();
+        LocalDateTime newValue = datePicker.getValue();
+        Assertions.assertEquals(value, newValue);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        assertConfiguration(datePicker.getWidgetConfiguration(), newValue.format(dateTimeFormatter));
     }
 
     @Test
@@ -166,15 +148,11 @@ public class DatePicker004Test extends AbstractPrimePageTest {
         datePicker.getClearButton().click();
 
         // Assert - clear button reset to NOW
-        if (!PrimeSelenium.isMacOs()) {
-            //TODO: Figure out why this is not working on MacOS?
-            panel = datePicker.getPanel();
-            PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(panel));
-            LocalDateTime now = LocalDateTime.now();
-            assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
-            assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
-            Assertions.assertNull(datePicker.getValue());
-        }
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(panel));
+        LocalDateTime now = LocalDateTime.now();
+        assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
+        assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
+        Assertions.assertNull(datePicker.getValue());
     }
 
     @Test
