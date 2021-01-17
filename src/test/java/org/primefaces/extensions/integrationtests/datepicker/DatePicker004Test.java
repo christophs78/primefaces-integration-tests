@@ -142,11 +142,11 @@ public class DatePicker004Test extends AbstractDatePickerTest {
 
         // Act - click Clear button
         datePicker.showPanel();
+        LocalDateTime now = LocalDateTime.now();
         datePicker.getClearButton().click();
 
         // Assert - clear button reset to NOW
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(panel));
-        LocalDateTime now = LocalDateTime.now();
         assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
         assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
         Assertions.assertNull(datePicker.getValue());
