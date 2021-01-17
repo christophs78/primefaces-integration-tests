@@ -74,7 +74,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
         datePicker.hidePanel();
 
         // Assert
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.invisibleAndAnimationComplete(datePicker.getPanel()));
+        Assertions.assertFalse(datePicker.getPanel().isDisplayed());
         assertConfiguration(datePicker.getWidgetConfiguration());
     }
 
