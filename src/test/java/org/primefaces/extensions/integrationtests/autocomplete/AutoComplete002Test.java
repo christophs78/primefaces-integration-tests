@@ -66,7 +66,9 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
         Assertions.assertEquals("Driver No. 41", itemValues.get(13));
 
         // Act
-        autoComplete.setValue("15");
+        autoComplete.setValueWithoutTab("15");
+        autoComplete.wait4Panel();
+        autoComplete.getInput().sendKeys(new CharSequence[]{Keys.TAB});
         page.button.click();
 
         // Assert - Part 2
