@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -53,8 +52,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
         datePicker.showPanel();
 
         // Assert
-        WebElement panel = datePicker.getPanel();
-        assertDate(panel, "July", "1985");
+        assertDate(datePicker.getPanel(), "July", "1985");
         LocalDate newValue = datePicker.getValueAsLocalDate();
         Assertions.assertEquals(value, newValue);
         assertMessage(page, "1985-07-04");
@@ -63,6 +61,25 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
     @Test
     @Order(2)
+    @DisplayName("DatePicker: AJAX close popup")
+    public void testAjaxClosePopup(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        Assertions.assertEquals(LocalDate.now(), datePicker.getValue().toLocalDate());
+        LocalDate value = LocalDate.of(1985, 7, 4);
+
+        // Act
+        datePicker.setValue(value);
+        datePicker.showPanel();
+        datePicker.hidePanel();
+
+        // Assert
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.invisibleAndAnimationComplete(datePicker.getPanel()));
+        assertConfiguration(datePicker.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
     @DisplayName("DatePicker: AJAX select date via click on day in the next month")
     public void testAjaxSelectDateNextMonth(Page page) {
         // Arrange
@@ -85,7 +102,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @DisplayName("DatePicker: AJAX select date via click on day in the previous month")
     public void testAjaxSelectDatePreviousMonth(Page page) {
         // Arrange
@@ -108,7 +125,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("DatePicker: AJAX date using widget setDate() API.")
     public void testAjaxSetDateWidgetApi(Page page) {
         // Arrange
@@ -121,8 +138,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
         datePicker.showPanel();
 
         // Assert
-        WebElement panel = datePicker.getPanel();
-        assertDate(panel, "July", "1985");
+        assertDate(datePicker.getPanel(), "July", "1985");
         LocalDate newValue = datePicker.getValueAsLocalDate();
         Assertions.assertEquals(value, newValue);
         assertMessage(page, "1985-07-04");

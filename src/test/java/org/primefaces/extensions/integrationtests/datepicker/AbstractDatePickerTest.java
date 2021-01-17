@@ -21,18 +21,20 @@
  */
 package org.primefaces.extensions.integrationtests.datepicker;
 
-import org.apache.openejb.jee.Web;
+import java.util.Locale;
+
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-
-import java.util.Locale;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 
 public class AbstractDatePickerTest extends AbstractPrimePageTest {
 
     protected void assertDate(WebElement panel, String month, String year) {
         Assertions.assertNotNull(panel);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleInViewport(panel));
         WebElement title = panel.findElement(By.className("ui-datepicker-title"));
         WebElement monthElement = title.findElement(By.className("ui-datepicker-month"));
         WebElement yearElement = title.findElement(By.className("ui-datepicker-year"));
@@ -41,17 +43,19 @@ public class AbstractDatePickerTest extends AbstractPrimePageTest {
     }
 
     protected void assertTime(WebElement panel, String hours, String minutes, String seconds) {
+        Assertions.assertNotNull(panel);
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleInViewport(panel));
         WebElement timePicker = panel.findElement(By.className("ui-timepicker"));
         if (hours != null) {
             Assertions.assertEquals(Integer.parseInt(hours), Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-hour-picker > span")).getText()));
         }
         if (minutes != null) {
             Assertions.assertEquals(Integer.parseInt(minutes),
-                    Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText()));
+                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-minute-picker > span")).getText()));
         }
         if (seconds != null) {
             Assertions.assertEquals(Integer.parseInt(seconds),
-                    Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText()));
+                        Integer.parseInt(timePicker.findElement(By.cssSelector("div.ui-second-picker > span")).getText()));
         }
     }
 }
