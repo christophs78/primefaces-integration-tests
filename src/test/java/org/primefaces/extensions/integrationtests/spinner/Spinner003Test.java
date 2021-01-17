@@ -73,6 +73,59 @@ public class Spinner003Test extends AbstractPrimePageTest {
         assertConfiguration(spinner.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(3)
+    @DisplayName("Spinner: AJAX setting value with widget method")
+    public void testAjaxSetValue(Page page) {
+        // Arrange
+        Spinner spinner = page.spinner;
+        Assertions.assertEquals("0", spinner.getValue());
+
+        // Act
+        spinner.setValue("4");
+        spinner.change();
+
+        // Assert
+        Assertions.assertEquals("4", spinner.getValue());
+        assertConfiguration(spinner.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Spinner: AJAX Test integer increment by 1")
+    public void testAjaxSpinUp(Page page) {
+        // Arrange
+        Spinner spinner = page.spinner;
+        Assertions.assertEquals("0", spinner.getValue());
+
+        // Act
+        spinner.increment();
+        spinner.change();
+
+        // Assert
+        Assertions.assertEquals("1", spinner.getValue());
+        assertConfiguration(spinner.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Spinner: AJAX Test integer decrement by 2")
+    public void testSpinAjaxDown(Page page) {
+        // Arrange
+        Spinner spinner = page.spinner;
+        Assertions.assertEquals("0", spinner.getValue());
+
+        // Act
+        spinner.setValue("6");
+        spinner.decrement();
+        spinner.decrement();
+        spinner.change();
+
+        // Assert
+        Assertions.assertEquals("2", spinner.getValue());
+        assertConfiguration(spinner.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("Spinner Config = " + cfg);

@@ -65,7 +65,37 @@ public class TriStateCheckbox001Test extends AbstractPrimePageTest {
     }
 
     @Test
-    @Order(2)
+    @Order(1)
+    @DisplayName("TriStateCheckbox: widget toggle through all states")
+    public void testWidgetToggle(Page page) {
+        // Arrange / Assert
+        TriStateCheckbox triStateCheckbox = page.triStateCheckbox;
+        Assertions.assertEquals("0", triStateCheckbox.getValue());
+
+        // Act
+        triStateCheckbox.toggle();
+
+        // Assert
+        Assertions.assertEquals("1", triStateCheckbox.getValue());
+        assertConfiguration(triStateCheckbox.getWidgetConfiguration());
+
+        // Act
+        triStateCheckbox.toggle();
+
+        // Assert
+        Assertions.assertEquals("2", triStateCheckbox.getValue());
+        assertConfiguration(triStateCheckbox.getWidgetConfiguration());
+
+        // Act
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals("2", triStateCheckbox.getValue());
+        assertConfiguration(triStateCheckbox.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
     @DisplayName("TriStateCheckbox: setValue")
     public void testSetValue(Page page) {
         // Arrange
