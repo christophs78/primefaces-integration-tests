@@ -135,6 +135,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setDate(value.atStartOfDay());
+        datePicker.hidePanel();
         datePicker.showPanel();
 
         // Assert
