@@ -21,16 +21,19 @@
  */
 package org.primefaces.extensions.integrationtests.selectonemenu;
 
-import lombok.Data;
-import org.primefaces.extensions.integrationtests.general.model.Driver;
-import org.primefaces.extensions.integrationtests.general.service.RealDriverService;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
+
+import org.primefaces.extensions.integrationtests.general.model.Driver;
+import org.primefaces.extensions.integrationtests.general.service.RealDriverService;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -49,6 +52,11 @@ public class SelectOneMenu001 implements Serializable {
     public void init() {
         drivers = driverService.getDrivers();
         value = 1;
+    }
+
+    public void onAjax() {
+        // pause for 1 second to verify AJAX guards are working properly
+        TestUtils.wait(1000);
     }
 
 }

@@ -24,19 +24,18 @@ package org.primefaces.extensions.integrationtests.selectonemenu;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
-import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.SelectOneMenu;
 
 public class SelectOneMenu001Test extends AbstractPrimePageTest {
 
     @Test
+    @Order(1)
     @DisplayName("SelectOneMenu: basic usecase")
     public void testBasic(Page page) {
         // Arrange
@@ -60,10 +59,84 @@ public class SelectOneMenu001Test extends AbstractPrimePageTest {
         assertConfiguration(selectOneMenu.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("SelectOneMenu: show panel")
+    public void testShowPanel(Page page) {
+        // Arrange
+        SelectOneMenu selectOneMenu = page.selectOneMenu;
+        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+
+        // Act
+        selectOneMenu.show();
+
+        // Assert
+        assertDisplayed(selectOneMenu.getPanel());
+        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("SelectOneMenu: hide panel")
+    public void testHidePanel(Page page) {
+        // Arrange
+        SelectOneMenu selectOneMenu = page.selectOneMenu;
+        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+
+        // Act
+        selectOneMenu.show();
+        selectOneMenu.hide();
+
+        // Assert
+        assertNotDisplayed(selectOneMenu.getPanel());
+        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("SelectOneMenu: disable panel")
+    public void testDisablePanel(Page page) {
+        // Arrange
+        SelectOneMenu selectOneMenu = page.selectOneMenu;
+        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+
+        // Act
+        selectOneMenu.disable();
+        selectOneMenu.select("Max");
+
+        // Assert - value should not be accepted
+        assertNotClickable(selectOneMenu);
+        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("SelectOneMenu: enable panel")
+    public void testEnablePanel(Page page) {
+        // Arrange
+        SelectOneMenu selectOneMenu = page.selectOneMenu;
+        Assertions.assertEquals("Lewis", selectOneMenu.getSelectedLabel());
+
+        // Act
+        selectOneMenu.disable();
+        selectOneMenu.enable();
+        selectOneMenu.select("Max");
+
+        // Assert
+        assertClickable(selectOneMenu);
+        Assertions.assertEquals("Max", selectOneMenu.getSelectedLabel());
+        assertConfiguration(selectOneMenu.getWidgetConfiguration());
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("SelectOneMenu Config = " + cfg);
         Assertions.assertTrue(cfg.has("appendTo"));
+        Assertions.assertTrue(cfg.getBoolean("autoWidth"));
+        Assertions.assertFalse(cfg.getBoolean("dynamic"));
+        Assertions.assertEquals("fade", cfg.getString("effect"));
+        Assertions.assertEquals("normal", cfg.getString("effectSpeed"));
     }
 
     public static class Page extends AbstractPrimePage {

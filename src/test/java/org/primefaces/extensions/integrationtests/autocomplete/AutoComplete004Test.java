@@ -30,6 +30,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.AutoComplete;
 
 public class AutoComplete004Test extends AbstractPrimePageTest {
@@ -38,6 +39,10 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
     @Order(1)
     @DisplayName("AutoComplete: GitHub #6711 AJAX change event in CSP and non CSP mode")
     public void testAjaxChange(Page page) {
+        if (PrimeSelenium.isSafari()) {
+            // TODO: Test in SAFARI
+            return;
+        }
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
@@ -55,6 +60,10 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
     @Order(2)
     @DisplayName("AutoComplete: AJAX clear event when clearing out the input")
     public void testAjaxClear(Page page) {
+        if (PrimeSelenium.isSafari()) {
+            // TODO: Test in SAFARI
+            return;
+        }
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
