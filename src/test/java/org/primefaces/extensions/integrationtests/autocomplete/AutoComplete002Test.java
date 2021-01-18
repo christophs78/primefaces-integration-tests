@@ -21,6 +21,8 @@
  */
 package org.primefaces.extensions.integrationtests.autocomplete;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -30,14 +32,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.AutoComplete;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.model.Msg;
-
-import java.util.List;
 
 public class AutoComplete002Test extends AbstractPrimePageTest {
 
@@ -56,7 +54,7 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
         autoComplete.wait4Panel();
 
         // Assert - Part 1
-        Assertions.assertTrue(autoComplete.getPanel().isDisplayed());
+        assertDisplayed(autoComplete.getPanel());
         Assertions.assertNotNull(autoComplete.getItems());
         List<String> itemValues = autoComplete.getItemValues();
         Assertions.assertEquals(14, itemValues.size());
@@ -68,7 +66,7 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
         // Act
         autoComplete.setValueWithoutTab("15");
         autoComplete.wait4Panel();
-        autoComplete.getInput().sendKeys(new CharSequence[]{Keys.TAB});
+        autoComplete.getInput().sendKeys(new CharSequence[] {Keys.TAB});
         page.button.click();
 
         // Assert - Part 2
@@ -82,7 +80,6 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
 
         assertConfiguration(autoComplete.getWidgetConfiguration());
     }
-
 
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();

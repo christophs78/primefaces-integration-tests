@@ -21,22 +21,19 @@
  */
 package org.primefaces.extensions.integrationtests.autocomplete;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.AutoComplete;
 import org.primefaces.extensions.selenium.component.CommandButton;
-
-import java.util.List;
 
 public class AutoComplete001Test extends AbstractPrimePageTest {
 
@@ -48,7 +45,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("test", autoComplete.getValue());
         Assertions.assertNotNull(autoComplete.getPanel());
-        Assertions.assertFalse(autoComplete.getPanel().isDisplayed());
+        assertNotDisplayed(autoComplete.getPanel());
 
         // Act
         autoComplete.deactivate();
@@ -71,7 +68,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         autoComplete.activate();
         autoComplete.setValueWithoutTab("bye");
         autoComplete.wait4Panel();
-        autoComplete.getInput().sendKeys(new CharSequence[]{Keys.TAB});
+        autoComplete.getInput().sendKeys(new CharSequence[] {Keys.TAB});
         page.button.click();
 
         // Assert
@@ -92,7 +89,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         autoComplete.wait4Panel();
 
         // Assert - Part 1
-        Assertions.assertTrue(autoComplete.getPanel().isDisplayed());
+        assertDisplayed(autoComplete.getPanel());
         Assertions.assertNotNull(autoComplete.getItems());
         List<String> itemValues = autoComplete.getItemValues();
         Assertions.assertEquals(10, itemValues.size());
@@ -118,7 +115,7 @@ public class AutoComplete001Test extends AbstractPrimePageTest {
         autoComplete.search("abc");
 
         // Assert
-        Assertions.assertTrue(autoComplete.getPanel().isDisplayed());
+        assertDisplayed(autoComplete.getPanel());
         Assertions.assertNotNull(autoComplete.getItems());
         List<String> itemValues = autoComplete.getItemValues();
         Assertions.assertEquals(10, itemValues.size());

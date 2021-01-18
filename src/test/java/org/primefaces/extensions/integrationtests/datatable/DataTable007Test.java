@@ -57,8 +57,8 @@ public class DataTable007Test extends AbstractDataTableTest {
         rows = dataTable.getRows();
         Assertions.assertEquals(6, rows.size()); // now has 6 after row added
         Row row = dataTable.getRow(5);
-        Assertions.assertTrue(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")).isDisplayed());
-        Assertions.assertFalse(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")).isDisplayed());
+        assertDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")));
+        assertNotDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")));
         Assertions.assertEquals("Smalltalk", row.getCell(1).getText());
         Assertions.assertEquals("6", row.getCell(0).getText());
         Assertions.assertEquals("New Language added", page.messages.getMessage(0).getSummary());
@@ -85,8 +85,8 @@ public class DataTable007Test extends AbstractDataTableTest {
 
         // Assert
         row = dataTable.getRow(1);
-        Assertions.assertTrue(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")).isDisplayed());
-        Assertions.assertFalse(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")).isDisplayed());
+        assertDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")));
+        assertNotDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")));
         Assertions.assertEquals(langs.get(1).getName(), row.getCell(1).getText());
         Assertions.assertEquals(Integer.toString(langs.get(1).getFirstAppeared()), row.getCell(2).getText());
         Assertions.assertEquals("Edit Cancelled", page.messages.getMessage(0).getSummary());
@@ -103,8 +103,8 @@ public class DataTable007Test extends AbstractDataTableTest {
 
         // Assert
         row = dataTable.getRow(2);
-        Assertions.assertTrue(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")).isDisplayed());
-        Assertions.assertFalse(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")).isDisplayed());
+        assertDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")));
+        assertNotDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")));
         Assertions.assertEquals("abc", row.getCell(1).getText());
         Assertions.assertEquals("2020", row.getCell(2).getText());
         Assertions.assertEquals("ProgrammingLanguage Edited", page.messages.getMessage(0).getSummary());

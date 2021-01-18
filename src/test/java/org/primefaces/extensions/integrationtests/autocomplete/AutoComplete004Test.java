@@ -46,7 +46,7 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
-        Assertions.assertFalse(autoComplete.getPanel().isDisplayed());
+        assertNotDisplayed(autoComplete.getPanel());
 
         // Act
         autoComplete.setValue("Nintendo");
@@ -67,7 +67,7 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
-        Assertions.assertFalse(autoComplete.getPanel().isDisplayed());
+        assertNotDisplayed(autoComplete.getPanel());
 
         // Act
         autoComplete.setValue("PlayStation");

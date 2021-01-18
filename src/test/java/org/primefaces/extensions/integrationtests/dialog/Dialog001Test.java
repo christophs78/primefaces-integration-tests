@@ -26,11 +26,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.*;
 
 public class Dialog001Test extends AbstractPrimePageTest {
@@ -40,19 +38,20 @@ public class Dialog001Test extends AbstractPrimePageTest {
     @DisplayName("Dialog: edit values within dialog, OK, close-event")
     public void testBasicOk(Page page) {
         // Arrange
+        Dialog dialog = page.dialog;
 
         // Act
         page.buttonShowDialog.click();
 
         // Assert
-        Assertions.assertTrue(PrimeSelenium.isElementDisplayed(page.dialog));
+        assertDisplayed(dialog);
 
         // Act
         page.inputText2Dialog.setValue("test123");
         page.buttonDlgOk.click();
 
         // Assert
-        Assertions.assertFalse(PrimeSelenium.isElementDisplayed(page.dialog));
+        assertNotDisplayed(dialog);
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Dialog - close-event"));
         Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains("text2: test123"));
         Assertions.assertEquals("test123", page.inputText2Readonly.getValue());
@@ -73,19 +72,20 @@ public class Dialog001Test extends AbstractPrimePageTest {
     @DisplayName("Dialog: edit values within dialog, cancel")
     public void testBasicCancel(Page page) {
         // Arrange
+        Dialog dialog = page.dialog;
 
         // Act
         page.buttonShowDialog.click();
 
         // Assert
-        Assertions.assertTrue(PrimeSelenium.isElementDisplayed(page.dialog));
+        assertDisplayed(dialog);
 
         // Act
         page.inputText2Dialog.setValue("testabc");
         page.buttonDlgCancel.click();
 
         // Assert
-        Assertions.assertFalse(PrimeSelenium.isElementDisplayed(page.dialog));
+        assertNotDisplayed(dialog);
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Dialog - close-event"));
         Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains("text2: null"));
         Assertions.assertEquals("", page.inputText2Readonly.getValue());
@@ -106,23 +106,22 @@ public class Dialog001Test extends AbstractPrimePageTest {
     @DisplayName("Dialog: show, hide & title")
     public void testAPI(Page page) {
         // Arrange
+        Dialog dialog = page.dialog;
 
         // Act
-        page.dialog.show();
+        dialog.show();
 
         // Assert
-        Assertions.assertTrue(PrimeSelenium.isElementDisplayed(page.dialog));
-        Assertions.assertEquals("Modal Dialog", page.dialog.getTitle());
+        assertDisplayed(dialog);
+        Assertions.assertEquals("Modal Dialog", dialog.getTitle());
 
         // Act
-        page.dialog.hide();
+        dialog.hide();
 
         // Assert
-        Assertions.assertFalse(PrimeSelenium.isElementDisplayed(page.dialog));
-
-        assertConfiguration(page.dialog.getWidgetConfiguration());
+        assertNotDisplayed(dialog);
+        assertConfiguration(dialog.getWidgetConfiguration());
     }
-
 
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();

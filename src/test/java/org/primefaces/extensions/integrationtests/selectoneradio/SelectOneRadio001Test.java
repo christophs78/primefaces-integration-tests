@@ -31,7 +31,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.SelectOneRadio;
 
@@ -94,7 +93,7 @@ public class SelectOneRadio001Test extends AbstractPrimePageTest {
 
         // Assert
         for (WebElement radioButton : selectOneRadio.getRadioButtons()) {
-            Assertions.assertFalse(PrimeSelenium.isElementClickable(radioButton.findElement(By.className("ui-radiobutton-box"))));
+            assertNotClickable(radioButton.findElement(By.className("ui-radiobutton-box")));
         }
         assertConfiguration(selectOneRadio.getWidgetConfiguration());
     }
@@ -113,7 +112,7 @@ public class SelectOneRadio001Test extends AbstractPrimePageTest {
 
         // Assert
         for (WebElement radioButton : selectOneRadio.getRadioButtons()) {
-            Assertions.assertTrue(PrimeSelenium.isElementClickable(radioButton.findElement(By.className("ui-radiobutton-box"))));
+            assertClickable(radioButton.findElement(By.className("ui-radiobutton-box")));
         }
         assertConfiguration(selectOneRadio.getWidgetConfiguration());
     }
@@ -126,13 +125,13 @@ public class SelectOneRadio001Test extends AbstractPrimePageTest {
         SelectOneRadio selectOneRadio = page.selectOneRadio;
         Assertions.assertEquals("Lewis", selectOneRadio.getSelectedLabel());
         WebElement radioButton = selectOneRadio.getRadioButtonBox(2);
-        Assertions.assertTrue(PrimeSelenium.isElementClickable(radioButton));
+        assertClickable(radioButton);
 
         // Act
         selectOneRadio.disableOption(2);
 
         // Assert
-        Assertions.assertFalse(PrimeSelenium.isElementClickable(radioButton));
+        assertNotClickable(radioButton);
         assertConfiguration(selectOneRadio.getWidgetConfiguration());
     }
 
@@ -144,19 +143,19 @@ public class SelectOneRadio001Test extends AbstractPrimePageTest {
         SelectOneRadio selectOneRadio = page.selectOneRadio;
         Assertions.assertEquals("Lewis", selectOneRadio.getSelectedLabel());
         WebElement radioButton = selectOneRadio.getRadioButtonBox(2);
-        Assertions.assertTrue(PrimeSelenium.isElementClickable(radioButton));
+        assertClickable(radioButton);
 
         // Act - disable option
         selectOneRadio.disableOption(2);
 
         // Assert
-        Assertions.assertFalse(PrimeSelenium.isElementClickable(radioButton));
+        assertNotClickable(radioButton);
 
         //Act - enable option
         selectOneRadio.enableOption(2);
 
         // Assert
-        Assertions.assertTrue(PrimeSelenium.isElementClickable(radioButton));
+        assertClickable(radioButton);
         assertConfiguration(selectOneRadio.getWidgetConfiguration());
     }
 

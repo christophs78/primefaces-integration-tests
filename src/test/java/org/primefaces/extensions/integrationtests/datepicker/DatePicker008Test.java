@@ -74,7 +74,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
         datePicker.hidePanel();
 
         // Assert
-        Assertions.assertFalse(datePicker.getPanel().isDisplayed());
+        assertNotDisplayed(datePicker.getPanel());
         assertConfiguration(datePicker.getWidgetConfiguration());
     }
 
