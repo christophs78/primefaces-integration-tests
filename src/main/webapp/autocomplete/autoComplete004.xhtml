@@ -18,7 +18,9 @@
                 <p:ajax event="clear" update="output" listener="#{autoComplete004.onAjax}"/>
             </p:autoComplete>
 
-            <h:outputLabel id="output" value="#{autoComplete004.value}"/>
+            <h:outputText id="output" value="#{autoComplete004.value}" />
+            <br/>
+            <p:inputText id="focus" />
         </h:form>
 
     </h:body>

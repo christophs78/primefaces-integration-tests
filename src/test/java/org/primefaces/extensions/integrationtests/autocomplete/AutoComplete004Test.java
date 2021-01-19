@@ -39,10 +39,6 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
     @Order(1)
     @DisplayName("AutoComplete: GitHub #6711 AJAX change event in CSP and non CSP mode")
     public void testAjaxChange(Page page) {
-        if (PrimeSelenium.isSafari()) {
-            // TODO: Test in SAFARI
-            return;
-        }
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
@@ -60,10 +56,6 @@ public class AutoComplete004Test extends AbstractPrimePageTest {
     @Order(2)
     @DisplayName("AutoComplete: AJAX clear event when clearing out the input")
     public void testAjaxClear(Page page) {
-        if (PrimeSelenium.isSafari()) {
-            // TODO: Test in SAFARI
-            return;
-        }
         // Arrange
         AutoComplete autoComplete = page.autoComplete;
         Assertions.assertEquals("", autoComplete.getValue());
