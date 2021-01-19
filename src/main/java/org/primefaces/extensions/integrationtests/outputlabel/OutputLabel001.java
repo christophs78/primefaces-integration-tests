@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -36,7 +38,13 @@ public class OutputLabel001 implements Serializable {
 
     private static final long serialVersionUID = 1l;
     @NotNull
-    private String value;
+    private String notnull;
+
+    @NotEmpty
+    private String notempty;
+
+    @NotBlank
+    private String notblank;
 
     private String nullableValue;
 

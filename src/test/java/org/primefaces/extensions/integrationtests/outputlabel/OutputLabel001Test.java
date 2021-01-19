@@ -79,12 +79,34 @@ public class OutputLabel001Test extends AbstractPrimePageTest {
     @Test
     @Order(5)
     @DisplayName("OutputLabel: @NotNull bean validation")
-    public void testBeanValidation(Page page) {
+    public void testBeanValidation_NotNull(Page page) {
         // Arrange
-        OutputLabel label = page.annotation;
+        OutputLabel label = page.notnull;
 
         // Act and Assert
         assertLabel(label, "Label which considers @NotNull:*", true);
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("OutputLabel: @NotBlank bean validation")
+    public void testBeanValidation_NotBlank(Page page) {
+        // Arrange
+        OutputLabel label = page.notblank;
+
+        // Act and Assert
+        assertLabel(label, "Label which considers @NotBlank:*", true);
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("OutputLabel: @NotEmpty bean validation")
+    public void testBeanValidation_NotEmpty(Page page) {
+        // Arrange
+        OutputLabel label = page.notempty;
+
+        // Act and Assert
+        assertLabel(label, "Label which considers @NotEmpty:*", true);
     }
 
     @Test
@@ -139,8 +161,14 @@ public class OutputLabel001Test extends AbstractPrimePageTest {
         @FindBy(id = "form:noannotations")
         OutputLabel noannotations;
 
-        @FindBy(id = "form:annotation")
-        OutputLabel annotation;
+        @FindBy(id = "form:notnull")
+        OutputLabel notnull;
+
+        @FindBy(id = "form:notblank")
+        OutputLabel notblank;
+
+        @FindBy(id = "form:notempty")
+        OutputLabel notempty;
 
         @FindBy(id = "form:composite1")
         OutputLabel composite1;

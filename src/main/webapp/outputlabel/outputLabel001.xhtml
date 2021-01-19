@@ -27,14 +27,20 @@
                 <p:outputLabel id="noannotations" for="@next" value="Label with no annotations:"/>
                 <p:inputText value="#{outputLabel001.nullableValue}"/>
 
-                <p:outputLabel id="annotation" for="@next" value="Label which considers @NotNull:"/>
-                <p:inputText value="#{outputLabel001.value}"/>
+                <p:outputLabel id="notnull" for="@next" value="Label which considers @NotNull:"/>
+                <p:inputText value="#{outputLabel001.notnull}"/>
+
+                <p:outputLabel id="notempty" for="@next" value="Label which considers @NotEmpty:"/>
+                <p:inputText value="#{outputLabel001.notempty}"/>
+
+                <p:outputLabel id="notblank" for="@next" value="Label which considers @NotBlank:"/>
+                <p:inputText value="#{outputLabel001.notblank}"/>
 
                 <p:outputLabel id="composite1" for="@next" value="Label for input wrapped in composite not required:"/>
                 <composite:inputTextWrapper value="#{outputLabel001.nullableValue}" required="false"/>
 
                 <p:outputLabel id="composite2" for="@next" value="Label for input wrapped in composite, considering @NotNull:"/>
-                <composite:inputTextWrapper value="#{outputLabel001.value}"/>
+                <composite:inputTextWrapper value="#{outputLabel001.notnull}"/>
 
                 <p:outputLabel id="composite3" for="@next" value="Label for input wrapped in composite required:"/>
                 <composite:inputTextWrapper value="#{outputLabel001.nullableValue}" required="true"/>
