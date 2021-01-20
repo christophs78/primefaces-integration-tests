@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -34,13 +35,16 @@ public class OutputLabel001Test extends AbstractPrimePageTest {
 
     @Test
     @Order(1)
-    @DisplayName("OutputLabel: reqired=true")
+    @DisplayName("OutputLabel: required=true")
     public void testRequired(Page page) {
         // Arrange
         OutputLabel label = page.required;
 
         // Act and Assert
         assertLabel(label, "Required*", true);
+        WebElement input = label.getFor();
+        Assertions.assertNotNull(input);
+        Assertions.assertEquals("form:inputrequired", input.getAttribute("id"));
     }
 
     @Test
