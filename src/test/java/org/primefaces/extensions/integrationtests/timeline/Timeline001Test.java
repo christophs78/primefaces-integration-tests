@@ -44,7 +44,6 @@ public class Timeline001Test extends AbstractPrimePageTest {
     public void testBasic(Page page) {
         // Arrange
         Timeline timeline = page.timeline;
-        TestUtils.wait(2000); // let timeline load
 
         // Act
         timeline.update();
