@@ -27,6 +27,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -43,6 +44,7 @@ public class Timeline001Test extends AbstractPrimePageTest {
     public void testBasic(Page page) {
         // Arrange
         Timeline timeline = page.timeline;
+        TestUtils.wait(2000); // let timeline load
 
         // Act
         timeline.update();
