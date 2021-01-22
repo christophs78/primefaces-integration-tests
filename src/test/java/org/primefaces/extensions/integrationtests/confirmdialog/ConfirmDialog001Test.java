@@ -27,6 +27,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -160,9 +161,10 @@ public class ConfirmDialog001Test extends AbstractPrimePageTest {
                 // modal dialog should block clickability of button
                 page.confirm.click();
                 Assertions.fail("Button should not be clickable because modal mask is covering it!");
-            }
-            catch (ElementClickInterceptedException ex) {
+            } catch (ElementClickInterceptedException ex) {
                 // element should be blocked by modal mask!
+            } catch (WebDriverException ex) {
+                // Safari: element should be blocked by modal mask!
             }
         }
         else {

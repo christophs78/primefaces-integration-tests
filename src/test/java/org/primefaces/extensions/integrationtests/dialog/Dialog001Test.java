@@ -27,6 +27,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -150,6 +151,9 @@ public class Dialog001Test extends AbstractPrimePageTest {
             }
             catch (ElementClickInterceptedException ex) {
                 // element should be blocked by modal mask!
+            }
+            catch (WebDriverException ex) {
+                // Safari: element should be blocked by modal mask!
             }
         }
         else {
