@@ -141,6 +141,45 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
     }
 
+    @Test
+    @Order(5)
+    @DisplayName("DatePicker: Use disable() widget method to disable DatePicker")
+    public void testDisable(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        Assertions.assertEquals(LocalDate.now(), datePicker.getValue().toLocalDate());
+
+        // Act
+        datePicker.disable();
+        datePicker.showPanel();
+
+        // Assert
+        Assertions.assertFalse(datePicker.isEnabled());
+        assertNotDisplayed(datePicker.getPanel());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertConfiguration(datePicker.getWidgetConfiguration(), LocalDate.now().format(dateTimeFormatter));
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("DatePicker: Use enable() widget method to enable DatePicker")
+    public void testEnable(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        datePicker.disable();
+        Assertions.assertFalse(datePicker.isEnabled());
+
+        // Act
+        datePicker.enable();
+        datePicker.showPanel();
+
+        // Assert
+        Assertions.assertTrue(datePicker.isEnabled());
+        assertDisplayed(datePicker.getPanel());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertConfiguration(datePicker.getWidgetConfiguration(), LocalDate.now().format(dateTimeFormatter));
+    }
+
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
         assertNoJavascriptErrors();
         System.out.println("DatePicker Config = " + cfg);
