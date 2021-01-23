@@ -12,6 +12,8 @@
     <h:body>
 
         <h:form id="form">
+            <p:messages id="msgs" showDetail="true"/>
+
             <p:datePicker id="datepicker" value="#{datePicker001.localDate}" pattern="MM/dd/yyyy"/>
 
             <p:commandButton id="button" value="Submit" update="@form"/>

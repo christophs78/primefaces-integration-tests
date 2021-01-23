@@ -33,9 +33,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
+import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.base.ComponentUtils;
 
 public class DatePicker001Test extends AbstractDatePickerTest {
 
@@ -180,6 +183,46 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         assertConfiguration(datePicker.getWidgetConfiguration(), LocalDate.now().format(dateTimeFormatter));
     }
 
+    @Test
+    @Order(7)
+    @DisplayName("DatePicker: illegal date")
+    public void testIllegalDate(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        datePicker.clear();
+        ComponentUtils.sendKeys(datePicker.getInput(), "02/32/1900");
+
+        // Act
+        page.button.click();
+
+        // Assert
+        Assertions.assertTrue(page.messages.isDisplayed());
+        Assertions.assertEquals(1, page.messages.getAllMessages().size());
+        Assertions.assertTrue(page.messages.getAllMessages().get(0).getDetail().contains("could not be understood as a date"));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertNoJavascriptErrors();
+    }
+
+
+    @Test
+    @Order(8)
+    @DisplayName("DatePicker: correct date")
+    public void testCorrectDate(Page page) {
+        // Arrange
+        DatePicker datePicker = page.datePicker;
+        datePicker.clear();
+        ComponentUtils.sendKeys(datePicker.getInput(), "02/28/1900");
+
+        // Act
+        page.button.click();
+
+        // Assert
+        Assertions.assertFalse(page.messages.isDisplayed());
+        Assertions.assertEquals(0, page.messages.getAllMessages().size());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        assertNoJavascriptErrors();
+    }
+
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
         assertNoJavascriptErrors();
         System.out.println("DatePicker Config = " + cfg);
@@ -190,6 +233,9 @@ public class DatePicker001Test extends AbstractDatePickerTest {
     }
 
     public static class Page extends AbstractPrimePage {
+        @FindBy(id = "form:msgs")
+        Messages messages;
+
         @FindBy(id = "form:datepicker")
         DatePicker datePicker;
 
