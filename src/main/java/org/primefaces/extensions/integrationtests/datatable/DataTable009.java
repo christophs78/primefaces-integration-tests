@@ -26,14 +26,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.data.FilterEvent;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 
 import lombok.Data;
 
@@ -59,10 +58,7 @@ public class DataTable009 implements Serializable {
         // show actual filter as message
         filterEvent.getFilterBy().values().stream()
                     .filter(filterMeta -> filterMeta.getFilterValue() != null)
-                    .forEach(filterMeta -> {
-                                    FacesMessage msg = new FacesMessage("FilterValue for " + filterMeta.getField(), filterMeta.getFilterValue().toString());
-                                    FacesContext.getCurrentInstance().addMessage(null, msg);
-                                }
+                    .forEach(filterMeta -> TestUtils.addMessage("FilterValue for " + filterMeta.getField(), filterMeta.getFilterValue().toString())
                     );
 
         // show actual filtered values
@@ -71,10 +67,9 @@ public class DataTable009 implements Serializable {
         if (dataTable.getFilteredValue() != null) {
             List<ProgrammingLanguage> filteredProgLanguagesAtEvent = (List<ProgrammingLanguage>) dataTable.getFilteredValue();
 
-            filterValuesFlat = filteredProgLanguagesAtEvent.stream().map(lang -> lang.getName()).collect(Collectors.joining(","));
+            filterValuesFlat = filteredProgLanguagesAtEvent.stream().map(ProgrammingLanguage::getName).collect(Collectors.joining(","));
         }
 
-        FacesMessage msg = new FacesMessage("FilteredValue(s)", filterValuesFlat);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        TestUtils.addMessage("FilteredValue(s)", filterValuesFlat);
     }
 }
