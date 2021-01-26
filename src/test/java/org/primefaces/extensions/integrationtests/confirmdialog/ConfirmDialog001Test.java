@@ -31,7 +31,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.ConfirmDialog;
 import org.primefaces.extensions.selenium.component.Messages;
@@ -162,18 +161,10 @@ public class ConfirmDialog001Test extends AbstractPrimePageTest {
                 // modal dialog should block clickability of button
                 page.confirm.click();
                 Assertions.fail("Button should not be clickable because modal mask is covering it!");
-            }
-            catch (ElementClickInterceptedException ex) {
+            } catch (ElementClickInterceptedException ex) {
                 // element should be blocked by modal mask!
-                if (PrimeSelenium.isSafari()) {
-                    Assertions.fail("Safari finally fixed their bug so this block and next block can be removed!");
-                }
-            }
-            catch (WebDriverException ex) {
+            } catch (WebDriverException ex) {
                 // Safari: element should be blocked by modal mask!
-                if (!PrimeSelenium.isSafari()) {
-                    Assertions.fail("Only Safari should throw a WebDriverException here instead of ElementClickInterceptedException");
-                }
             }
         }
         else {
