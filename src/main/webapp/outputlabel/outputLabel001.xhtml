@@ -24,6 +24,12 @@
                 <p:outputLabel id="indicaterequired" for="@next" value="Indicate Required" indicateRequired="true"/>
                 <p:inputText required="false"/>
 
+                <p:outputLabel id="disabled" for="@next" value="Disabled"/>
+                <p:inputText required="true" disabled="true"/>
+
+                <p:outputLabel id="readonly" for="@next" value="Read Only"/>
+                <p:inputText required="true" readonly="true"/>
+
                 <p:outputLabel id="noannotations" for="@next" value="Label with no annotations:"/>
                 <p:inputText value="#{outputLabel001.nullableValue}"/>
 

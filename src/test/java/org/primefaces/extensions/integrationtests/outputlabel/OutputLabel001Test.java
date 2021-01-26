@@ -146,6 +146,28 @@ public class OutputLabel001Test extends AbstractPrimePageTest {
         assertLabel(label, "Label for input wrapped in composite required:*", true);
     }
 
+    @Test
+    @Order(9)
+    @DisplayName("OutputLabel: disabled=true")
+    public void testDisabled(Page page) {
+        // Arrange
+        OutputLabel label = page.disabled;
+
+        // Act and Assert
+        assertLabel(label, "Disabled*", true);
+    }
+
+    @Test
+    @Order(10)
+    @DisplayName("OutputLabel: readonly=true")
+    public void testReadOnly(Page page) {
+        // Arrange
+        OutputLabel label = page.readonly;
+
+        // Act and Assert
+        assertLabel(label, "Read Only*", true);
+    }
+
     private void assertLabel(OutputLabel label, String text, boolean required) {
         Assertions.assertEquals(required, label.hasRequiredIndicator());
         Assertions.assertEquals(text, label.getText());
@@ -161,6 +183,12 @@ public class OutputLabel001Test extends AbstractPrimePageTest {
 
         @FindBy(id = "form:indicaterequired")
         OutputLabel indicaterequired;
+
+        @FindBy(id = "form:disabled")
+        OutputLabel disabled;
+
+        @FindBy(id = "form:readonly")
+        OutputLabel readonly;
 
         @FindBy(id = "form:noannotations")
         OutputLabel noannotations;
