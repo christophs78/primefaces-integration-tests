@@ -40,7 +40,7 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable002Test extends AbstractPrimePageTest {
 
-    private ProgrammingLanguageLazyDataModel langs = new ProgrammingLanguageLazyDataModel();
+    private final ProgrammingLanguageLazyDataModel langs = new ProgrammingLanguageLazyDataModel();
 
     @Test
     @Order(1)
@@ -142,8 +142,8 @@ public class DataTable002Test extends AbstractPrimePageTest {
 
         // Act
         dataTable.selectPage(1);
-        dataTable.sort("First appeared");
-        dataTable.filter("First appeared", "1998");
+        dataTable.sort("First Appeared");
+        dataTable.filter("First Appeared", "1998");
 
         // Assert
         List<Row> rows = dataTable.getRows();

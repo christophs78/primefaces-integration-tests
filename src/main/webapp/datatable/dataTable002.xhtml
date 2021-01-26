@@ -21,17 +21,11 @@
                          selectionMode="single" selection="#{dataTable002.selectedProgrammingLanguage}">
                 <p:ajax event="rowSelect" listener="#{dataTable002.onRowSelect}"/>
 
-                <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}"/>
-                </p:column>
+                <p:column field="id" headerText="ID"/>
 
-                <p:column headerText="Name" sortBy="#{lang.name}" filterBy="#{lang.name}" filterMatchMode="contains">
-                    <h:outputText value="#{lang.name}"/>
-                </p:column>
+                <p:column field="name" filterMatchMode="contains"/>
 
-                <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}" filterMatchMode="gte">
-                    <h:outputText value="#{lang.firstAppeared}"/>
-                </p:column>
+                <p:column field="firstAppeared" filterMatchMode="gte"/>
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form"/>
