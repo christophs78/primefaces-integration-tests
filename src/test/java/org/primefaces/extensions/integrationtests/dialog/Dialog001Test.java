@@ -31,6 +31,7 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.*;
 
 public class Dialog001Test extends AbstractPrimePageTest {
@@ -151,9 +152,15 @@ public class Dialog001Test extends AbstractPrimePageTest {
             }
             catch (ElementClickInterceptedException ex) {
                 // element should be blocked by modal mask!
+                if (PrimeSelenium.isSafari()) {
+                    Assertions.fail("Safari finally fixed their bug so this block and next block can be removed!");
+                }
             }
             catch (WebDriverException ex) {
                 // Safari: element should be blocked by modal mask!
+                if (!PrimeSelenium.isSafari()) {
+                    Assertions.fail("Only Safari should throw a WebDriverException here instead of ElementClickInterceptedException");
+                }
             }
         }
         else {

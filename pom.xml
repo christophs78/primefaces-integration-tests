@@ -29,7 +29,6 @@
         <primefaces-selenium.version>10.0.0-SNAPSHOT</primefaces-selenium.version>
         <hibernate-validator.version>6.1.7.Final</hibernate-validator.version>
         <lombok.version>1.18.16</lombok.version>
-        <myfaces.version>2.3.7</myfaces.version>
         <junit.version>5.7.0</junit.version>
         <tomee.version>8.0.6</tomee.version>
         <!-- plugin versions -->
@@ -63,12 +62,6 @@
             <version>8.0-5</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <version>${myfaces.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- TEST -->
         <dependency>
@@ -88,22 +81,11 @@
             <artifactId>tomee-embedded</artifactId>
             <version>${tomee.version}</version>
             <scope>test</scope>
-            <exclusions>
-                <!-- As of 2020-12 TomEE 8.0.5 comes with MyFaces 2.3.6 which has issues with Prime Client Window. So we replace MyFaces. -->
-                <exclusion>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-api</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.myfaces.core</groupId>
-                    <artifactId>myfaces-impl</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <version>${myfaces.version}</version>
+            <groupId>org.apache.tomee</groupId>
+            <artifactId>tomee-myfaces</artifactId>
+            <version>${tomee.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
