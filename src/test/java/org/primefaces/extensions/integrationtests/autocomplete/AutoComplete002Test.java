@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -66,7 +65,7 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
         // Act
         autoComplete.setValueWithoutTab("15");
         autoComplete.wait4Panel();
-        autoComplete.getInput().sendKeys(new CharSequence[] {Keys.TAB});
+        autoComplete.sendTabKey();
         page.button.click();
 
         // Assert - Part 2
