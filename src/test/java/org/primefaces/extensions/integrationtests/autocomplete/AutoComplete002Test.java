@@ -31,6 +31,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.AutoComplete;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
@@ -65,10 +66,19 @@ public class AutoComplete002Test extends AbstractPrimePageTest {
         // Act
         autoComplete.setValueWithoutTab("15");
         autoComplete.wait4Panel();
+
+        // Assert - Part 2
+        assertDisplayed(autoComplete.getPanel());
+        Assertions.assertNotNull(autoComplete.getItems());
+        itemValues = autoComplete.getItemValues();
+        Assertions.assertEquals(1, itemValues.size());
+        Assertions.assertEquals("Driver No. 15", itemValues.get(0));
+
+        // Act
         autoComplete.sendTabKey();
         page.button.click();
 
-        // Assert - Part 2
+        // Assert - Part 3
         Assertions.assertEquals("Driver No. 15", autoComplete.getValue());
         assertConfiguration(autoComplete.getWidgetConfiguration());
 
