@@ -27,7 +27,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -35,6 +34,7 @@ import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.Timeline;
+import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class Timeline001Test extends AbstractPrimePageTest {
 
@@ -51,7 +51,7 @@ public class Timeline001Test extends AbstractPrimePageTest {
         // Assert
         long eventCount = timeline.getNumberOfEvents();
         Assertions.assertEquals(15, eventCount);
-        assertConfiguration(page.timeline.getWidgetConfiguration());
+        assertConfiguration(timeline.getWidgetConfiguration());
     }
 
     @Test
@@ -63,10 +63,74 @@ public class Timeline001Test extends AbstractPrimePageTest {
 
         // Act
         timeline.select("vis-item-content");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
 
         // Assert
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected event:"));
+        assertConfiguration(timeline.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("Timeline: Zoom In GitHub #6902/#5455 range changed event with and without CSP")
+    public void testRangeChangedZoomIn(Page page) {
+        // Arrange
+        Timeline timeline = page.timeline;
+
+        // Act
+        timeline.zoom(0.1);
+
+        // Assert
+        assertRangeChanged(page, "Range Changed:", "2014");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Timeline: Zoom Out range changed event with and without CSP")
+    public void testRangeChangedZoomOut(Page page) {
+        // Arrange
+        Timeline timeline = page.timeline;
+
+        // Act
+        timeline.zoom(-0.1);
+
+        // Assert
+        assertRangeChanged(page, "Range Changed:", "2014");
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Timeline: Move Left range changed event with and without CSP")
+    public void testRangeChangedMoveLeft(Page page) {
+        // Arrange
+        Timeline timeline = page.timeline;
+
+        // Act
+        timeline.move(-0.1);
+
+        // Assert
+        assertRangeChanged(page, "Range Changed:", "2014");
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Timeline: Move Right range changed event with and without CSP")
+    public void testRangeChangedMoveRight(Page page) {
+        // Arrange
+        Timeline timeline = page.timeline;
+
+        // Act
+        timeline.move(0.1);
+
+        // Assert
+        assertRangeChanged(page, "Range Changed:", "2014");
+    }
+
+    private void assertRangeChanged(Page page, String detail, String summary) {
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(page.messages));
+        Msg message = page.messages.getMessage(0);
+        Assertions.assertEquals(detail, message.getSummary());
+        Assertions.assertTrue(message.getDetail().contains(summary));
         assertConfiguration(page.timeline.getWidgetConfiguration());
     }
 

@@ -25,12 +25,12 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.event.timeline.TimelineRangeEvent;
 import org.primefaces.event.timeline.TimelineSelectEvent;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 import org.primefaces.model.timeline.TimelineEvent;
 import org.primefaces.model.timeline.TimelineModel;
 
@@ -66,11 +66,13 @@ public class Timeline001 implements Serializable {
         model.add(TimelineEvent.<String>builder().data("PrimeNG 0.5").startDate(LocalDate.of(2016, 2, 29)).build());
     }
 
-    public void onSelect(TimelineSelectEvent<String> e) {
-        TimelineEvent<String> timelineEvent = e.getTimelineEvent();
+    public void onSelect(TimelineSelectEvent<String> event) {
+        TimelineEvent<String> timelineEvent = event.getTimelineEvent();
+        TestUtils.addMessage("Selected event:", timelineEvent.getData());
+    }
 
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected event:", timelineEvent.getData());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void onRangeChanged(TimelineRangeEvent event) {
+        TestUtils.addMessage("Range Changed:", event.getStartDate() + " - " + event.getEndDate());
     }
 
 }

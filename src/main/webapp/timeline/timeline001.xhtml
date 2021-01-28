@@ -13,7 +13,7 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
             <p:timeline id="timeline" value="#{timeline001.model}" height="250px"
@@ -25,6 +25,7 @@
                         showCurrentTime="true">
 
                 <p:ajax event="select" listener="#{timeline001.onSelect}"/>
+                <p:ajax event="rangechanged" listener="#{timeline001.onRangeChanged}"/>
 
             </p:timeline>
 
