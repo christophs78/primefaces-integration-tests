@@ -43,20 +43,17 @@ import org.primefaces.extensions.selenium.component.model.data.Paginator;
 import org.primefaces.extensions.selenium.component.model.datatable.Header;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
-public class DataTable001Test extends AbstractDataTableTest {
+public class DataTable018Test extends AbstractDataTableTest {
 
     private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)
-    @DisplayName("DataTable: Basic & Paginator")
-    public void testBasicAndPaginator(Page page) {
+    @DisplayName("DataTable: ListModel Basic & Paginator")
+    public void testListModelBasicAndPaginator(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
-
-        // Act
-        //page.button.click();
 
         // Assert
         Assertions.assertNotNull(dataTable.getPaginatorWebElement());
@@ -103,8 +100,8 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(2)
-    @DisplayName("DataTable: single sort")
-    public void testSortSingle(Page page) {
+    @DisplayName("DataTable: ListModel single sort")
+    public void testListModelSortSingle(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
@@ -141,8 +138,8 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(3)
-    @DisplayName("DataTable: filter")
-    public void testFilter(Page page) {
+    @DisplayName("DataTable: ListModel filter")
+    public void testListModelFilter(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
@@ -171,8 +168,8 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(4)
-    @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465 & https://github.com/primefaces/primefaces/issues/5481")
-    public void testRowsPerPageAndReset_5465_5481(Page page) {
+    @DisplayName("DataTable: ListModel rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465 & https://github.com/primefaces/primefaces/issues/5481")
+    public void testListModelRowsPerPageAndReset_5465_5481(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
@@ -223,7 +220,7 @@ public class DataTable001Test extends AbstractDataTableTest {
 
         @Override
         public String getLocation() {
-            return "datatable/dataTable001.xhtml";
+            return "datatable/dataTable018.xhtml";
         }
     }
 }
