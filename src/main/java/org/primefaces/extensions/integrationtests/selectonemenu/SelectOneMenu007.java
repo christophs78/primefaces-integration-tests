@@ -39,30 +39,39 @@ import lombok.Data;
 @Named
 @ViewScoped
 @Data
-public class SelectOneMenu006 implements Serializable {
+public class SelectOneMenu007 implements Serializable {
 
     private static final long serialVersionUID = -7798312444085660208L;
 
-    private String console;
-    private List<SelectItem> availableConsoles;
+    private String countryGroup;
+    private List<SelectItem> countriesGroup;
 
     @PostConstruct
     public void init() {
-        availableConsoles = new ArrayList<>();
-        SelectItemGroup group1 = new SelectItemGroup("Older");
-        group1.setSelectItems(new SelectItem[] {new SelectItem("XBOXONE", "Xbox One"), new SelectItem("PS3", "PlayStation 3"),
-                    new SelectItem("WII", "Wii U")});
-        availableConsoles.add(group1);
+        countriesGroup = new ArrayList<>();
 
-        SelectItemGroup group2 = new SelectItemGroup("Newer");
-        group2.setSelectItems(new SelectItem[] {new SelectItem("XBOXX", "Xbox X"), new SelectItem("PS5", "PlayStation 5"),
-                    new SelectItem("SWITCH", "Nintendo Switch")});
-        availableConsoles.add(group2);
+        SelectItemGroup europeCountries = new SelectItemGroup("Europe");
+        europeCountries.setSelectItems(new SelectItem[] {
+                    new SelectItem("Germany", "Germany"),
+                    new SelectItem("Turkey", "Turkey"),
+                    new SelectItem("Spain", "Spain")
+        });
+
+        SelectItemGroup americaCountries = new SelectItemGroup("North America");
+        americaCountries.setSelectItems(new SelectItem[] {
+                    new SelectItem("United States", "United States"),
+                    new SelectItem("Brazil", "Brazil"),
+                    new SelectItem("Turks & Caicos", "<span>Turks &amp; Caicos<span>", null, false, true),
+                    new SelectItem("Mexico", "Mexico")
+        });
+
+        countriesGroup.add(europeCountries);
+        countriesGroup.add(americaCountries);
     }
 
     public void submit() {
-        if (!LangUtils.isValueBlank(console)) {
-            TestUtils.addMessage("Console", console);
+        if (!LangUtils.isValueBlank(countryGroup)) {
+            TestUtils.addMessage("Country", countryGroup);
         }
     }
 
