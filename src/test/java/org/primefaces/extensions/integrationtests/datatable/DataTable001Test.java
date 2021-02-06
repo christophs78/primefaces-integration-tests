@@ -39,6 +39,7 @@ import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
+import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.model.data.Paginator;
 import org.primefaces.extensions.selenium.component.model.datatable.Header;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
@@ -108,9 +109,9 @@ public class DataTable001Test extends AbstractDataTableTest {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
+        dataTable.selectPage(1);
 
         // Act - ascending
-        dataTable.selectPage(1);
         dataTable.sort("Name");
 
         // Assert
@@ -145,11 +146,10 @@ public class DataTable001Test extends AbstractDataTableTest {
     public void testFilter(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
-        Assertions.assertNotNull(dataTable);
-
-        // Act
         dataTable.selectPage(1);
         dataTable.sort("Name");
+
+        // Act
         dataTable.filter("Name", "Java");
 
         // Assert
@@ -171,6 +171,30 @@ public class DataTable001Test extends AbstractDataTableTest {
 
     @Test
     @Order(4)
+    @DisplayName("DataTable: global filter")
+    public void testGlobalFilter(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        InputText globalFilter = page.globalFilter;
+        Assertions.assertNotNull(globalFilter);
+        dataTable.selectPage(1);
+        dataTable.sort("Name");
+
+        // Act
+        globalFilter.setValue("Python");
+
+        // Assert
+        List<ProgrammingLanguage> langsFiltered = langs.stream()
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
+                    .filter(l -> l.getName().startsWith("Python"))
+                    .limit(3)
+                    .collect(Collectors.toList());
+        assertRows(dataTable, langsFiltered);
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(5)
     @DisplayName("DataTable: rows per page & reset; includes https://github.com/primefaces/primefaces/issues/5465 & https://github.com/primefaces/primefaces/issues/5481")
     public void testRowsPerPageAndReset_5465_5481(Page page) {
         // Arrange
@@ -209,11 +233,16 @@ public class DataTable001Test extends AbstractDataTableTest {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
         Assertions.assertTrue(cfg.has("paginator"));
+        Assertions.assertEquals("wgtTable", cfg.getString("widgetVar"));
+        Assertions.assertEquals(0, cfg.getInt("tabindex"));
     }
 
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:datatable")
         DataTable dataTable;
+
+        @FindBy(id = "form:datatable:globalFilter")
+        InputText globalFilter;
 
         @FindBy(id = "form:buttonUpdate")
         CommandButton buttonUpdate;
