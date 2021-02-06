@@ -39,8 +39,12 @@ public abstract class AbstractDataTableTest extends AbstractPrimePageTest {
     }
 
     protected void assertRows(List<Row> rows, List<ProgrammingLanguage> langs) {
+        int expectedSize = langs.size();
         Assertions.assertNotNull(rows);
-        Assertions.assertEquals(langs.size(), rows.size());
+        if (expectedSize == 0) {
+            expectedSize = 1; // No records found.
+        }
+        Assertions.assertEquals(expectedSize, rows.size());
 
         int row = 0;
         for (ProgrammingLanguage programmingLanguage : langs) {
