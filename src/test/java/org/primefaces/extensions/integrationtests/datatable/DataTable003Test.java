@@ -41,8 +41,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable003Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: multisort - firstAppeared desc, name asc")
@@ -70,7 +68,7 @@ public class DataTable003Test extends AbstractDataTableTest {
         assertHeaderSorted(eltSortFirstAppeared, "DESC", 1);
         assertHeaderSorted(eltSortName, "ASC", 2);
 
-        List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameAsc()).collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = languages.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameAsc()).collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
     }
 
@@ -102,7 +100,8 @@ public class DataTable003Test extends AbstractDataTableTest {
         assertHeaderSorted(eltSortFirstAppeared, "DESC", 1);
         assertHeaderSorted(eltSortName, "DESC", 2);
 
-        List<ProgrammingLanguage> langsSorted = langs.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameDesc()).collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = languages.stream().sorted(new ProgrammingLanguageSorterFirstAppearedDescNameDesc())
+                    .collect(Collectors.toList());
         assertRows(dataTable, langsSorted);
     }
 

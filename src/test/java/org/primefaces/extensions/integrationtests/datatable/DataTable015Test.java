@@ -22,7 +22,6 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -37,8 +36,6 @@ import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable015Test extends AbstractDataTableTest {
-
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)
@@ -56,11 +53,7 @@ public class DataTable015Test extends AbstractDataTableTest {
         dataTable.filter("Name", "Java");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
-                    .filter(l -> l.getName().startsWith("Java"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByName("Java");
         assertRows(dataTable, langsFiltered);
 
         // Act

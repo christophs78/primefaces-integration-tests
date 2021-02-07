@@ -37,8 +37,6 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable016Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: RowGroup - header row and summary row")
@@ -55,11 +53,11 @@ public class DataTable016Test extends AbstractDataTableTest {
 
         List<WebElement> rowElts = dataTable.getRowsWebElement();
         Assertions.assertNotNull(rowElts);
-        Assertions.assertEquals(langs.size() + 2 + 2, rowElts.size()); //plus 2 header-rows plus 2 summary-rows
+        Assertions.assertEquals(languages.size() + 2 + 2, rowElts.size()); //plus 2 header-rows plus 2 summary-rows
 
         List<Row> rows = dataTable.getRows();
         Assertions.assertNotNull(rows);
-        Assertions.assertEquals(langs.size() + 2 + 2, rows.size()); //plus 2 header-rows plus 2 summary-rows
+        Assertions.assertEquals(languages.size() + 2 + 2, rows.size()); //plus 2 header-rows plus 2 summary-rows
 
         //check header-rows
         Assertions.assertEquals("4", dataTable.getCell(0, 0).getWebElement().getAttribute("colspan"));
@@ -83,7 +81,7 @@ public class DataTable016Test extends AbstractDataTableTest {
         rows.remove(3); //first summary-row
         rows.remove(0); //first header-row
 
-        assertRows(rows, langs);
+        assertRows(rows, languages);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }

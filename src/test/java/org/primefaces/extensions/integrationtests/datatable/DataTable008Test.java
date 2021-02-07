@@ -21,7 +21,9 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.json.JSONObject;
@@ -37,8 +39,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable008Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: filter - issue 5481 - https://github.com/primefaces/primefaces/issues/5481")
@@ -50,12 +50,12 @@ public class DataTable008Test extends AbstractDataTableTest {
         // Act - do some filtering
         dataTable.selectPage(1);
         dataTable.sort("Name");
-        dataTable.getHeader().getCell("First appeared").get().setFilterValue("2010", "change", 0);
+        Objects.requireNonNull(dataTable.getHeader().getCell("First appeared").orElse(null)).setFilterValue("2010", "change", 0);
 
         // Assert
         Assertions.assertEquals("2010", getFirstAppearedFilterElt(dataTable).getAttribute("value"));
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+        List<ProgrammingLanguage> langsFiltered = languages.stream()
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
                     .filter(l -> l.getFirstAppeared() >= 2010)
                     .limit(3)
                     .collect(Collectors.toList());
@@ -69,8 +69,8 @@ public class DataTable008Test extends AbstractDataTableTest {
 
         // Assert
         Assertions.assertEquals("", getFirstAppearedFilterElt(dataTable).getAttribute("value"));
-        List<ProgrammingLanguage> langsUnfilteredPage2 = langs.stream()
-                    .sorted((l1, l2) -> l1.getName().compareTo(l2.getName()))
+        List<ProgrammingLanguage> langsUnfilteredPage2 = languages.stream()
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
                     .skip(3)
                     .limit(3)
                     .collect(Collectors.toList());

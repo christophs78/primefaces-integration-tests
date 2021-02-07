@@ -21,8 +21,6 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import java.util.List;
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -35,8 +33,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
 
 public class DataTable009Test extends AbstractDataTableTest {
-
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)

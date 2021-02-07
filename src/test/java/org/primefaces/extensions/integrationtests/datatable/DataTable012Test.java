@@ -24,7 +24,7 @@ package org.primefaces.extensions.integrationtests.datatable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -40,8 +40,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable012Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: single sort; sortBy on p:column; initial sort via sortBy on dataTable")
@@ -53,9 +51,7 @@ public class DataTable012Test extends AbstractDataTableTest {
         // Act
 
         // Assert - ascending (initial)
-        List<ProgrammingLanguage> langsSorted = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = sortByNoLimit(Comparator.comparing(ProgrammingLanguage::getName));
         assertRows(dataTable, langsSorted);
 
         // Act - descending
@@ -80,14 +76,12 @@ public class DataTable012Test extends AbstractDataTableTest {
         // Act
 
         // Assert - ascending (initial)
-        List<ProgrammingLanguage> langsSorted = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = sortByNoLimit(Comparator.comparing(ProgrammingLanguage::getName));
         assertRows(dataTable, langsSorted);
 
         // Act - descending
-        //dataTable.sort("Name");
-        PrimeSelenium.guardAjax(dataTable.getHeader().getCell("Name").get().getWebElement().findElement(By.className("ui-column-title"))).click();
+        PrimeSelenium.guardAjax(Objects.requireNonNull(dataTable.getHeader().getCell("Name").orElse(null)).getWebElement()
+                    .findElement(By.className("ui-column-title"))).click();
 
         // Assert - descending
         Collections.reverse(langsSorted);

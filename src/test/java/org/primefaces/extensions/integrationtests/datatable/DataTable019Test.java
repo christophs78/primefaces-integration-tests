@@ -21,9 +21,7 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -36,8 +34,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.InputText;
 
 public class DataTable019Test extends AbstractDataTableTest {
-
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)
@@ -53,11 +49,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         globalFilter.setValue("Java");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .filter(l -> l.getName().startsWith("Java"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByName("Java");
         Assertions.assertEquals(2, langsFiltered.size());
         assertRows(dataTable, langsFiltered);
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -77,11 +69,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         globalFilter.setValue("COMPILED");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getType))
-                    .filter(l -> l.getType().name().startsWith("COMPILED"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByType(ProgrammingLanguage.ProgrammingLanguageType.COMPILED);
         Assertions.assertEquals(2, langsFiltered.size());
         assertRows(dataTable, langsFiltered);
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -101,11 +89,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         globalFilter.setValue("Clojure");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .filter(l -> l.getName().startsWith("Clojure"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByName("Clojure");
         Assertions.assertEquals(0, langsFiltered.size());
         assertRows(dataTable, langsFiltered);
         assertConfiguration(dataTable.getWidgetConfiguration());
@@ -116,17 +100,15 @@ public class DataTable019Test extends AbstractDataTableTest {
     @DisplayName("DataTable: Global Filter Function clearing field resets all rows")
     public void testGlobalFilterFunctionClear(Page page) {
         // Arrange
+        testGlobalFilterFunctionNoResults(page);
         DataTable dataTable = page.dataTable;
         InputText globalFilter = page.globalFilter;
-        dataTable.selectPage(1);
-        dataTable.sort("Name");
 
         // Act
-        globalFilter.setValue("Java");
         globalFilter.setValue("");
 
         // Assert
-        Assertions.assertEquals(5, langs.size());
+        Assertions.assertEquals(5, languages.size());
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
@@ -143,11 +125,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         dataTable.filter("Type", "INTERPRETED");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getType))
-                    .filter(l -> l.getType().name().startsWith("INTERPRETED"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByType(ProgrammingLanguage.ProgrammingLanguageType.INTERPRETED);
         Assertions.assertEquals(3, langsFiltered.size());
         assertRows(dataTable, langsFiltered);
         assertConfiguration(dataTable.getWidgetConfiguration());

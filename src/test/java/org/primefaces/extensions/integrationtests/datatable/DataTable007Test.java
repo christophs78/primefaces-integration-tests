@@ -39,8 +39,6 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable007Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: Add-Row")
@@ -87,10 +85,10 @@ public class DataTable007Test extends AbstractDataTableTest {
         row = dataTable.getRow(1);
         assertDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-pencil")));
         assertNotDisplayed(row.getCell(3).getWebElement().findElement(By.className("ui-row-editor-close")));
-        Assertions.assertEquals(langs.get(1).getName(), row.getCell(1).getText());
-        Assertions.assertEquals(Integer.toString(langs.get(1).getFirstAppeared()), row.getCell(2).getText());
+        Assertions.assertEquals(languages.get(1).getName(), row.getCell(1).getText());
+        Assertions.assertEquals(Integer.toString(languages.get(1).getFirstAppeared()), row.getCell(2).getText());
         Assertions.assertEquals("Edit Cancelled", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals(Integer.toString(langs.get(1).getId()), page.messages.getMessage(0).getDetail());
+        Assertions.assertEquals(Integer.toString(languages.get(1).getId()), page.messages.getMessage(0).getDetail());
 
         // Act - edit and accept
         row = dataTable.getRow(2);
@@ -108,7 +106,7 @@ public class DataTable007Test extends AbstractDataTableTest {
         Assertions.assertEquals("abc", row.getCell(1).getText());
         Assertions.assertEquals("2020", row.getCell(2).getText());
         Assertions.assertEquals("ProgrammingLanguage Edited", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals(Integer.toString(langs.get(2).getId()), page.messages.getMessage(0).getDetail());
+        Assertions.assertEquals(Integer.toString(languages.get(2).getId()), page.messages.getMessage(0).getDetail());
 
         // Act - submit
         page.btnSubmit.click();

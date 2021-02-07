@@ -36,8 +36,6 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable017Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: RowGroup - rowspan")
@@ -54,11 +52,11 @@ public class DataTable017Test extends AbstractDataTableTest {
 
         List<WebElement> rowElts = dataTable.getRowsWebElement();
         Assertions.assertNotNull(rowElts);
-        Assertions.assertEquals(langs.size(), rowElts.size());
+        Assertions.assertEquals(languages.size(), rowElts.size());
 
         List<Row> rows = dataTable.getRows();
         Assertions.assertNotNull(rows);
-        Assertions.assertEquals(langs.size(), rows.size());
+        Assertions.assertEquals(languages.size(), rows.size());
 
         Assertions.assertEquals("2", dataTable.getCell(0, 0).getWebElement().getAttribute("rowspan"));
         Assertions.assertEquals("COMPILED", dataTable.getCell(0, 0).getText());

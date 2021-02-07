@@ -45,8 +45,6 @@ import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable018Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: ListModel Basic & Paginator")
@@ -111,20 +109,14 @@ public class DataTable018Test extends AbstractDataTableTest {
         dataTable.sort("Name");
 
         // Assert
-        List<ProgrammingLanguage> langsSorted = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = sortBy(Comparator.comparing(ProgrammingLanguage::getName));
         assertRows(dataTable, langsSorted);
 
         // Act - descending
         dataTable.sort("Name");
 
         // Assert
-        langsSorted = langs.stream()
-                    .sorted((l1, l2) -> l2.getName().compareTo(l1.getName()))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        langsSorted = sortBy(Comparator.comparing(ProgrammingLanguage::getName).reversed());
         assertRows(dataTable, langsSorted);
 
         // Act
@@ -150,11 +142,7 @@ public class DataTable018Test extends AbstractDataTableTest {
         dataTable.filter("Name", "Java");
 
         // Assert
-        List<ProgrammingLanguage> langsFiltered = langs.stream()
-                    .sorted(Comparator.comparing(ProgrammingLanguage::getName))
-                    .filter(l -> l.getName().startsWith("Java"))
-                    .limit(3)
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsFiltered = filterByName("Java");
         assertRows(dataTable, langsFiltered);
 
         // Act
@@ -186,7 +174,7 @@ public class DataTable018Test extends AbstractDataTableTest {
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
 
         // Assert
-        Assertions.assertEquals(langs.size(), dataTable.getRows().size());
+        Assertions.assertEquals(languages.size(), dataTable.getRows().size());
 
         // Act
         dataTable.filter("Name", "Java");
@@ -197,7 +185,7 @@ public class DataTable018Test extends AbstractDataTableTest {
         selectRowsPerPage = new Select(dataTable.getPaginatorWebElement().findElement(By.className("ui-paginator-rpp-options")));
         Assertions.assertEquals("3", selectRowsPerPage.getFirstSelectedOption().getText());
         Assertions.assertEquals(3, dataTable.getRows().size());
-        assertRows(dataTable, langs.stream().limit(3).collect(Collectors.toList())); //implicit checks reset sort & filter
+        assertRows(dataTable, languages.stream().limit(3).collect(Collectors.toList())); //implicit checks reset sort & filter
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }

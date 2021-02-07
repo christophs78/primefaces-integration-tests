@@ -21,8 +21,6 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import java.util.List;
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -37,8 +35,6 @@ import org.primefaces.extensions.selenium.component.Messages;
 
 public class DataTable004Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: selection - single; click on row & events")
@@ -51,23 +47,25 @@ public class DataTable004Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(dataTable.getCell(2, 0).getWebElement()).click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("ProgrammingLanguage Selected"));
-        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(langs.get(2).getName()));
+        asssertMessage(page, "ProgrammingLanguage Selected", languages.get(2).getName());
 
         // Act - other row
         PrimeSelenium.guardAjax(dataTable.getCell(4, 0).getWebElement()).click();
 
         // Assert
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("ProgrammingLanguage Selected"));
-        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(langs.get(4).getName()));
+        asssertMessage(page, "ProgrammingLanguage Selected", languages.get(4).getName());
 
         // Act - submit button
         page.button.click();
 
         // Assert
         assertConfiguration(dataTable.getWidgetConfiguration());
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage"));
-        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(langs.get(4).getName()));
+        asssertMessage(page, "Selected ProgrammingLanguage", languages.get(4).getName());
+    }
+
+    private void asssertMessage(Page page, String summary, String detail) {
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains(summary));
+        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(detail));
     }
 
     private void assertConfiguration(JSONObject cfg) {

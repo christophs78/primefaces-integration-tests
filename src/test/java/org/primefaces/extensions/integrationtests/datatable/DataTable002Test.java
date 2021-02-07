@@ -32,15 +32,12 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
-public class DataTable002Test extends AbstractPrimePageTest {
-
-    private final ProgrammingLanguageLazyDataModel langs = new ProgrammingLanguageLazyDataModel();
+public class DataTable002Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
@@ -96,8 +93,8 @@ public class DataTable002Test extends AbstractPrimePageTest {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
-        List<ProgrammingLanguage> langsAsc = langs.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName)).collect(Collectors.toList());
-        List<ProgrammingLanguage> langsDesc = langs.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName).reversed())
+        List<ProgrammingLanguage> langsAsc = model.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName)).collect(Collectors.toList());
+        List<ProgrammingLanguage> langsDesc = model.getLangs().stream().sorted(Comparator.comparing(ProgrammingLanguage::getName).reversed())
                     .collect(Collectors.toList());
 
         // Act - ascending
@@ -135,7 +132,7 @@ public class DataTable002Test extends AbstractPrimePageTest {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
-        List<ProgrammingLanguage> langsFiltered = langs.getLangs().stream()
+        List<ProgrammingLanguage> langsFiltered = model.getLangs().stream()
                     .filter(l -> l.getFirstAppeared() >= 1998)
                     .sorted(Comparator.comparingInt(ProgrammingLanguage::getFirstAppeared))
                     .collect(Collectors.toList());
@@ -149,12 +146,8 @@ public class DataTable002Test extends AbstractPrimePageTest {
         List<Row> rows = dataTable.getRows();
         Assertions.assertNotNull(rows);
         Assertions.assertEquals(10, rows.size()); //one page
-        //TODO: implement dataTable.getTotalRowCount()
-        //Assertions.assertEquals(langsFiltered.size(), dataTable.getTotalRowCount());
-
         Assertions.assertEquals(langsFiltered.get(0).getName(), rows.get(0).getCell(1).getText());
         Assertions.assertEquals(langsFiltered.get(1).getName(), rows.get(1).getCell(1).getText());
-
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 

@@ -21,8 +21,6 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import java.util.List;
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -36,8 +34,6 @@ import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable011Test extends AbstractDataTableTest {
-
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
 
     @Test
     @Order(1)
@@ -54,6 +50,7 @@ public class DataTable011Test extends AbstractDataTableTest {
         // Assert
         page.dataTable.getRows()
                     .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
+        assertConfiguration(page.dataTable.getWidgetConfiguration());
     }
 
     @Test
@@ -71,6 +68,7 @@ public class DataTable011Test extends AbstractDataTableTest {
         // Assert
         page.dataTable.getRows()
                     .forEach(row -> Assertions.assertNotEquals("1", row.getCell(0).getText()));
+        assertConfiguration(page.dataTable.getWidgetConfiguration());
     }
 
     private void assertConfiguration(JSONObject cfg) {

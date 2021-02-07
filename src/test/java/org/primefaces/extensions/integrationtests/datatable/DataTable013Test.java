@@ -22,7 +22,6 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -35,8 +34,6 @@ import org.primefaces.extensions.selenium.component.DataTable;
 
 public class DataTable013Test extends AbstractDataTableTest {
 
-    private final List<ProgrammingLanguage> langs = new ProgrammingLanguageService().getLangs();
-
     @Test
     @Order(1)
     @DisplayName("DataTable: multiple sort; sortBy on p:column; initial sort via sortMeta on dataTable")
@@ -48,9 +45,7 @@ public class DataTable013Test extends AbstractDataTableTest {
         // Act
 
         // Assert - initial sorting
-        List<ProgrammingLanguage> langsSorted = langs.stream()
-                    .sorted(new ProgrammingLanguageSorterFirstAppearedDescNameAsc())
-                    .collect(Collectors.toList());
+        List<ProgrammingLanguage> langsSorted = sortByNoLimit(new ProgrammingLanguageSorterFirstAppearedDescNameAsc());
         assertRows(dataTable, langsSorted);
 
         assertConfiguration(dataTable.getWidgetConfiguration());
