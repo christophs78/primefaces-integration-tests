@@ -112,7 +112,7 @@ public class DataTable019Test extends AbstractDataTableTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @DisplayName("DataTable: Global Filter Function clearing field resets all rows")
     public void testGlobalFilterFunctionClear(Page page) {
         // Arrange
@@ -127,6 +127,29 @@ public class DataTable019Test extends AbstractDataTableTest {
 
         // Assert
         Assertions.assertEquals(5, langs.size());
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("DataTable: Column Filter Function finds results by type")
+    public void testColumnFilterFunctionByType(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        dataTable.selectPage(1);
+        dataTable.sort("Type");
+
+        // Act
+        dataTable.filter("Type", "INTERPRETED");
+
+        // Assert
+        List<ProgrammingLanguage> langsFiltered = langs.stream()
+                    .sorted(Comparator.comparing(ProgrammingLanguage::getType))
+                    .filter(l -> l.getType().name().startsWith("INTERPRETED"))
+                    .limit(3)
+                    .collect(Collectors.toList());
+        Assertions.assertEquals(3, langsFiltered.size());
+        assertRows(dataTable, langsFiltered);
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 

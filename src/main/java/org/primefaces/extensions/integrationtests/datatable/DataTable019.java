@@ -24,6 +24,7 @@ package org.primefaces.extensions.integrationtests.datatable;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -64,6 +65,11 @@ public class DataTable019 implements Serializable {
                     || lang.getType().name().toLowerCase(locale).contains(filterText)
                     || lang.getFirstAppeared() < filterInt
                     || lang.getId() == filterInt;
+    }
+
+    public boolean columnFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = Objects.toString(filter);
+        return Objects.equals(filterText, Objects.toString(value));
     }
 
     private int getInteger(String string) {
