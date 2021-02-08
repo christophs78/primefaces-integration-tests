@@ -49,7 +49,7 @@ public class Messages001Test extends AbstractPrimePageTest {
         // Assert
         assertDisplayed(messages);
         Assertions.assertEquals(1, messages.getAllMessages().size());
-        Assertions.assertEquals("Value 2: must not be null", messages.getMessage(0).getSummary());
+        Assertions.assertEquals("Value 2: may not be null", messages.getMessage(0).getSummary());
         Assertions.assertEquals(Severity.ERROR, messages.getMessage(0).getSeverity());
         Assertions.assertTrue(PrimeSelenium.hasCssClass(page.inputTextVal2, "ui-state-error"));
 
