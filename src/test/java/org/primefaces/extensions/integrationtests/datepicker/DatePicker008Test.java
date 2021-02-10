@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
@@ -49,10 +50,10 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         // Assert
-        assertDate(datePicker.getPanel(), "July", "1985");
+        assertDate(panel, "July", "1985");
         LocalDate newValue = datePicker.getValueAsLocalDate();
         Assertions.assertEquals(value, newValue);
         assertMessage(page, "1985-07-04");
@@ -70,11 +71,11 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
         datePicker.hidePanel();
 
         // Assert
-        assertNotDisplayed(datePicker.getPanel());
+        assertNotDisplayed(panel);
         assertConfiguration(datePicker.getWidgetConfiguration());
     }
 
@@ -88,7 +89,6 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
         datePicker.getNextMonthLink().click();
         datePicker.selectDay("31");
 
@@ -111,7 +111,6 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel();
         datePicker.getPreviousMonthLink().click();
         datePicker.selectDay("8");
 

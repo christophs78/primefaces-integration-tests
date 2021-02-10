@@ -52,10 +52,9 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "February", "1978");
 
         // Assert Submit Value
@@ -76,7 +75,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
         datePicker.getNextMonthLink().click();
         datePicker.selectDay("25");
 
@@ -102,7 +100,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
         datePicker.getPreviousMonthLink().click();
         datePicker.selectDay("8");
 
@@ -124,8 +121,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
     public void testHighlight(Page page) {
         // Arrange
         DatePicker datePicker = page.datePicker;
-
-        // Act
         LocalDate selectedDate = LocalDate.now();
         if (selectedDate.getDayOfMonth() == 1) {
             selectedDate = selectedDate.plusMonths(1).minusDays(1);
@@ -133,14 +128,16 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         else {
             selectedDate = selectedDate.minusDays(1);
         }
+
+        // Act
         datePicker.setValue(selectedDate);
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         //Assert panel
         String currentDayOfMonth = ((Integer) LocalDate.now().getDayOfMonth()).toString();
         String selectedDayOfMonth = ((Integer) selectedDate.getDayOfMonth()).toString();
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(selectedDayOfMonth)), "ui-state-active"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText(selectedDayOfMonth)), "ui-state-active"));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
     }
 
     @Test
@@ -153,11 +150,11 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.disable();
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         // Assert
         Assertions.assertFalse(datePicker.isEnabled());
-        assertNotDisplayed(datePicker.getPanel());
+        assertNotDisplayed(panel);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertConfiguration(datePicker.getWidgetConfiguration(), LocalDate.now().format(dateTimeFormatter));
     }
@@ -173,11 +170,11 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.enable();
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         // Assert
         Assertions.assertTrue(datePicker.isEnabled());
-        assertDisplayed(datePicker.getPanel());
+        assertDisplayed(panel);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertConfiguration(datePicker.getWidgetConfiguration(), LocalDate.now().format(dateTimeFormatter));
     }
@@ -198,7 +195,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         Assertions.assertTrue(page.messages.isDisplayed());
         Assertions.assertEquals(1, page.messages.getAllMessages().size());
         Assertions.assertTrue(page.messages.getAllMessages().get(0).getDetail().contains("could not be understood as a date"));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertNoJavascriptErrors();
     }
 
@@ -217,7 +213,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         // Assert
         Assertions.assertFalse(page.messages.isDisplayed());
         Assertions.assertEquals(0, page.messages.getAllMessages().size());
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertNoJavascriptErrors();
     }
 

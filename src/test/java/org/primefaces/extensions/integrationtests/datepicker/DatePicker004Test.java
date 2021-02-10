@@ -51,10 +51,9 @@ public class DatePicker004Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "February", "1978");
         assertTime(panel, "11", "55", "19");
         datePicker.hidePanel();
@@ -79,10 +78,9 @@ public class DatePicker004Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setDate(value);
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "February", "1978");
         assertTime(panel, "11", "55", "19");
         datePicker.hidePanel();
@@ -107,10 +105,9 @@ public class DatePicker004Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "February", "1978");
         assertTime(panel, "11", "55", null);
         datePicker.hidePanel();
@@ -132,16 +129,15 @@ public class DatePicker004Test extends AbstractDatePickerTest {
         Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
 
         // Act
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "August", "2020");
         assertTime(panel, "22", "20", "19");
         datePicker.hidePanel();
 
         // Act - click Clear button
-        datePicker.showPanel();
+        panel = datePicker.showPanel();
         LocalDateTime now = LocalDateTime.now();
         datePicker.getClearButton().click();
 
@@ -161,16 +157,15 @@ public class DatePicker004Test extends AbstractDatePickerTest {
         Assertions.assertEquals(LocalDateTime.of(2020, 8, 20, 22, 20, 19), datePicker.getValue());
 
         // Act
-        datePicker.showPanel();
+        WebElement panel = datePicker.showPanel();
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         assertDate(panel, "August", "2020");
         assertTime(panel, "22", "20", "19");
         datePicker.hidePanel();
 
         // Act - click Today button
-        datePicker.showPanel();
+        panel = datePicker.showPanel();
         datePicker.getTodayButton().click();
 
         // Assert - clear button reset to NOW
@@ -189,8 +184,6 @@ public class DatePicker004Test extends AbstractDatePickerTest {
         Assertions.assertTrue(cfg.getBoolean("showTime"));
         Assertions.assertFalse(cfg.getBoolean("inline"));
     }
-
-
 
     public static class Page extends AbstractPrimePage {
 

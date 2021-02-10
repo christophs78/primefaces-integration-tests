@@ -45,10 +45,9 @@ public class DatePicker005Test extends AbstractDatePickerTest {
         DatePicker datePicker = page.datePicker;
 
         // Act
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel
-        WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText("20")), "ui-state-active"));
         Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText("25")), "ui-state-active"));
@@ -70,8 +69,7 @@ public class DatePicker005Test extends AbstractDatePickerTest {
         DatePicker datePicker = page.datePicker;
 
         // Act
-        datePicker.showPanel(); // focus to bring up panel
-        WebElement panel = datePicker.getPanel();
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
         Assertions.assertNotNull(panel);
         panel.findElement(By.linkText("3")).click();
         panel.findElement(By.linkText("5")).click();

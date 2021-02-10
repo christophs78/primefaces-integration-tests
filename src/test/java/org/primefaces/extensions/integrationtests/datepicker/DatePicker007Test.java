@@ -46,10 +46,9 @@ public class DatePicker007Test extends AbstractDatePickerTest {
         Assertions.assertEquals(LocalTime.of(12, 4), datePicker.getValue().toLocalTime());
 
         // Act
-        datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel(); // focus to bring up panel
 
         // Assert Panel (12:04 AM)
-        WebElement panel = datePicker.getPanel();
         Assertions.assertNotNull(panel);
         String text = panel.getText();
         Assertions.assertTrue(text.contains("12"));
