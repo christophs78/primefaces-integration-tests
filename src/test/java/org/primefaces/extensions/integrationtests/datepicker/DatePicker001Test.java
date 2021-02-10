@@ -33,7 +33,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
@@ -135,7 +134,7 @@ public class DatePicker001Test extends AbstractDatePickerTest {
             selectedDate = selectedDate.minusDays(1);
         }
         datePicker.setValue(selectedDate);
-        datePicker.click(); // focus to bring up panel
+        datePicker.showPanel();
 
         //Assert panel
         String currentDayOfMonth = ((Integer) LocalDate.now().getDayOfMonth()).toString();
@@ -202,7 +201,6 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         assertNoJavascriptErrors();
     }
-
 
     @Test
     @Order(8)
