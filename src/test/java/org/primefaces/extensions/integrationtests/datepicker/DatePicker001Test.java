@@ -33,6 +33,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DatePicker;
@@ -133,13 +134,12 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(selectedDate);
-        WebElement panel = datePicker.showPanel();
 
         //Assert panel
         String currentDayOfMonth = ((Integer) LocalDate.now().getDayOfMonth()).toString();
+        assertDay(datePicker, currentDayOfMonth, "ui-state-highlight");
         String selectedDayOfMonth = ((Integer) selectedDate.getDayOfMonth()).toString();
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText(selectedDayOfMonth)), "ui-state-active"));
-        Assertions.assertTrue(PrimeSelenium.hasCssClass(panel.findElement(By.linkText(currentDayOfMonth)), "ui-state-highlight"));
+        assertDay(datePicker, selectedDayOfMonth, "ui-state-active");
     }
 
     @Test
@@ -216,6 +216,13 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         Assertions.assertFalse(page.messages.isDisplayed());
         Assertions.assertEquals(0, page.messages.getAllMessages().size());
         assertNoJavascriptErrors();
+    }
+
+    private void assertDay(DatePicker datePicker, String day, String styleClass) {
+        PrimeSelenium.wait(100);
+        datePicker.showPanel();
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.elementToBeClickable(datePicker.getPanel().findElement(By.linkText(day))));
+        Assertions.assertTrue(PrimeSelenium.hasCssClass(datePicker.getPanel().findElement(By.linkText(day)), styleClass));
     }
 
     private void assertConfiguration(JSONObject cfg, String defaultDate) {
