@@ -53,10 +53,9 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        WebElement panel = datePicker.showPanel();
 
         // Assert Panel
-        assertDate(panel, "February", "1978");
+        assertDate(datePicker.showPanel(), "February", "1978");
 
         // Assert Submit Value
         page.button.click();
