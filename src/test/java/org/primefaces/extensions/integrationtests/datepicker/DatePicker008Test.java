@@ -89,6 +89,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
+        datePicker.showPanel();
         datePicker.getNextMonthLink().click();
         datePicker.selectDay("31");
 
@@ -111,6 +112,7 @@ public class DatePicker008Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
+        datePicker.showPanel();
         datePicker.getPreviousMonthLink().click();
         datePicker.selectDay("8");
 

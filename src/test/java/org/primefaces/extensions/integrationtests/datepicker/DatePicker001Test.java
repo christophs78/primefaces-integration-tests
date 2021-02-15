@@ -52,7 +52,7 @@ public class DatePicker001Test extends AbstractDatePickerTest {
 
         // Act
         datePicker.setValue(value);
-        WebElement panel = datePicker.showPanel(); // focus to bring up panel
+        WebElement panel = datePicker.showPanel();
 
         // Assert Panel
         assertDate(panel, "February", "1978");
@@ -73,6 +73,7 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
         datePicker.setValue(value);
+        datePicker.showPanel();
 
         // Act
         datePicker.getNextMonthLink().click();
@@ -98,6 +99,7 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
         datePicker.setValue(value);
+        datePicker.showPanel();
 
         // Act
         datePicker.getPreviousMonthLink().click();
