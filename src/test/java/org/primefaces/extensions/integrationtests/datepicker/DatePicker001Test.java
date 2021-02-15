@@ -72,9 +72,9 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         // Arrange
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
+        datePicker.setValue(value);
 
         // Act
-        datePicker.setValue(value);
         datePicker.getNextMonthLink().click();
         datePicker.selectDay("25");
 
@@ -97,9 +97,9 @@ public class DatePicker001Test extends AbstractDatePickerTest {
         // Arrange
         DatePicker datePicker = page.datePicker;
         LocalDate value = LocalDate.of(1978, 2, 19);
+        datePicker.setValue(value);
 
         // Act
-        datePicker.setValue(value);
         datePicker.getPreviousMonthLink().click();
         datePicker.selectDay("8");
 

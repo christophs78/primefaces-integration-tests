@@ -147,8 +147,6 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
         System.out.println("ConfirmPopup Config = " + cfg);
         Assertions.assertTrue(cfg.getBoolean("global"));
         Assertions.assertTrue(cfg.getBoolean("dismissable"));
-        Assertions.assertEquals("fade", cfg.getString("showEffect"));
-        Assertions.assertEquals("fade", cfg.getString("hideEffect"));
         Assertions.assertEquals("@(body)", cfg.getString("appendTo"));
     }
 
