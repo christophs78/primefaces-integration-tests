@@ -171,14 +171,13 @@ public class DataTable018Test extends AbstractDataTableTest {
         dataTable.selectPage(1);
         dataTable.sort("Name");
         selectRowsPerPage.selectByVisibleText("10");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(dataTable));
 
         // Assert
         Assertions.assertEquals(languages.size(), dataTable.getRows().size());
 
         // Act
         dataTable.filter("Name", "Java");
-        PrimeSelenium.waitGui().until(PrimeExpectedConditions.jQueryNotActive());
         PrimeSelenium.guardAjax(page.buttonResetTable).click();
 
         // Assert
