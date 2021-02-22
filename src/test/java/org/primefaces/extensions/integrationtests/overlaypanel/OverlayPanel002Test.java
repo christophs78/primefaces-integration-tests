@@ -92,7 +92,7 @@ public class OverlayPanel002Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertFalse(overlayPanel.isDisplayed());
-        assertConfiguration(overlayPanel.getWidgetConfiguration(), "@(body)");
+        assertConfiguration(overlayPanel.getWidgetConfiguration(), "");
     }
 
     @Test
@@ -133,7 +133,7 @@ public class OverlayPanel002Test extends AbstractPrimePageTest {
         // Assert
         Assertions.assertTrue(page.dialog.isDisplayed());
         Assertions.assertTrue(overlayPanel.isDisplayed());
-        assertConfiguration(overlayPanel.getWidgetConfiguration(), "@(body)");
+        assertConfiguration(overlayPanel.getWidgetConfiguration(), "form:btnDestroy");
     }
 
     private void assertConfiguration(JSONObject cfg, String appendTo) {
@@ -141,7 +141,13 @@ public class OverlayPanel002Test extends AbstractPrimePageTest {
         System.out.println("OverlayPanel Config = " + cfg);
 
         if (cfg.has("appendTo")) {
-            Assertions.assertEquals(appendTo, cfg.getString("appendTo"));
+            String widgetAppendTo = cfg.getString("appendTo");
+            if (widgetAppendTo.length() > 0) {
+                Assertions.assertEquals(appendTo, cfg.getString("appendTo"));
+            }
+            else {
+                Assertions.assertEquals("", cfg.getString("appendTo"));
+            }
         }
         Assertions.assertTrue(cfg.getBoolean("dismissable"));
         Assertions.assertEquals("form:btnShow", cfg.getString("target"));

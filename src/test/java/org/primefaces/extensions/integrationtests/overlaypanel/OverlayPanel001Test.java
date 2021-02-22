@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -103,25 +104,13 @@ public class OverlayPanel001Test extends AbstractPrimePageTest {
         page.btnDestroy.click();
 
         // Assert
-        Assertions.assertFalse(overlayPanel.isDisplayed());
-        assertConfiguration(overlayPanel.getWidgetConfiguration());
-    }
-
-    @Test
-    @Order(4)
-    @DisplayName("OverlayPanel: Change appendTo from @(body) to the Dialog")
-    public void testAppendToDialog(Page page) {
-        // Arrange
-        OverlayPanel overlayPanel = page.overlayPanel;
-        overlayPanel.show();
-        Assertions.assertTrue(overlayPanel.isDisplayed());
-
-        // Act
-        page.btnDestroy.click();
-
-        // Assert
-        Assertions.assertFalse(overlayPanel.isDisplayed());
-        assertConfiguration(overlayPanel.getWidgetConfiguration());
+        try {
+            overlayPanel.isDisplayed();
+            Assertions.fail("OverlayPanel should have been destroyed.");
+        }
+        catch (NoSuchElementException ex) {
+            // overlay panel should be destroyed
+        }
     }
 
     private void assertConfiguration(JSONObject cfg) {

@@ -41,7 +41,6 @@ public class OverlayPanel002 implements Serializable {
     @PostConstruct
     public void init() {
         rendered = true;
-        appendTo = "@(body)";
     }
 
     public void destroy() {
