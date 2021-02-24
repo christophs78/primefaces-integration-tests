@@ -29,9 +29,12 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeExpectedConditions;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.ConfirmPopup;
 import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.model.Msg;
 
 public class ConfirmPopup001Test extends AbstractPrimePageTest {
 
@@ -84,7 +87,7 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertFalse(popup.isVisible());
-        Assertions.assertTrue(page.message.isEmpty());
+        Assertions.assertTrue(page.messages.isEmpty());
         assertConfiguration(popup.getWidgetConfiguration());
     }
 
@@ -102,7 +105,7 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertFalse(popup.isVisible());
-        Assertions.assertEquals("You have accepted", page.message.getMessage(0).getDetail());
+        assertMessage(page, "You have accepted");
         assertConfiguration(popup.getWidgetConfiguration());
     }
 
@@ -120,7 +123,7 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertFalse(popup.isVisible());
-        Assertions.assertTrue(page.message.isEmpty());
+        Assertions.assertTrue(page.messages.isEmpty());
         assertConfiguration(popup.getWidgetConfiguration());
     }
 
@@ -138,8 +141,15 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
 
         // Assert
         Assertions.assertFalse(popup.isVisible());
-        Assertions.assertEquals("Record deleted", page.message.getMessage(0).getDetail());
+        assertMessage(page, "Record deleted");
         assertConfiguration(popup.getWidgetConfiguration());
+    }
+
+    private void assertMessage(Page page, String message) {
+        Messages messages = page.messages;
+        PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleInViewport(messages));
+        Msg msg = messages.getMessage(0);
+        Assertions.assertEquals(message, msg.getDetail());
     }
 
     private void assertConfiguration(JSONObject cfg) {
@@ -156,7 +166,7 @@ public class ConfirmPopup001Test extends AbstractPrimePageTest {
         ConfirmPopup popup;
 
         @FindBy(id = "form:message")
-        Messages message;
+        Messages messages;
 
         @FindBy(id = "form:confirm")
         CommandButton confirm;
