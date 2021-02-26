@@ -50,17 +50,17 @@ public class DatePicker002Test extends AbstractDatePickerTest {
         Assertions.assertNotNull(panel);
         List<WebElement> elements = panel.findElements(By.cssSelector("table.ui-datepicker-calendar"));
         Assertions.assertNotNull(elements);
-        Assertions.assertEquals(elements.size(), 1);
+        Assertions.assertEquals(1, elements.size());
         WebElement table = elements.get(0);
 
         List<WebElement> days = table.findElements(By.cssSelector("td a"));
         Assertions.assertNotNull(days);
-        Assertions.assertEquals(days.size(), 28);
+        Assertions.assertEquals(28, days.size());
 
         List<WebElement> daysOtherMonths = table.findElements(By.cssSelector("td.ui-datepicker-other-month"));
         Assertions.assertNotNull(daysOtherMonths);
-        Assertions.assertEquals(daysOtherMonths.size(), 14);
-        Assertions.assertEquals(daysOtherMonths.stream().filter(dayOtherMonth -> dayOtherMonth.isDisplayed()).count(), 0);
+        Assertions.assertEquals(7, daysOtherMonths.size());
+        Assertions.assertEquals(0, daysOtherMonths.stream().filter(dayOtherMonth -> dayOtherMonth.isDisplayed()).count());
     }
 
     @Test
@@ -87,8 +87,8 @@ public class DatePicker002Test extends AbstractDatePickerTest {
 
         List<WebElement> daysOtherMonths = table.findElements(By.cssSelector("td.ui-datepicker-other-month"));
         Assertions.assertNotNull(daysOtherMonths);
-        Assertions.assertEquals(14, daysOtherMonths.size());
-        Assertions.assertEquals(14, daysOtherMonths.stream().filter(dayOtherMonth -> dayOtherMonth.isDisplayed()).count());
+        Assertions.assertEquals(7, daysOtherMonths.size());
+        Assertions.assertEquals(7, daysOtherMonths.stream().filter(dayOtherMonth -> dayOtherMonth.isDisplayed()).count());
     }
 
     public static class Page extends AbstractPrimePage {
