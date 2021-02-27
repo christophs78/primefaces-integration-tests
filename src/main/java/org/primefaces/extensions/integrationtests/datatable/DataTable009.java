@@ -22,6 +22,8 @@
 package org.primefaces.extensions.integrationtests.datatable;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,7 @@ public class DataTable009 implements Serializable {
 
     private List<ProgrammingLanguage> progLanguages;
     private List<ProgrammingLanguage> filteredProgLanguages;
+    private List<Integer> allYearsSince1990;
 
     @Inject
     private ProgrammingLanguageService service;
@@ -52,6 +55,11 @@ public class DataTable009 implements Serializable {
     @PostConstruct
     public void init() {
         progLanguages = service.getLangs();
+
+        allYearsSince1990 = new ArrayList<>();
+        for (int year = 1990; year<= LocalDate.now().getYear(); year++) {
+            allYearsSince1990.add(year);
+        }
     }
 
     public void filterListener(FilterEvent filterEvent) {
@@ -71,5 +79,9 @@ public class DataTable009 implements Serializable {
         }
 
         TestUtils.addMessage("FilteredValue(s)", filterValuesFlat);
+    }
+
+    public List<Integer> firstAppearedYearsWithProgLanguages() {
+        return progLanguages.stream().map(p -> p.getFirstAppeared()).distinct().sorted().collect(Collectors.toList());
     }
 }

@@ -17,7 +17,7 @@
             </p:messages>
 
             <p:dataTable id="datatable" value="#{dataTable009.progLanguages}" var="lang" filteredValue="#{dataTable009.filteredProgLanguages}"
-                         filterEvent="enter">
+                         filterEvent="enter" widgetVar="progLanguagesTables">
                 <p:ajax event="filter" listener="#{dataTable009.filterListener}" update="form:msgs"></p:ajax>
 
                 <p:column headerText="ID" sortBy="#{lang.id}">
@@ -28,8 +28,16 @@
                     <h:outputText value="#{lang.name}"/>
                 </p:column>
 
-                <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}" filterMatchMode="gte">
-                    <h:outputText value="#{lang.firstAppeared}"/>
+                <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}" filterBy="#{lang.firstAppeared}">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('progLanguagesTables').filter()" id="firstAppearedFilter">
+                            <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true"/>
+                            <f:selectItems value="#{dataTable009.firstAppearedYearsWithProgLanguages()}"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <p:selectOneMenu value="#{lang.firstAppeared}" id="firstAppeared">
+                        <f:selectItems value="#{dataTable009.allYearsSince1990}" />
+                    </p:selectOneMenu>
                 </p:column>
             </p:dataTable>
 

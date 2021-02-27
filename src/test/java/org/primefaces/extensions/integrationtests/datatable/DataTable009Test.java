@@ -26,11 +26,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.SelectOneMenu;
+import org.primefaces.extensions.selenium.component.model.datatable.Row;
 
 public class DataTable009Test extends AbstractDataTableTest {
 
@@ -65,6 +69,48 @@ public class DataTable009Test extends AbstractDataTableTest {
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("DataTable: filter - issue 7026 - https://github.com/primefaces/primefaces/issues/7026")
+    public void testFilterIssue7026(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act - do some filtering
+        dataTable.sort("Name");
+        page.firstAppearedFilter.select("2000");
+        PrimeExpectedConditions.visibleAndAnimationComplete(page.messages);
+
+        // Assert
+        validateFirstAppeared4EachRow(dataTable, "2000");
+        Assertions.assertEquals("FilterValue for firstAppeared", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("2000", page.messages.getMessage(0).getDetail());
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
+        Assertions.assertEquals("C#", page.messages.getMessage(1).getDetail());
+
+        // Act - do some other filtering
+        page.firstAppearedFilter.select("1995");
+
+        // Assert
+        validateFirstAppeared4EachRow(dataTable, "1995");
+        Assertions.assertEquals("FilterValue for firstAppeared", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("1995", page.messages.getMessage(0).getDetail());
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
+        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
+
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    private void validateFirstAppeared4EachRow(DataTable dataTable, String firstAppearedExpected) {
+        int rowNumber = 0;
+        for (Row row : dataTable.getRows()) {
+            SelectOneMenu firstAppeared = PrimeSelenium.createFragment(SelectOneMenu.class, By.id("form:datatable:" + rowNumber + ":firstAppeared"));
+            Assertions.assertEquals(firstAppearedExpected, firstAppeared.getSelectedLabel());
+            rowNumber++;
+        }
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);
@@ -77,6 +123,9 @@ public class DataTable009Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:datatable")
         DataTable dataTable;
+
+        @FindBy(id = "form:datatable:firstAppearedFilter")
+        SelectOneMenu firstAppearedFilter;
 
         @Override
         public String getLocation() {
