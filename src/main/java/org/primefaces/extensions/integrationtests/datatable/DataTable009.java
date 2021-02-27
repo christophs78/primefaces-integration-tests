@@ -81,6 +81,15 @@ public class DataTable009 implements Serializable {
         TestUtils.addMessage("FilteredValue(s)", filterValuesFlat);
     }
 
+    public void reportFilteredProgLanguages() {
+        String filterValuesFlat = "null";
+        if (filteredProgLanguages != null) {
+            filterValuesFlat = filteredProgLanguages.stream().map(ProgrammingLanguage::getName).collect(Collectors.joining(","));
+        }
+
+        TestUtils.addMessage("FilteredValue(s)", filterValuesFlat);
+    }
+
     public List<Integer> firstAppearedYearsWithProgLanguages() {
         return progLanguages.stream().map(p -> p.getFirstAppeared()).distinct().sorted().collect(Collectors.toList());
     }
