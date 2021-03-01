@@ -29,12 +29,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
-import org.primefaces.extensions.selenium.component.Chips;
 import org.primefaces.extensions.selenium.component.CommandButton;
+import org.primefaces.extensions.selenium.component.InputText;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.Slider;
-
-import java.util.List;
 
 public class Slider001Test extends AbstractPrimePageTest {
 
@@ -44,8 +42,7 @@ public class Slider001Test extends AbstractPrimePageTest {
     public void testIntValue(Page page) {
         // Arrange
         Slider slider = page.sliderInt;
-
-        // Assert initial state
+        InputText inputText = page.inputInt;
         Assertions.assertEquals(5, slider.getValue().intValue());
 
         // Act - add value
@@ -55,10 +52,8 @@ public class Slider001Test extends AbstractPrimePageTest {
         page.button.click();
 
         // Assert
-        //Assertions.assertEquals("Defect, Feature, Question", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals(8, slider.getValue().intValue());
-
-        assertConfiguration(slider.getWidgetConfiguration());
+        assertValue(slider, inputText, 8);
+        assertIntConfiguration(slider.getWidgetConfiguration());
     }
 
     @Test
@@ -67,8 +62,7 @@ public class Slider001Test extends AbstractPrimePageTest {
     public void testFloatValue(Page page) {
         // Arrange
         Slider slider = page.sliderfloat;
-
-        // Assert initial state
+        InputText inputText = page.inputFloat;
         Assertions.assertEquals(3.14f, slider.getValue().floatValue());
 
         // Act - add value
@@ -78,16 +72,176 @@ public class Slider001Test extends AbstractPrimePageTest {
         page.button.click();
 
         // Assert
-        //Assertions.assertEquals("Defect, Feature, Question", page.messages.getMessage(0).getSummary());
-        Assertions.assertEquals(9.9f, slider.getValue().floatValue());
+        assertValue(slider, inputText, 9.9f);
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
 
-        assertConfiguration(slider.getWidgetConfiguration());
+    @Test
+    @Order(3)
+    @DisplayName("Slider: Negative not accepted if min >= 0")
+    public void testNegativeRejected(Page page) {
+        // Arrange
+        Slider slider = page.sliderInt;
+        InputText inputText = page.inputInt;
+        Assertions.assertEquals(5, slider.getValue().intValue());
+
+        // Act - add value
+        inputText.setValue("-7");
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        assertValue(slider, inputText, 7);
+        assertIntConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Slider: Decimal not accepted if integer only and max reached")
+    public void testDecimalRejected(Page page) {
+        // Arrange
+        Slider slider = page.sliderInt;
+        InputText inputText = page.inputInt;
+        Assertions.assertEquals(5, slider.getValue().intValue());
+
+        // Act - add value
+        inputText.setValue("6.4");
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals(50, slider.getValue().intValue());
+        Assertions.assertEquals("64", inputText.getValue());
+        assertIntConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Slider: Negative accepted if min < 0")
+    public void testNegativeAccepted(Page page) {
+        // Arrange
+        Slider slider = page.sliderfloat;
+        InputText inputText = page.inputFloat;
+        Assertions.assertEquals(3.14f, slider.getValue().floatValue());
+
+        // Act - add value
+        inputText.setValue("-3.87");
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        assertValue(slider, inputText, -3.87f);
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Slider: Only allow one negative symbol")
+    public void testMultipleNegativesRejected(Page page) {
+        // Arrange
+        Slider slider = page.sliderfloat;
+        InputText inputText = page.inputFloat;
+        Assertions.assertEquals(3.14f, slider.getValue().floatValue());
+
+        // Act - add value
+        inputText.setValue("-4.5-6");
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        assertValue(slider, inputText, -4.56f);
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Slider: Only allow one decimal symbol")
+    public void testMultipleDecimalsRejected(Page page) {
+        // Arrange
+        Slider slider = page.sliderfloat;
+        InputText inputText = page.inputFloat;
+        Assertions.assertEquals(3.14f, slider.getValue().floatValue());
+
+        // Act - add value
+        inputText.setValue("2.9...8");
+
+        // Act - submit
+        page.button.click();
+
+        // Assert
+        assertValue(slider, inputText, 2.98f);
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(7)
+    @DisplayName("Slider: Don't allow value past minimum")
+    public void testMinimum(Page page) {
+        // Arrange
+        Slider slider = page.sliderfloat;
+        InputText inputText = page.inputFloat;
+        Assertions.assertEquals(3.14f, slider.getValue().floatValue());
+
+        // Act - add value
+        slider.setValue(-11.0f);
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals(-10.0f, slider.getValue().floatValue());
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(8)
+    @DisplayName("Slider: Don't allow value past maximum")
+    public void testMaximum(Page page) {
+        // Arrange
+        Slider slider = page.sliderfloat;
+        InputText inputText = page.inputFloat;
+        Assertions.assertEquals(3.14f, slider.getValue().floatValue());
+
+        // Act - add value
+        slider.setValue(11.99f);
+        page.button.click();
+
+        // Assert
+        Assertions.assertEquals(10.0f, slider.getValue().floatValue());
+        assertFloatConfiguration(slider.getWidgetConfiguration());
+    }
+
+    private void assertValue(Slider slider, InputText inputText, Number value) {
+        if (value instanceof Integer) {
+            Assertions.assertEquals(value.intValue(), slider.getValue().intValue());
+        }
+        else {
+            Assertions.assertEquals(value.floatValue(), slider.getValue().floatValue());
+        }
+        Assertions.assertEquals(value.toString(), inputText.getValue());
+    }
+
+    private void assertFloatConfiguration(JSONObject cfg) {
+        assertConfiguration(cfg);
+        Assertions.assertEquals(-10, cfg.getInt("min"));
+        Assertions.assertEquals(10, cfg.getInt("max"));
+        Assertions.assertEquals("0.01", cfg.get("step").toString());
+    }
+
+    private void assertIntConfiguration(JSONObject cfg) {
+        assertConfiguration(cfg);
+        Assertions.assertEquals(0, cfg.getInt("min"));
+        Assertions.assertEquals(50, cfg.getInt("max"));
+        Assertions.assertEquals(1, cfg.getInt("step"));
     }
 
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("Slider Config = " + cfg);
         Assertions.assertTrue(cfg.has("id"));
+        Assertions.assertTrue(cfg.getBoolean("animate"));
     }
 
     public static class Page extends AbstractPrimePage {
@@ -99,6 +253,12 @@ public class Slider001Test extends AbstractPrimePageTest {
 
         @FindBy(id = "form:sliderFloat")
         Slider sliderfloat;
+
+        @FindBy(id = "form:int")
+        InputText inputInt;
+
+        @FindBy(id = "form:float")
+        InputText inputFloat;
 
         @FindBy(id = "form:button")
         CommandButton button;

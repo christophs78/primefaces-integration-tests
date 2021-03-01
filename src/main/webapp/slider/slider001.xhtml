@@ -13,17 +13,17 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
             <p>
-                <h:inputText id="int" value="#{slider001.val1}" />
-                <p:slider id="sliderInt" for="int" minValue="0" maxValue="50" />
+                <h:inputText id="int" value="#{slider001.val1}"/>
+                <p:slider id="sliderInt" for="int" minValue="0" maxValue="50"/>
             </p>
 
             <p>
-                <h:inputText id="float" value="#{slider001.val2}" />
-                <p:slider id="sliderFloat" for="float" minValue="-10" maxValue="10" step="0.01" />
+                <p:inputText id="float" value="#{slider001.val2}"/>
+                <p:slider id="sliderFloat" for="float" minValue="-10" maxValue="10" step="0.01"/>
             </p>
 
             <p:commandButton id="button" value="Submit" update="@form" action="#{slider001.submit}"/>
