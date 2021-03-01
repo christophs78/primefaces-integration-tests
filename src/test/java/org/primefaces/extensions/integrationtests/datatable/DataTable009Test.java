@@ -31,6 +31,7 @@ import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeExpectedConditions;
 import org.primefaces.extensions.selenium.PrimeSelenium;
+import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.Messages;
 import org.primefaces.extensions.selenium.component.SelectOneMenu;
@@ -55,7 +56,15 @@ public class DataTable009Test extends AbstractDataTableTest {
         Assertions.assertEquals("FilterValue for name", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("Java", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
+//        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
+        Assertions.assertEquals("null", page.messages.getMessage(1).getDetail()); //filtered values are the old filtered values from last time
+
+        // Act
+        page.buttonReportFilteredProgLanguages.click();
+
+        // Assert
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(0).getDetail());
 
         // Act - do some other filtering
         dataTable.filter("Name", "JavaScript");
@@ -64,15 +73,23 @@ public class DataTable009Test extends AbstractDataTableTest {
         Assertions.assertEquals("FilterValue for name", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("JavaScript", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("JavaScript", page.messages.getMessage(1).getDetail());
+//        Assertions.assertEquals("JavaScript", page.messages.getMessage(1).getDetail());
+        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail()); //filtered values are the old filtered values from last time
+
+        // Act
+        page.buttonReportFilteredProgLanguages.click();
+
+        // Assert
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("JavaScript", page.messages.getMessage(0).getDetail());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
     @Test
     @Order(2)
-    @DisplayName("DataTable: filter - issue 7026 - https://github.com/primefaces/primefaces/issues/7026")
-    public void testFilterIssue7026(Page page) {
+    @DisplayName("DataTable: SelectOneMenu acts as filter")
+    public void testKeepSelectOneMenuFilter(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
         Assertions.assertNotNull(dataTable);
@@ -83,26 +100,74 @@ public class DataTable009Test extends AbstractDataTableTest {
         PrimeExpectedConditions.visibleAndAnimationComplete(page.messages);
 
         // Assert
-        validateFirstAppeared4EachRow(dataTable, "2000");
+        validateFirstAppeared(dataTable, page.firstAppearedFilter, "2000");
         Assertions.assertEquals("FilterValue for firstAppeared", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("2000", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("C#", page.messages.getMessage(1).getDetail());
+//        Assertions.assertEquals("C#", page.messages.getMessage(1).getDetail());
+        Assertions.assertEquals("null", page.messages.getMessage(1).getDetail()); //filtered values are the old filtered values from last time
+
+        // Act
+        page.buttonReportFilteredProgLanguages.click();
+
+        // Assert
+        validateFirstAppeared(dataTable, page.firstAppearedFilter, "2000");
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("C#", page.messages.getMessage(0).getDetail());
 
         // Act - do some other filtering
         page.firstAppearedFilter.select("1995");
 
         // Assert
-        validateFirstAppeared4EachRow(dataTable, "1995");
+        validateFirstAppeared(dataTable, page.firstAppearedFilter,"1995");
         Assertions.assertEquals("FilterValue for firstAppeared", page.messages.getMessage(0).getSummary());
         Assertions.assertEquals("1995", page.messages.getMessage(0).getDetail());
         Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(1).getSummary());
-        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
+//        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(1).getDetail());
+        Assertions.assertEquals("C#", page.messages.getMessage(1).getDetail()); //filtered values are the old filtered values from last time
+
+        // Act
+        page.buttonReportFilteredProgLanguages.click();
+
+        // Assert
+        validateFirstAppeared(dataTable, page.firstAppearedFilter,"1995");
+        Assertions.assertEquals("FilteredValue(s)", page.messages.getMessage(0).getSummary());
+        Assertions.assertEquals("Java,JavaScript", page.messages.getMessage(0).getDetail());
 
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
-    private void validateFirstAppeared4EachRow(DataTable dataTable, String firstAppearedExpected) {
+    @Test
+    @Order(3)
+    @DisplayName("DataTable: filter - issue 7026 - https://github.com/primefaces/primefaces/issues/7026")
+    public void testFilterIssue7026(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+        dataTable.sort("Name");
+
+        // Assert
+        Assertions.assertEquals("C#", dataTable.getRow(0).getCell(1).getText());
+        SelectOneMenu firstAppeared = PrimeSelenium.createFragment(SelectOneMenu.class, By.id("form:datatable:0:firstAppeared"));
+        Assertions.assertEquals("2000", firstAppeared.getSelectedLabel());
+
+        // Act
+        firstAppeared.select("2020");
+        dataTable.filter("Name", "xxx");
+        dataTable.removeFilter("Name");
+
+        // Assert
+        Assertions.assertEquals("C#", dataTable.getRow(0).getCell(1).getText());
+        firstAppeared = PrimeSelenium.createFragment(SelectOneMenu.class, By.id("form:datatable:0:firstAppeared"));
+        Assertions.assertEquals("2020", firstAppeared.getSelectedLabel());
+
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+
+    private void validateFirstAppeared(DataTable dataTable, SelectOneMenu firstAppearedFilter, String firstAppearedExpected) {
+        Assertions.assertEquals(firstAppearedExpected, firstAppearedFilter.getSelectedLabel());
+
         int rowNumber = 0;
         for (Row row : dataTable.getRows()) {
             SelectOneMenu firstAppeared = PrimeSelenium.createFragment(SelectOneMenu.class, By.id("form:datatable:" + rowNumber + ":firstAppeared"));
@@ -123,6 +188,9 @@ public class DataTable009Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:datatable")
         DataTable dataTable;
+
+        @FindBy(id = "form:buttonReportFilteredProgLanguages")
+        CommandButton buttonReportFilteredProgLanguages;
 
         @FindBy(id = "form:datatable:firstAppearedFilter")
         SelectOneMenu firstAppearedFilter;
