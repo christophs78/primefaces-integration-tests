@@ -21,42 +21,46 @@
  */
 package org.primefaces.extensions.integrationtests.cascadeselect;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CascadeSelect;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.model.Msg;
 
-public class CascadeSelect002Test extends BaseCascadeSelectTest {
+import java.util.List;
+
+public class CascadeSelect003Test extends BaseCascadeSelectTest {
 
     @Test
     @Order(1)
-    @DisplayName("CascadeSelect: select and submit item (SelectItems with value and label)")
+    @DisplayName("CascadeSelect: select and submit item (SelectItems with converter)")
     public void testBasic(Page page) {
         // Arrange
         CascadeSelect cascadeSelect = page.cascadeSelect;
         cascadeSelect.toggleDropdown();
-        assertItems(cascadeSelect, 10);
+        assertItems(cascadeSelect, 4);
 
         // Act
-        cascadeSelect.select("nVidia");
-        cascadeSelect.select("2000-Series");
-        cascadeSelect.select("RTX 2080");
+        cascadeSelect.select("Charles");
 
         // Assert
-        assertMessage(page.messages, 0, "Selected GPU", "2080");
+        assertMessage(page.messages, 0, "Selected driver", "Charles");
         assertConfiguration(cascadeSelect.getWidgetConfiguration());
 
         // Act
         page.button.click();
 
         // Assert
-        assertMessage(page.messages, 0, "Selected GPU", "2080");
-        Assertions.assertEquals("RTX 2080", cascadeSelect.getSelectedLabel());
+        assertMessage(page.messages, 0, "Selected driver", "Charles");
+        Assertions.assertEquals("Charles", cascadeSelect.getSelectedLabel());
         assertConfiguration(cascadeSelect.getWidgetConfiguration());
     }
 
@@ -72,7 +76,7 @@ public class CascadeSelect002Test extends BaseCascadeSelectTest {
 
         @Override
         public String getLocation() {
-            return "cascadeselect/cascadeSelect002.xhtml";
+            return "cascadeselect/cascadeSelect003.xhtml";
         }
     }
 }

@@ -21,25 +21,17 @@
  */
 package org.primefaces.extensions.integrationtests.cascadeselect;
 
-import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CascadeSelect;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
-import org.primefaces.extensions.selenium.component.SelectOneMenu;
-import org.primefaces.extensions.selenium.component.model.Msg;
 
-import java.util.List;
-
-public class CascadeSelect001Test extends AbstractPrimePageTest {
+public class CascadeSelect001Test extends BaseCascadeSelectTest {
 
     @Test
     @Order(1)
@@ -48,45 +40,24 @@ public class CascadeSelect001Test extends AbstractPrimePageTest {
         // Arrange
         CascadeSelect cascadeSelect = page.cascadeSelect;
         cascadeSelect.toggleDropdown();
-        assertItems(page, 10);
+        assertItems(cascadeSelect, 10);
 
         // Act
         cascadeSelect.select("nVidia");
         cascadeSelect.select("2000-Series");
         cascadeSelect.select("RTX 2080");
-//        page.button.click();
 
         // Assert
-        assertMessage(page, 0, "Selected GPU", "RTX 2080");
+        assertMessage(page.messages, 0, "Selected GPU", "RTX 2080");
         assertConfiguration(cascadeSelect.getWidgetConfiguration());
 
         // Act
         page.button.click();
 
         // Assert
-        assertMessage(page, 0, "Selected GPU", "RTX 2080");
+        assertMessage(page.messages, 0, "Selected GPU", "RTX 2080");
         Assertions.assertEquals("RTX 2080", cascadeSelect.getSelectedLabel());
         assertConfiguration(cascadeSelect.getWidgetConfiguration());
-    }
-
-    private void assertItems(Page page, int leafItemCount) {
-        CascadeSelect cascadeSelect = page.cascadeSelect;
-        List<WebElement> options = cascadeSelect.getLeafItems();
-        // List<String> labels = cascadeSelect.getLabels();
-        Assertions.assertEquals(leafItemCount, options.size());
-    }
-
-    private void assertMessage(Page page, int index, String summary, String detail) {
-        Msg message = page.messages.getMessage(index);
-        Assertions.assertEquals(summary, message.getSummary());
-        Assertions.assertEquals(detail, message.getDetail());
-    }
-
-    private void assertConfiguration(JSONObject cfg) {
-        assertNoJavascriptErrors();
-        System.out.println("CascadeSelect Config = " + cfg);
-        Assertions.assertTrue(cfg.has("appendTo"));
-        Assertions.assertTrue(cfg.has("behaviors"));
     }
 
     public static class Page extends AbstractPrimePage {
