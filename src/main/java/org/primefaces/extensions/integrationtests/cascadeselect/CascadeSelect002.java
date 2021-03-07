@@ -84,13 +84,11 @@ public class CascadeSelect002 implements Serializable {
         // pause for 1 second to verify AJAX guards are working properly
         TestUtils.wait(1000);
 
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected GPU", Integer.toString((int)event.getObject()));
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        TestUtils.addMessage("Selected GPU", Integer.toString((int)event.getObject()));
     }
 
     public void submit() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected GPU", Integer.toString(selectedGpu));
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        TestUtils.addMessage("Selected GPU", Integer.toString(selectedGpu));
     }
 
 }
