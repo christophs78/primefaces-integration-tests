@@ -60,6 +60,74 @@ public class CascadeSelect001Test extends BaseCascadeSelectTest {
         assertConfiguration(cascadeSelect.getWidgetConfiguration());
     }
 
+    @Test
+    @Order(2)
+    @DisplayName("CascadeSelect: show panel")
+    public void testShowPanel(Page page) {
+        // Arrange
+        CascadeSelect cascadeSelect = page.cascadeSelect;
+
+        // Act
+        cascadeSelect.show();
+
+        // Assert
+        assertDisplayed(cascadeSelect.getPanel());
+        assertConfiguration(cascadeSelect.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("CascadeSelect: hide panel")
+    public void testHidePanel(Page page) {
+        // Arrange
+        CascadeSelect cascadeSelect = page.cascadeSelect;
+
+        // Act
+        cascadeSelect.show();
+        cascadeSelect.hide();
+
+        // Assert
+        assertNotDisplayed(cascadeSelect.getPanel());
+        assertConfiguration(cascadeSelect.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("CascadeSelect: disable panel")
+    public void testDisablePanel(Page page) {
+        // Arrange
+        CascadeSelect cascadeSelect = page.cascadeSelect;
+
+        // Act
+        cascadeSelect.disable();
+        cascadeSelect.select("nVidia");
+
+        // Assert - value should not be accepted
+        assertNotClickable(cascadeSelect);
+        Assertions.assertEquals("Select a GPU", cascadeSelect.getSelectedLabel());
+        assertConfiguration(cascadeSelect.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("CascadeSelect: enable panel")
+    public void testEnablePanel(Page page) {
+        // Arrange
+        CascadeSelect cascadeSelect = page.cascadeSelect;
+
+        // Act
+        cascadeSelect.disable();
+        cascadeSelect.enable();
+        cascadeSelect.select("nVidia");
+        cascadeSelect.select("2000-Series");
+        cascadeSelect.select("RTX 2080");
+
+        // Assert
+        assertClickable(cascadeSelect);
+        Assertions.assertEquals("RTX 2080", cascadeSelect.getSelectedLabel());
+        assertConfiguration(cascadeSelect.getWidgetConfiguration());
+    }
+
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:cascadeSelect")
         CascadeSelect cascadeSelect;
