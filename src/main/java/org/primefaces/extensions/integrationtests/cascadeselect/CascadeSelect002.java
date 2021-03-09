@@ -80,11 +80,11 @@ public class CascadeSelect002 implements Serializable {
         gpus.add(amd);
     }
 
-    public void onItemSelect(SelectEvent event) {
+    public void onItemSelect(SelectEvent<Integer> event) {
         // pause for 1 second to verify AJAX guards are working properly
         TestUtils.wait(1000);
 
-        TestUtils.addMessage("Selected GPU", Integer.toString((int) event.getObject()));
+        TestUtils.addMessage("Selected GPU", Integer.toString(event.getObject()));
     }
 
     public void submit() {

@@ -21,18 +21,20 @@
  */
 package org.primefaces.extensions.integrationtests.cascadeselect;
 
-import lombok.Data;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.extensions.integrationtests.general.model.Driver;
-import org.primefaces.extensions.integrationtests.general.service.RealDriverService;
-import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.extensions.integrationtests.general.model.Driver;
+import org.primefaces.extensions.integrationtests.general.service.RealDriverService;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
+
+import lombok.Data;
 
 @Named
 @ViewScoped
@@ -53,11 +55,11 @@ public class CascadeSelect003 implements Serializable {
         drivers = driverService.getDrivers();
     }
 
-    public void onItemSelect(SelectEvent event) {
+    public void onItemSelect(SelectEvent<Driver> event) {
         // pause for 1 second to verify AJAX guards are working properly
         TestUtils.wait(1000);
 
-        TestUtils.addMessage("Selected driver", ((Driver)event.getObject()).getName());
+        TestUtils.addMessage("Selected driver", event.getObject().getName());
     }
 
     public void submit() {
