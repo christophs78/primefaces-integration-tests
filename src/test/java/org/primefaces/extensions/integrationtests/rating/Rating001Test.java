@@ -239,7 +239,7 @@ public class Rating001Test extends AbstractPrimePageTest {
 
     @Test
     @Order(11)
-    @DisplayName("Rating: set value to a string should return original value")
+    @DisplayName("Rating: set value to a string should trigger error.xhtml")
     public void testInvalidNumberServerSide(Page page) {
         // Arrange
         Rating rating = page.ratingMinMax;
@@ -251,8 +251,7 @@ public class Rating001Test extends AbstractPrimePageTest {
         page.submit.click();
 
         // Assert
-        Assertions.assertEquals(2L, rating.getValue());
-        assertConfiguration(rating.getWidgetConfiguration());
+        Assertions.assertEquals("Error", page.getWebDriver().getTitle());
     }
 
     private JSONObject assertConfiguration(JSONObject cfg) {
