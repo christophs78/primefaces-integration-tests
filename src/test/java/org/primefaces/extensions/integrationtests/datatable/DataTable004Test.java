@@ -26,7 +26,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -40,7 +42,7 @@ public class DataTable004Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
-    @DisplayName("DataTable: selection - single; click on row & events; including https://github.com/primefaces/primefaces/issues/7128")
+    @DisplayName("DataTable: selection - single; click on row & events")
     public void testSelectionSingle(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -75,13 +77,40 @@ public class DataTable004Test extends AbstractDataTableTest {
         asssertMessage(page, "ProgrammingLanguage Unselected", languages.get(4).getName());
 
         // Act
+        page.button.click();
+
+        // Assert (no row selected)
+        dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
+        asssertMessage(page, "no ProgrammingLanguage selected", "");
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("DataTable: selection - single - unselect; https://github.com/primefaces/primefaces/issues/7128")
+    public void testSelectionSingleUnselect(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act
+        dataTable.getCell(2, 0).getWebElement().click();
+        page.buttonMsgOnly.click();
+
+        // Assert
+        WebElement card = page.getWebDriver().findElement(By.id("form:card"));
+        Assertions.assertTrue(card.getText().contains(languages.get(2).getName()));
+
+        // Act - unselect row
+        Actions actions = new Actions(page.getWebDriver());
+        actions.keyDown(Keys.META).click(dataTable.getCell(2, 0).getWebElement()).keyUp(Keys.META).perform();
         page.buttonMsgOnly.click();
 
         // Assert (no row selected)
         dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
-        Assertions.assertEquals(0, page.messages.getAllMessages().size());
+        card = page.getWebDriver().findElement(By.id("form:card"));
+        Assertions.assertTrue(card.getText().contains("no ProgrammingLanguage selected"));
         assertConfiguration(dataTable.getWidgetConfiguration());
-
     }
 
     private void asssertMessage(Page page, String summary, String detail) {

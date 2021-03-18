@@ -6,7 +6,11 @@
 
 <f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
     <h:head>
-
+        <style type="text/css">
+            body {
+                background-color: #f8f9fa;
+            }
+        </style>
     </h:head>
 
     <h:body>
@@ -34,7 +38,19 @@
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form" action="#{dataTable004.submit}"/>
-            <p:commandButton id="buttonMsgOnly" value="Submit - update messages only" process="form:datatable" action="#{dataTable004.submit}"/>
+            <p:commandButton id="buttonMsgOnly" value="Submit - update card only" process="form:datatable" update="form:card"/>
+
+            <p:card id="card" style="width: 25rem; margin-top: 2em">
+                <f:facet name="title">
+                    selected programming language
+                </f:facet>
+                <p:outputPanel rendered="#{not empty dataTable004.selectedProgLanguage}">
+                    #{dataTable004.selectedProgLanguage.name}
+                </p:outputPanel>
+                <p:outputPanel rendered="#{empty dataTable004.selectedProgLanguage}">
+                    no ProgrammingLanguage selected
+                </p:outputPanel>
+            </p:card>
         </h:form>
 
     </h:body>

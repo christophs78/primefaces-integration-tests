@@ -24,10 +24,9 @@ package org.primefaces.extensions.integrationtests.datatable;
 import lombok.Data;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -53,19 +52,19 @@ public class DataTable004 implements Serializable {
     }
 
     public void onRowSelect(SelectEvent<ProgrammingLanguage> event) {
-        FacesMessage msg = new FacesMessage("ProgrammingLanguage Selected", event.getObject().getId() + " - " + event.getObject().getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        TestUtils.addMessage("ProgrammingLanguage Selected", event.getObject().getId() + " - " + event.getObject().getName());
     }
 
     public void onRowUnselect(UnselectEvent<ProgrammingLanguage> event) {
-        FacesMessage msg = new FacesMessage("ProgrammingLanguage Unselected", event.getObject().getId() + " - " + event.getObject().getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        TestUtils.addMessage("ProgrammingLanguage Unselected", event.getObject().getId() + " - " + event.getObject().getName());
     }
 
     public void submit() {
         if (selectedProgLanguage != null) {
-            FacesMessage msg = new FacesMessage("Selected ProgrammingLanguage", selectedProgLanguage.getId() + " - " + selectedProgLanguage.getName());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+            TestUtils.addMessage("Selected ProgrammingLanguage", selectedProgLanguage.getId() + " - " + selectedProgLanguage.getName());
+        }
+        else {
+            TestUtils.addMessage("no ProgrammingLanguage selected", "");
         }
     }
 }
