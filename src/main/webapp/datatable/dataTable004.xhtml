@@ -34,6 +34,7 @@
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form" action="#{dataTable004.submit}"/>
+            <p:commandButton id="buttonMsgOnly" value="Submit - update messages only" process="form:datatable" action="#{dataTable004.submit}"/>
         </h:form>
 
     </h:body>

@@ -26,6 +26,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -37,7 +40,7 @@ public class DataTable004Test extends AbstractDataTableTest {
 
     @Test
     @Order(1)
-    @DisplayName("DataTable: selection - single; click on row & events")
+    @DisplayName("DataTable: selection - single; click on row & events; including https://github.com/primefaces/primefaces/issues/7128")
     public void testSelectionSingle(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -58,9 +61,27 @@ public class DataTable004Test extends AbstractDataTableTest {
         // Act - submit button
         page.button.click();
 
-        // Assert
-        assertConfiguration(dataTable.getWidgetConfiguration());
+        // Assert (select row after update still selected)
         asssertMessage(page, "Selected ProgrammingLanguage", languages.get(4).getName());
+        PrimeSelenium.hasCssClass(dataTable.getRow(4).getWebElement(), "ui-state-highlight");
+        Assertions.assertEquals("true", dataTable.getRow(4).getWebElement().getAttribute("aria-selected"));
+
+        // Act - unselect row
+        Actions actions = new Actions(page.getWebDriver());
+        Action actionMetaPlusRowClick = actions.keyDown(Keys.META).click(dataTable.getCell(4, 0).getWebElement()).keyUp(Keys.META).build();
+        PrimeSelenium.guardAjax(actionMetaPlusRowClick).perform();
+
+        // Assert
+        asssertMessage(page, "ProgrammingLanguage Unselected", languages.get(4).getName());
+
+        // Act
+        page.buttonMsgOnly.click();
+
+        // Assert (no row selected)
+        dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
+        Assertions.assertEquals(0, page.messages.getAllMessages().size());
+        assertConfiguration(dataTable.getWidgetConfiguration());
+
     }
 
     private void asssertMessage(Page page, String summary, String detail) {
@@ -83,6 +104,9 @@ public class DataTable004Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:button")
         CommandButton button;
+
+        @FindBy(id = "form:buttonMsgOnly")
+        CommandButton buttonMsgOnly;
 
         @Override
         public String getLocation() {
