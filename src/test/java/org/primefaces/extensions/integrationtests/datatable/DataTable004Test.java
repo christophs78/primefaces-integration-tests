@@ -26,6 +26,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -58,9 +63,54 @@ public class DataTable004Test extends AbstractDataTableTest {
         // Act - submit button
         page.button.click();
 
-        // Assert
-        assertConfiguration(dataTable.getWidgetConfiguration());
+        // Assert (select row after update still selected)
         asssertMessage(page, "Selected ProgrammingLanguage", languages.get(4).getName());
+        PrimeSelenium.hasCssClass(dataTable.getRow(4).getWebElement(), "ui-state-highlight");
+        Assertions.assertEquals("true", dataTable.getRow(4).getWebElement().getAttribute("aria-selected"));
+
+        // Act - unselect row
+        Actions actions = new Actions(page.getWebDriver());
+        Action actionMetaPlusRowClick = actions.keyDown(Keys.META).click(dataTable.getCell(4, 0).getWebElement()).keyUp(Keys.META).build();
+        PrimeSelenium.guardAjax(actionMetaPlusRowClick).perform();
+
+        // Assert
+        asssertMessage(page, "ProgrammingLanguage Unselected", languages.get(4).getName());
+
+        // Act
+        page.button.click();
+
+        // Assert (no row selected)
+        dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
+        asssertMessage(page, "no ProgrammingLanguage selected", "");
+        assertConfiguration(dataTable.getWidgetConfiguration());
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("DataTable: selection - single - unselect; https://github.com/primefaces/primefaces/issues/7128")
+    public void testSelectionSingleUnselect(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act
+        dataTable.getCell(2, 0).getWebElement().click();
+        page.buttonMsgOnly.click();
+
+        // Assert
+        WebElement card = page.getWebDriver().findElement(By.id("form:card"));
+        Assertions.assertTrue(card.getText().contains(languages.get(2).getName()));
+
+        // Act - unselect row
+        Actions actions = new Actions(page.getWebDriver());
+        actions.keyDown(Keys.META).click(dataTable.getCell(2, 0).getWebElement()).keyUp(Keys.META).perform();
+        page.buttonMsgOnly.click();
+
+        // Assert (no row selected)
+        dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
+        card = page.getWebDriver().findElement(By.id("form:card"));
+        Assertions.assertTrue(card.getText().contains("no ProgrammingLanguage selected"));
+        assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
     private void asssertMessage(Page page, String summary, String detail) {
@@ -83,6 +133,9 @@ public class DataTable004Test extends AbstractDataTableTest {
 
         @FindBy(id = "form:button")
         CommandButton button;
+
+        @FindBy(id = "form:buttonMsgOnly")
+        CommandButton buttonMsgOnly;
 
         @Override
         public String getLocation() {
