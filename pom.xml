@@ -245,7 +245,7 @@
             </properties>
         </profile>
         <profile>
-            <id>MyFaces-2.3.x</id>
+            <id>myfaces-2.3.x</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -265,14 +265,14 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Mojarra-2.3.x</id>
+            <id>mojarra-2.3.x</id>
             <dependencies>
-<!--                <dependency>-->
-<!--                    <groupId>org.apache.tomee</groupId>-->
-<!--                    <artifactId>tomee-mojarra</artifactId>-->
-<!--                    <version>${tomee.version}</version>-->
-<!--                    <scope>compile</scope>-->
-<!--                </dependency>-->
+                <dependency>
+                    <groupId>org.apache.tomee</groupId>
+                    <artifactId>tomee-mojarra</artifactId>
+                    <version>${tomee.version}</version>
+                    <scope>test</scope>
+                </dependency>
                 <dependency>
                     <groupId>org.glassfish</groupId>
                     <artifactId>jakarta.faces</artifactId>
