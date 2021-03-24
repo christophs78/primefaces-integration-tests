@@ -267,17 +267,17 @@
         <profile>
             <id>Mojarra-2.3.x</id>
             <dependencies>
+<!--                <dependency>-->
+<!--                    <groupId>org.apache.tomee</groupId>-->
+<!--                    <artifactId>tomee-mojarra</artifactId>-->
+<!--                    <version>${tomee.version}</version>-->
+<!--                    <scope>compile</scope>-->
+<!--                </dependency>-->
                 <dependency>
                     <groupId>org.glassfish</groupId>
                     <artifactId>jakarta.faces</artifactId>
                     <version>2.3.14</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomee</groupId>
-                    <artifactId>tomee-mojarra</artifactId>
-                    <version>${tomee.version}</version>
-                    <scope>test</scope>
+                    <scope>compile</scope>
                 </dependency>
             </dependencies>
         </profile>
