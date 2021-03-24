@@ -245,7 +245,7 @@
             </properties>
         </profile>
         <profile>
-            <id>MyFaces 2.3.x</id>
+            <id>MyFaces-2.3.x</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -265,7 +265,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Mojarra 2.3.x</id>
+            <id>Mojarra-2.3.x</id>
             <dependencies>
                 <dependency>
                     <groupId>org.glassfish</groupId>
