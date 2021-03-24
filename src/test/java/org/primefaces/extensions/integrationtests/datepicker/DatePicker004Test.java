@@ -144,7 +144,7 @@ public class DatePicker004Test extends AbstractDatePickerTest {
         // Assert - clear button reset to NOW
         PrimeSelenium.waitGui().until(PrimeExpectedConditions.visibleAndAnimationComplete(panel));
         assertDate(panel, now.getMonth().name(), Objects.toString(now.getYear()));
-        assertTime(panel, Objects.toString(now.getHour()), Objects.toString(now.getMinute()), null);
+        assertTime(panel, Objects.toString(now.getHour()), null, null);
         Assertions.assertNull(datePicker.getValue());
     }
 
