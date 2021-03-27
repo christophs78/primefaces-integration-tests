@@ -52,7 +52,7 @@ public class GeneratedDriverConverter implements Converter {
             driverService = CDI.current().select(GeneratedDriverService.class).get();
         }
 
-        if(value != null && value.trim().length() > 0) {
+        if (value != null && value.trim().length() > 0) {
             try {
                 int id = Integer.parseInt(value);
                 return driverService.getDrivers().stream().filter(d -> d.getId() == id).findFirst().get();
