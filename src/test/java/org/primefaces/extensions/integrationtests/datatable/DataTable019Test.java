@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.DataTable;
 import org.primefaces.extensions.selenium.component.InputText;
 
@@ -46,7 +47,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         dataTable.sort("Name");
 
         // Act
-        globalFilter.setValue("Java");
+        filterGlobal(globalFilter, "Java");
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = filterByName("Java");
@@ -66,7 +67,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         dataTable.sort("Type");
 
         // Act
-        globalFilter.setValue("COMPILED");
+        filterGlobal(globalFilter, "COMPILED");
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = filterByType(ProgrammingLanguage.ProgrammingLanguageType.COMPILED);
@@ -86,7 +87,7 @@ public class DataTable019Test extends AbstractDataTableTest {
         dataTable.sort("Name");
 
         // Act
-        globalFilter.setValue("Clojure");
+        filterGlobal(globalFilter, "Clojure");
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = filterByName("Clojure");
@@ -102,10 +103,9 @@ public class DataTable019Test extends AbstractDataTableTest {
         // Arrange
         testGlobalFilterFunctionNoResults(page);
         DataTable dataTable = page.dataTable;
-        InputText globalFilter = page.globalFilter;
 
         // Act
-        globalFilter.setValue("");
+        PrimeSelenium.executeScript(true, "PF('wgtTable').clearFilters()");
 
         // Assert
         Assertions.assertEquals(5, languages.size());

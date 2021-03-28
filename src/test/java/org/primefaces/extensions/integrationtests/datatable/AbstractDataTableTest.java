@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.PrimeSelenium;
@@ -123,5 +124,12 @@ public abstract class AbstractDataTableTest extends AbstractPrimePageTest {
         else {
             System.out.println("WebDriver does not implement HasCapabilities --> can´t show version etc");
         }
+    }
+
+    protected void filterGlobal(WebElement inputGlobalFilter, String filter) {
+        // maybe we can move some of this to PF Selenium (InputText?, DataTable?)
+        inputGlobalFilter.clear();
+        inputGlobalFilter.sendKeys(filter);
+        PrimeSelenium.guardAjax(inputGlobalFilter).sendKeys(Keys.TAB);
     }
 }

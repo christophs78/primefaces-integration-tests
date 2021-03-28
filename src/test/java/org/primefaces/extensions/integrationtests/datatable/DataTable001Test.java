@@ -169,7 +169,7 @@ public class DataTable001Test extends AbstractDataTableTest {
         dataTable.sort("Name");
 
         // Act
-        globalFilter.setValue("Python");
+        filterGlobal(globalFilter, "Python");
 
         // Assert
         List<ProgrammingLanguage> langsFiltered = filterByName("Python");
