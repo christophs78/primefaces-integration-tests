@@ -30,6 +30,8 @@
         <hibernate-validator.version>7.0.1.Final</hibernate-validator.version>
         <lombok.version>1.18.18</lombok.version>
         <myfaces.version>2.3.8</myfaces.version>
+        <myfaces-next.version>2.3-next-SNAPSHOT</myfaces-next.version>
+        <mojarra.version>2.3.14</mojarra.version>
         <junit.version>5.7.1</junit.version>
         <tomee.version>8.0.6</tomee.version>
         <!-- plugin versions -->
@@ -63,12 +65,6 @@
             <version>8.0-5</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-api</artifactId>
-            <version>${myfaces.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- TEST -->
         <dependency>
@@ -99,12 +95,6 @@
                     <artifactId>myfaces-impl</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.myfaces.core</groupId>
-            <artifactId>myfaces-impl</artifactId>
-            <version>${myfaces.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
@@ -254,6 +244,86 @@
             <properties>
                 <primefaces.THEME>saga</primefaces.THEME>
             </properties>
+        </profile>
+        <profile>
+            <id>myfaces-2.3.x</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <version>${myfaces.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <version>${myfaces.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>myfaces-next-2.3.x</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.tomee</groupId>
+                    <artifactId>tomee-myfaces</artifactId>
+                    <version>${tomee.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-api</artifactId>
+                    <version>${myfaces-next.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.myfaces.core</groupId>
+                    <artifactId>myfaces-impl</artifactId>
+                    <version>${myfaces-next.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>mojarra-2.3.x</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.tomee</groupId>
+                    <artifactId>tomee-mojarra</artifactId>
+                    <version>${tomee.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish</groupId>
+                    <artifactId>jakarta.faces</artifactId>
+                    <version>2.3.14</version>
+                    <scope>compile</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.tomee</groupId>
+                    <artifactId>tomee-embedded</artifactId>
+                    <version>${tomee.version}</version>
+                    <scope>test</scope>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.apache.tomee</groupId>
+                            <artifactId>tomee-myfaces</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.myfaces.core</groupId>
+                            <artifactId>myfaces-api</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>org.apache.myfaces.core</groupId>
+                            <artifactId>myfaces-impl</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 

@@ -24,6 +24,8 @@ package org.primefaces.extensions.integrationtests.general.converter;
 import org.primefaces.extensions.integrationtests.general.model.Driver;
 import org.primefaces.extensions.integrationtests.general.service.GeneratedDriverService;
 
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.CDI;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -42,7 +44,15 @@ public class GeneratedDriverConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
-        if(value != null && value.trim().length() > 0) {
+        if (driverService == null) {
+            /**
+             * Not ideal work-around because @Inject does not work for managed
+             * FacesConverter on TomEE + Mojarra as of march 2021.
+             */
+            driverService = CDI.current().select(GeneratedDriverService.class).get();
+        }
+
+        if (value != null && value.trim().length() > 0) {
             try {
                 int id = Integer.parseInt(value);
                 return driverService.getDrivers().stream().filter(d -> d.getId() == id).findFirst().get();

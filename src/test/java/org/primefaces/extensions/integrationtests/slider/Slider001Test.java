@@ -112,8 +112,9 @@ public class Slider001Test extends AbstractPrimePageTest {
         page.button.click();
 
         // Assert
-        Assertions.assertEquals(50, slider.getValue().intValue());
-        Assertions.assertEquals("64", inputText.getValue());
+        // Mojarra and MyFaces have slightly different behaviour - we check their common behaviour
+        Assertions.assertEquals(1, page.messages.getAllMessages().size());
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Value is out of range."));
         assertIntConfiguration(slider.getWidgetConfiguration());
     }
 
@@ -191,7 +192,9 @@ public class Slider001Test extends AbstractPrimePageTest {
         page.button.click();
 
         // Assert
-        Assertions.assertEquals(-10.0f, slider.getValue().floatValue());
+        // Mojarra and MyFaces have slightly different behaviour - we check their common behaviour
+        Assertions.assertEquals(1, page.messages.getAllMessages().size());
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Value is out of range."));
         assertFloatConfiguration(slider.getWidgetConfiguration());
     }
 
@@ -209,7 +212,9 @@ public class Slider001Test extends AbstractPrimePageTest {
         page.button.click();
 
         // Assert
-        Assertions.assertEquals(10.0f, slider.getValue().floatValue());
+        // Mojarra and MyFaces have slightly different behaviour - we check their common behaviour
+        Assertions.assertEquals(1, page.messages.getAllMessages().size());
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Value is out of range."));
         assertFloatConfiguration(slider.getWidgetConfiguration());
     }
 

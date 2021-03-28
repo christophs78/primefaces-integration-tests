@@ -93,4 +93,8 @@ public class DataTable009 implements Serializable {
     public List<Integer> firstAppearedYearsWithProgLanguages() {
         return progLanguages.stream().map(p -> p.getFirstAppeared()).distinct().sorted().collect(Collectors.toList());
     }
+
+    public void addJsfImplMessage()  {
+        TestUtils.addJsfImplMessage();
+    }
 }

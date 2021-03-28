@@ -57,4 +57,13 @@ public class TestUtils {
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return msg;
     }
+
+    /**
+     * Add´s a message containing JSF-impl and -version.
+     * @return
+     */
+    public static FacesMessage addJsfImplMessage() {
+        Package p = FacesContext.class.getPackage();
+        return addMessage(p.getImplementationTitle(), p.getImplementationVersion());
+    }
 }
