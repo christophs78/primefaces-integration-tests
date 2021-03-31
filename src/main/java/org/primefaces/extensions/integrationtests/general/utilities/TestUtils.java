@@ -35,6 +35,8 @@ public class TestUtils {
         }
         catch (InterruptedException ex) {
             System.err.println("Wait was interrupted!");
+            // Restore interrupted state...
+            Thread.currentThread().interrupt();
         }
     }
 
