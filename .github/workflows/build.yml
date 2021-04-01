@@ -16,7 +16,7 @@ jobs:
         java: [ 8, 11 ]
         profile: [ 'headless,firefox,theme-saga,myfaces-2.3.x', 'headless,chrome,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,myfaces-2.3.x', 'headless,safari,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,mojarra-2.3.x' ]
 
-    steps:
+    steps: &integrationtests
       - uses: actions/checkout@v2
       - name: Set up JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -56,33 +56,4 @@ jobs:
         java: [ 11 ]
         profile: [ 'headless,firefox,theme-saga,myfaces-2.3.x', 'headless,chrome,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,myfaces-2.3.x', 'headless,safari,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,mojarra-2.3.x' ]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - name: Cache Maven packages
-        uses: actions/cache@v2.1.4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Checkout PrimeFaces
-        uses: actions/checkout@master
-        with:
-          repository: primefaces/primefaces
-          path: primefaces
-      - name: Build PrimeFaces
-        run: cd primefaces && mvn install && cd ..
-      - name: Checkout PrimeFaces Selenium
-        uses: actions/checkout@master
-        with:
-          repository: primefaces-extensions/primefaces-selenium
-          path: primefaces-selenium
-      - name: Build PrimeFaces Selenium
-        run: cd primefaces-selenium && mvn install && cd ..
-      - name: Run Integration Tests
-        run: |
-          sudo safaridriver --enable
-          mvn -B -V clean install -P${{ matrix.profile }}
+    steps: *integrationtests
