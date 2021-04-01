@@ -7,8 +7,8 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
-  build:
-    if: (github.event_name == 'schedule' && github.repository == 'primefaces-extensions/primefaces-integration-tests') || (github.event_name != 'schedule')
+  build_scheduled:
+    if: (github.event_name == 'schedule' && github.repository == 'primefaces-extensions/primefaces-integration-tests')
     runs-on: macos-latest
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
@@ -19,37 +19,70 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK ${{ matrix.java }}
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
       - name: Cache Maven packages
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         uses: actions/cache@v2.1.4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Checkout PrimeFaces
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         uses: actions/checkout@master
         with:
           repository: primefaces/primefaces
           path: primefaces
       - name: Build PrimeFaces
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         run: cd primefaces && mvn install && cd ..
       - name: Checkout PrimeFaces Selenium
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         uses: actions/checkout@master
         with:
           repository: primefaces-extensions/primefaces-selenium
           path: primefaces-selenium
       - name: Build PrimeFaces Selenium
-        if: (github.event_name == 'schedule' || matrix.java == 11)
         run: cd primefaces-selenium && mvn install && cd ..
       - name: Run Integration Tests
-        if: (github.event_name == 'schedule' || matrix.java == 11)
+        run: |
+          sudo safaridriver --enable
+          mvn -B -V clean install -P${{ matrix.profile }}
+
+  build_commit:
+    if: (github.event_name != 'schedule')
+    runs-on: macos-latest
+    name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
+    strategy:
+      matrix:
+        java: [ 11 ]
+        profile: [ 'headless,firefox,theme-saga,myfaces-2.3.x', 'headless,chrome,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,myfaces-2.3.x', 'headless,safari,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,mojarra-2.3.x' ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Cache Maven packages
+        uses: actions/cache@v2.1.4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Checkout PrimeFaces
+        uses: actions/checkout@master
+        with:
+          repository: primefaces/primefaces
+          path: primefaces
+      - name: Build PrimeFaces
+        run: cd primefaces && mvn install && cd ..
+      - name: Checkout PrimeFaces Selenium
+        uses: actions/checkout@master
+        with:
+          repository: primefaces-extensions/primefaces-selenium
+          path: primefaces-selenium
+      - name: Build PrimeFaces Selenium
+        run: cd primefaces-selenium && mvn install && cd ..
+      - name: Run Integration Tests
         run: |
           sudo safaridriver --enable
           mvn -B -V clean install -P${{ matrix.profile }}
