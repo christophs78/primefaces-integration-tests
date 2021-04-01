@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
-        matrix:
+      matrix:
         java: [ 8, 11 ]
         profile: [ 'headless,firefox,theme-saga,myfaces-2.3.x', 'headless,chrome,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,myfaces-2.3.x', 'headless,safari,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,mojarra-2.3.x' ]
 
