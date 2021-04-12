@@ -94,6 +94,7 @@ public class InputText002Test extends AbstractPrimePageTest {
         Assertions.assertEquals(1, messages.getAllMessages().size());
         Msg msg = messages.getAllMessages().get(0);
         Assertions.assertEquals(Severity.ERROR, msg.getSeverity());
+        assertCss(inputText, "ui-state-error", "ui-inputtext");
         Assertions.assertEquals("InputText is required!", msg.getSummary());
         Assertions.assertEquals("InputText is required!", msg.getDetail());
     }

@@ -58,6 +58,8 @@ public class Password004Test extends AbstractPrimePageTest {
         Assertions.assertEquals("Password 2: Validation Error: Value is required.", message2.getSummary());
         Assertions.assertEquals("", pwd1.getValue());
         Assertions.assertEquals("", pwd2.getValue());
+        assertCss(pwd1, "ui-state-error");
+        assertCss(pwd2, "ui-state-error");
         assertConfiguration(pwd1.getWidgetConfiguration());
     }
 
@@ -83,6 +85,8 @@ public class Password004Test extends AbstractPrimePageTest {
         Assertions.assertEquals("Password 1 should match with Password 2.", message1.getDetail());
         Assertions.assertEquals("", pwd1.getValue());
         Assertions.assertEquals("", pwd2.getValue());
+        assertCss(pwd1, "ui-state-error");
+        assertCss(pwd2, "ui-state-error");
         assertConfiguration(pwd1.getWidgetConfiguration());
     }
 
