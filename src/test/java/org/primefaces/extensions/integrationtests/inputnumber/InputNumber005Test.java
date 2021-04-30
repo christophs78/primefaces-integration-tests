@@ -26,6 +26,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
@@ -43,11 +44,12 @@ public class InputNumber005Test extends AbstractPrimePageTest {
         Assertions.assertEquals("", inputNumber.getValue());
 
         // Act
-        inputNumber.setValue("1.234,56");
+        inputNumber.getInput().sendKeys("1234");
+        inputNumber.getInput().sendKeys(Keys.TAB);
         page.button.click();
 
         // Assert
-        Assertions.assertEquals("1.234,56", inputNumber.getValue());
+        Assertions.assertEquals("1.234,00", inputNumber.getValue());
         assertConfiguration(inputNumber.getWidgetConfiguration());
     }
 
