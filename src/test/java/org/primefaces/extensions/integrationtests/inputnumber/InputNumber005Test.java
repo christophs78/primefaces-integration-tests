@@ -44,6 +44,7 @@ public class InputNumber005Test extends AbstractPrimePageTest {
         Assertions.assertEquals("", inputNumber.getValue());
 
         // Act
+        inputNumber.getInput().click();
         inputNumber.getInput().sendKeys("1234");
         inputNumber.getInput().sendKeys(Keys.TAB);
         page.button.click();
