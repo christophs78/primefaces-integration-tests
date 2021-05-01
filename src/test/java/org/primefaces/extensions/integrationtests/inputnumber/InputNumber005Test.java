@@ -27,11 +27,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputNumber;
+import org.primefaces.extensions.selenium.component.base.AbstractInputComponent;
+import org.primefaces.extensions.selenium.component.base.ComponentUtils;
 
 public class InputNumber005Test extends AbstractPrimePageTest {
 
@@ -44,9 +47,10 @@ public class InputNumber005Test extends AbstractPrimePageTest {
         Assertions.assertEquals("", inputNumber.getValue());
 
         // Act
-        inputNumber.getInput().click();
-        inputNumber.getInput().sendKeys("1234");
-        inputNumber.getInput().sendKeys(Keys.TAB);
+        WebElement input = inputNumber.getInput();
+        input.clear();
+        ComponentUtils.sendKeys(input, "1234");
+        input.sendKeys(Keys.TAB);
         page.button.click();
 
         // Assert
