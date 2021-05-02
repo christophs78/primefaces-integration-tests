@@ -31,6 +31,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.InputNumber;
 import org.primefaces.extensions.selenium.component.base.AbstractInputComponent;
@@ -42,6 +43,12 @@ public class InputNumber005Test extends AbstractPrimePageTest {
     @Order(1)
     @DisplayName("InputNumber: dot as thousand separator - https://github.com/primefaces/primefaces/issues/7271")
     public void testThousandSeparatorDot(Page page) {
+        if (PrimeSelenium.isSafari()) {
+            System.out.println(
+                    "Test disabled on Safari because sendKeys has issues with Safari and there´s so alternative way to do this test.");
+            return;
+        }
+
         // Arrange
         InputNumber inputNumber = page.inputnumber;
         Assertions.assertEquals("", inputNumber.getValue());
