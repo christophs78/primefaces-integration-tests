@@ -143,8 +143,7 @@ public class DataTable009Test extends AbstractDataTableTest {
     public void testFilterIssue7026(Page page) {
         page.buttonJsfImpl.click();
         if (page.messages.getMessage(0).getSummary().contains("Mojarra")) {
-            // known issue with Mojarra 2.3.14
-            return;
+            // known issue with Mojarra 2.3.14, fixed since Mojarra 2.3.15
         }
 
         // Arrange
