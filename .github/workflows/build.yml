@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     if: (github.event_name == 'schedule' && github.repository == 'primefaces-extensions/primefaces-integration-tests') || (github.event_name != 'schedule')
-    runs-on: macos-latest
+    runs-on: macos-11.0
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
       matrix:
