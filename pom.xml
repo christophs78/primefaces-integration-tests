@@ -33,7 +33,7 @@
         <myfaces-next.version>2.3-next-SNAPSHOT</myfaces-next.version>
         <mojarra.version>2.3.16</mojarra.version>
         <junit.version>5.7.1</junit.version>
-        <tomee.version>8.0.6</tomee.version>
+        <tomee.version>8.0.7</tomee.version>
         <!-- plugin versions -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-failsafe-plugin.version>2.22.2</maven-failsafe-plugin.version>
