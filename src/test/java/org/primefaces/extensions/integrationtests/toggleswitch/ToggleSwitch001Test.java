@@ -29,8 +29,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
 import org.primefaces.extensions.selenium.AbstractPrimePageTest;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.Messages;
+import org.primefaces.extensions.selenium.component.OutputLabel;
 import org.primefaces.extensions.selenium.component.ToggleSwitch;
 import org.primefaces.extensions.selenium.component.model.Msg;
 
@@ -115,6 +117,29 @@ public class ToggleSwitch001Test extends AbstractPrimePageTest {
         assertChecked(page, true);
     }
 
+    @Test
+    @Order(5)
+    @DisplayName("ToggleSwitch: Click on label should trigger switch")
+    public void testLabel(Page page) {
+        // Arrange
+        ToggleSwitch toggleSwitch = page.toggleSwitch;
+        OutputLabel label = page.label;
+        toggleSwitch.setValue(false);
+        Assertions.assertFalse(toggleSwitch.isSelected());
+
+        // Act
+        PrimeSelenium.guardAjax(label).click();
+
+        // Assert
+        assertChecked(page, true);
+
+        // Act
+        PrimeSelenium.guardAjax(label).click();
+
+        // Assert
+        assertChecked(page, false);
+    }
+
     private void assertConfiguration(JSONObject cfg) {
         assertNoJavascriptErrors();
         System.out.println("ToggleSwitch Config = " + cfg);
@@ -130,6 +155,9 @@ public class ToggleSwitch001Test extends AbstractPrimePageTest {
     public static class Page extends AbstractPrimePage {
         @FindBy(id = "form:toggleSwitch")
         ToggleSwitch toggleSwitch;
+
+        @FindBy(id = "form:label")
+        OutputLabel label;
 
         @FindBy(id = "form:msgs")
         Messages messages;

@@ -15,6 +15,7 @@
                 <p:autoUpdate/>
             </p:messages>
 
+            <p:outputLabel id="label" for="@next" value="Click Me"/>
             <p:toggleSwitch id="toggleSwitch" value="#{toggleSwitch001.value}">
                 <p:ajax listener="#{toggleSwitch001.addMessage}" update="@form"/>
             </p:toggleSwitch>
