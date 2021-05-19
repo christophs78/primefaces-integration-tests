@@ -12,7 +12,11 @@
     <h:body>
 
         <h:form id="form">
-            <p:inputMask id="alphanumeric" value="#{inputMask001.alphanumeric}" mask="a*-999-a999"/>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <p:inputMask id="alphanumeric" value="#{inputMask001.alphanumeric}" mask="aa-999-A999" validateMask="true"/>
 
             <p:inputMask id="optional" value="#{inputMask001.optional}" mask="(999) 999-9999[ x99999]"/>
 
