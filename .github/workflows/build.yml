@@ -13,8 +13,8 @@ jobs:
     name: Java ${{ matrix.java }}, Profile ${{ matrix.profile }}
     strategy:
       matrix:
-        java: [ 8, 11 ]
-        profile: [ 'headless,firefox,theme-saga,myfaces-2.3.x', 'headless,chrome,theme-saga,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,myfaces-2.3.x', 'headless,chrome,csp,theme-nova,mojarra-2.3.x' ]
+        java: [ 11 ]
+        profile: [ 'headless,safari,theme-saga,myfaces-2.3.x' ]
 
     steps:
       - uses: actions/checkout@v2.3.4
