@@ -27,6 +27,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import lombok.Data;
+import org.primefaces.extensions.integrationtests.general.utilities.TestUtils;
 
 @Named
 @ViewScoped
@@ -37,7 +38,13 @@ public class InputMask001 implements Serializable {
 
     private String value;
 
+    private String value2;
+
     private String alphanumeric;
 
     private String optional;
+
+    public void addMsg() {
+        TestUtils.addMessage("test");
+    }
 }
