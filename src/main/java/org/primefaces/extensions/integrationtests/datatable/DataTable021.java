@@ -63,7 +63,7 @@ public class DataTable021 implements Serializable {
 
     public void remove(ProgrammingLanguage programmingLanguage) {
         this.progLanguages.remove(programmingLanguage);
-//        this.filteredProgLanguages.remove(programmingLanguage); // work-around for PF up to 8.0; not working with >=10.0.0
+        this.filteredProgLanguages.remove(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
 
 //        updateDataTableFilterWorkaround(); // work-around for PF 10.0.0
     }
@@ -76,17 +76,17 @@ public class DataTable021 implements Serializable {
         programmingLanguage.setType(ProgrammingLanguage.ProgrammingLanguageType.COMPILED);
 
         this.progLanguages.add(programmingLanguage);
-//        this.filteredProgLanguages.add(programmingLanguage); // work-around for PF up to 8.0; not working with >=10.0.0
+        this.filteredProgLanguages.add(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
 
 //        updateDataTableFilterWorkaround(); // work-around for PF 10.0.0
     }
 
-    private void updateDataTableFilterWorkaround() {
-        DataTable dataTable = (DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("form:datatable");
-        FilterFeature filterFeature = (FilterFeature) dataTable.getFeature(DataTableFeatureKey.FILTER);
-        filterFeature.filter(FacesContext.getCurrentInstance(), dataTable);
-
-        SortFeature sortFeature = (SortFeature) dataTable.getFeature(DataTableFeatureKey.SORT);
-        sortFeature.sort(FacesContext.getCurrentInstance(), dataTable);
-    }
+//    private void updateDataTableFilterWorkaround() {
+//        DataTable dataTable = (DataTable)FacesContext.getCurrentInstance().getViewRoot().findComponent("form:datatable");
+//        FilterFeature filterFeature = (FilterFeature) dataTable.getFeature(DataTableFeatureKey.FILTER);
+//        filterFeature.filter(FacesContext.getCurrentInstance(), dataTable);
+//
+//        SortFeature sortFeature = (SortFeature) dataTable.getFeature(DataTableFeatureKey.SORT);
+//        sortFeature.sort(FacesContext.getCurrentInstance(), dataTable);
+//    }
 }
