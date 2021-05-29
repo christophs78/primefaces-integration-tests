@@ -53,8 +53,7 @@ public class DataTable005Test extends AbstractDataTableTest {
 
         // Assert
         assertConfiguration(dataTable.getWidgetConfiguration());
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3,4,5", page.messages.getMessage(0).getDetail());
+        assertMessage(page, "Selected ProgrammingLanguage(s)", "1,3,4,5");
 
         // Act
         page.buttonUpdate.click();
@@ -62,8 +61,50 @@ public class DataTable005Test extends AbstractDataTableTest {
 
         // Assert - selection must not be lost after update
         assertConfiguration(dataTable.getWidgetConfiguration());
-        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains("Selected ProgrammingLanguage(s)"));
-        Assertions.assertEquals("1,3,4,5", page.messages.getMessage(0).getDetail());
+        assertMessage(page, "Selected ProgrammingLanguage(s)", "1,3,4,5");
+    }
+
+    @Test
+    @Order(2)
+    @DisplayName("DataTable: GitHub #7368 Selection with filtering")
+    public void testSelectionWithFilter(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        Assertions.assertNotNull(dataTable);
+
+        // Act
+        dataTable.getCell(0, 0).getWebElement().click();
+        Actions actions = new Actions(page.getWebDriver());
+        actions.keyDown(Keys.META).click(dataTable.getCell(2, 0).getWebElement()).keyUp(Keys.META).perform();
+        actions.keyDown(Keys.SHIFT).click(dataTable.getCell(4, 0).getWebElement()).keyUp(Keys.SHIFT).perform();
+        page.button.click();
+
+        // Assert
+        assertConfiguration(dataTable.getWidgetConfiguration());
+        assertMessage(page, "Selected ProgrammingLanguage(s)", "1,3,4,5");
+
+        // Act - filter
+        dataTable.filter("Name", "Java");
+        page.buttonUpdate.click();
+        page.button.click();
+
+        // Assert - selection must not be lost after filter and update
+        assertConfiguration(dataTable.getWidgetConfiguration());
+        assertMessage(page, "Selected ProgrammingLanguage(s)", "1,3,4,5");
+
+        // Act - clear filter
+        dataTable.removeFilter("Name");
+        page.buttonUpdate.click();
+        page.button.click();
+
+        // Assert - selection must not be lost after filter and update
+        assertConfiguration(dataTable.getWidgetConfiguration());
+        assertMessage(page, "Selected ProgrammingLanguage(s)", "1,3,4,5");
+    }
+
+    private void assertMessage(Page page, String summary, String detail) {
+        Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains(summary));
+        Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(detail));
     }
 
     private void assertConfiguration(JSONObject cfg) {

@@ -13,25 +13,20 @@
 
         <h:form id="form">
             <p:messages id="msgs" showDetail="true">
-                <p:autoUpdate />
+                <p:autoUpdate/>
             </p:messages>
 
-            <p:dataTable id="datatable" value="#{dataTable005.progLanguages}" var="lang" selectionMode="multiple" selection="#{dataTable005.selectedProgLanguages}" rowKey="#{lang.id}">
-                <p:column headerText="ID" sortBy="#{lang.id}">
-                    <h:outputText value="#{lang.id}" />
-                </p:column>
+            <p:dataTable id="datatable" value="#{dataTable005.progLanguages}" var="lang" selectionMode="multiple"
+                         selection="#{dataTable005.selectedProgLanguages}" rowKey="#{lang.id}">
+                <p:column field="id"/>
 
-                <p:column headerText="Name" sortBy="#{lang.name}">
-                    <h:outputText value="#{lang.name}" />
-                </p:column>
+                <p:column field="name"/>
 
-                <p:column headerText="First appeared" sortBy="#{lang.firstAppeared}">
-                    <h:outputText value="#{lang.firstAppeared}" />
-                </p:column>
+                <p:column field="firstAppeared"/>
             </p:dataTable>
 
             <p:commandButton id="button" value="Submit" update="@form" action="#{dataTable005.submit}"/>
-            <p:commandButton id="buttonUpdate" value="Update" update="datatable" />
+            <p:commandButton id="buttonUpdate" value="Update" update="datatable"/>
         </h:form>
 
     </h:body>

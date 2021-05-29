@@ -52,19 +52,19 @@ public class DataTable004Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(dataTable.getCell(2, 0).getWebElement()).click();
 
         // Assert
-        asssertMessage(page, "ProgrammingLanguage Selected", languages.get(2).getName());
+        assertMessage(page, "ProgrammingLanguage Selected", languages.get(2).getName());
 
         // Act - other row
         PrimeSelenium.guardAjax(dataTable.getCell(4, 0).getWebElement()).click();
 
         // Assert
-        asssertMessage(page, "ProgrammingLanguage Selected", languages.get(4).getName());
+        assertMessage(page, "ProgrammingLanguage Selected", languages.get(4).getName());
 
         // Act - submit button
         page.button.click();
 
         // Assert (select row after update still selected)
-        asssertMessage(page, "Selected ProgrammingLanguage", languages.get(4).getName());
+        assertMessage(page, "Selected ProgrammingLanguage", languages.get(4).getName());
         PrimeSelenium.hasCssClass(dataTable.getRow(4).getWebElement(), "ui-state-highlight");
         Assertions.assertEquals("true", dataTable.getRow(4).getWebElement().getAttribute("aria-selected"));
 
@@ -74,14 +74,14 @@ public class DataTable004Test extends AbstractDataTableTest {
         PrimeSelenium.guardAjax(actionMetaPlusRowClick).perform();
 
         // Assert
-        asssertMessage(page, "ProgrammingLanguage Unselected", languages.get(4).getName());
+        assertMessage(page, "ProgrammingLanguage Unselected", languages.get(4).getName());
 
         // Act
         page.button.click();
 
         // Assert (no row selected)
         dataTable.getRows().forEach(r -> Assertions.assertEquals("false", r.getWebElement().getAttribute("aria-selected")));
-        asssertMessage(page, "no ProgrammingLanguage selected", "");
+        assertMessage(page, "no ProgrammingLanguage selected", "");
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
@@ -113,7 +113,7 @@ public class DataTable004Test extends AbstractDataTableTest {
         assertConfiguration(dataTable.getWidgetConfiguration());
     }
 
-    private void asssertMessage(Page page, String summary, String detail) {
+    private void assertMessage(Page page, String summary, String detail) {
         Assertions.assertTrue(page.messages.getMessage(0).getSummary().contains(summary));
         Assertions.assertTrue(page.messages.getMessage(0).getDetail().contains(detail));
     }
