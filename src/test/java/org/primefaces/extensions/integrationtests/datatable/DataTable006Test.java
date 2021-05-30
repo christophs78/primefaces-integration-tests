@@ -236,15 +236,17 @@ public class DataTable006Test extends AbstractDataTableTest {
         page.submit.click();
 
         // Assert
-        assertSelectAllCheckbox(dataTable, false);
         assertSelections(page.messages, "1,3");
-        assertConfiguration(dataTable.getWidgetConfiguration(), true);
 
         // Act - Filter
         dataTable.filter("Name", "Java");
         page.submit.click();
 
         // Assert
+        assertSelections(page.messages, "1,3");
+
+        // Act
+        dataTable.removeFilter("Name");
         assertSelectAllCheckbox(dataTable, false);
         assertSelections(page.messages, "1,3");
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
