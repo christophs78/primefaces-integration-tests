@@ -230,7 +230,7 @@ public class DataTable006Test extends AbstractDataTableTest {
         DataTable dataTable = page.dataTable;
         page.toggleLazyMode.click();
 
-        // Act
+        // Act - selection without filter applied
         dataTable.getCell(0, 0).getWebElement().click();
         dataTable.getCell(2, 0).getWebElement().click();
         page.submit.click();
@@ -238,17 +238,24 @@ public class DataTable006Test extends AbstractDataTableTest {
         // Assert
         assertSelections(page.messages, "1,3");
 
-        // Act - Filter
+        // Act - filter
         dataTable.filter("Name", "Java");
         page.submit.click();
 
         // Assert
         assertSelections(page.messages, "1,3");
 
-        // Act
+        // Act - selection with filter applied
+        dataTable.filter("Name", "2");
+        dataTable.getCell(1, 0).getWebElement().click();
+
+        // Act - remove filter
         dataTable.removeFilter("Name");
+        page.submit.click();
+
+        // Assert
         assertSelectAllCheckbox(dataTable, false);
-        assertSelections(page.messages, "1,3");
+        assertSelections(page.messages, "1,3,12");
         assertConfiguration(dataTable.getWidgetConfiguration(), true);
     }
 
