@@ -222,6 +222,34 @@ public class DataTable006Test extends AbstractDataTableTest {
         assertConfiguration(dataTable.getWidgetConfiguration(), false);
     }
 
+    @Test
+    @Order(7)
+    @DisplayName("DataTable: GitHub #7368 selection - with filtering")
+    public void testLazySelectionWithFiltering(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        page.toggleLazyMode.click();
+
+        // Act
+        dataTable.getCell(0, 0).getWebElement().click();
+        dataTable.getCell(2, 0).getWebElement().click();
+        page.submit.click();
+
+        // Assert
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,3");
+        assertConfiguration(dataTable.getWidgetConfiguration(), true);
+
+        // Act - Filter
+        dataTable.filter("Name", "Java");
+        page.submit.click();
+
+        // Assert
+        assertSelectAllCheckbox(dataTable, false);
+        assertSelections(page.messages, "1,3");
+        assertConfiguration(dataTable.getWidgetConfiguration(), true);
+    }
+
     private void assertConfiguration(JSONObject cfg, boolean selectionPageOnly) {
         assertNoJavascriptErrors();
         System.out.println("DataTable Config = " + cfg);

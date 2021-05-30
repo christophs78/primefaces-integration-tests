@@ -44,6 +44,7 @@ public class DataTable006 implements Serializable {
 
     private ProgrammingLanguageLazyDataModel lazyDataModel;
     private List<ProgrammingLanguage> progLanguages;
+    private List<ProgrammingLanguage> filteredProgLanguages;
     private List<ProgrammingLanguage> selectedProgLanguages;
     private boolean selectionPageOnly = true;
     private boolean lazy = false;

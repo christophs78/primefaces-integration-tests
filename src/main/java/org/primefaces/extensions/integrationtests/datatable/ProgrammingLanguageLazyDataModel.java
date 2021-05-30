@@ -56,6 +56,9 @@ public class ProgrammingLanguageLazyDataModel extends LazyDataModel<ProgrammingL
                             int filterValueInt = Integer.parseInt((String) meta.getFilterValue());
                             return lang.getFirstAppeared() >= filterValueInt;
                         }
+                        if (meta.getField().equals("name")) {
+                            return lang.getName().contains((String) meta.getFilterValue());
+                        }
                         return true; //TODO: add additional implementation when required
                     });
                 }
