@@ -55,8 +55,10 @@ public class DataTable021Test extends AbstractDataTableTest {
         assertRows(dataTable, langsFiltered);
         int rows = dataTable.getRows().size();
 
-        // Act - one row more than before
+        // Act
         page.buttonAdd.click();
+
+        // Assert - one row more than before
         Assertions.assertEquals(rows + 1, dataTable.getRows().size());
 
         assertNoJavascriptErrors();
@@ -78,9 +80,48 @@ public class DataTable021Test extends AbstractDataTableTest {
         assertRows(dataTable, langsFiltered);
         int rows = dataTable.getRows().size();
 
-        // Act - one row more than before
+        // Act
         WebElement removeButton = dataTable.getRow(0).getCell(3).getWebElement().findElement(By.className("ui-button"));
         removeButton.click();
+
+        // Assert - one row less than before
+        Assertions.assertEquals(rows - 1, dataTable.getRows().size());
+
+        assertNoJavascriptErrors();
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("DataTable: remove row without filter or sort applied")
+    public void testRemoveRowWithoutFilterOrSortApplied(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        int rows = dataTable.getRows().size();
+
+        // Act
+        WebElement removeButton = dataTable.getRow(0).getCell(3).getWebElement().findElement(By.className("ui-button"));
+        removeButton.click();
+
+        // Assert - one row less than before
+        Assertions.assertEquals(rows - 1, dataTable.getRows().size());
+
+        assertNoJavascriptErrors();
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("DataTable: remove row with sort but not filter applied")
+    public void testRemoveRowWithoutFilterApplied(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        dataTable.sort("Name");
+        int rows = dataTable.getRows().size();
+
+        // Act
+        WebElement removeButton = dataTable.getRow(0).getCell(3).getWebElement().findElement(By.className("ui-button"));
+        removeButton.click();
+
+        // Assert - one row less than before
         Assertions.assertEquals(rows - 1, dataTable.getRows().size());
 
         assertNoJavascriptErrors();

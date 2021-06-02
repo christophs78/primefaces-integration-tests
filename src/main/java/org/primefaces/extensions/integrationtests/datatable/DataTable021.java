@@ -63,7 +63,9 @@ public class DataTable021 implements Serializable {
 
     public void remove(ProgrammingLanguage programmingLanguage) {
         this.progLanguages.remove(programmingLanguage);
-        this.filteredProgLanguages.remove(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
+        if (this.filteredProgLanguages != null) {
+            this.filteredProgLanguages.remove(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
+        }
 
 //        updateDataTableFilterWorkaround(); // work-around for PF 10.0.0
     }
@@ -76,7 +78,9 @@ public class DataTable021 implements Serializable {
         programmingLanguage.setType(ProgrammingLanguage.ProgrammingLanguageType.COMPILED);
 
         this.progLanguages.add(programmingLanguage);
-        this.filteredProgLanguages.add(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
+        if (this.filteredProgLanguages != null) {
+            this.filteredProgLanguages.add(programmingLanguage); // see https://github.com/primefaces/primefaces/issues/7336
+        }
 
 //        updateDataTableFilterWorkaround(); // work-around for PF 10.0.0
     }
