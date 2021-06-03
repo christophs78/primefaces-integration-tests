@@ -70,8 +70,8 @@ public class DataTable021Test extends AbstractDataTableTest {
     }
 
     @Test
-    @Order(2)
-    @DisplayName("DataTable: filter and remove row")
+    @Order(0)
+    @DisplayName("DataTable: filter and remove row; this test´s fails when we run it first or stand-alone")
     public void testFilterAndRemoveRow(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -96,7 +96,7 @@ public class DataTable021Test extends AbstractDataTableTest {
     }
 
     @Test
-    @Order(0)
+    @Order(3)
     @DisplayName("DataTable: remove row without filter or sort applied; this test´s fails when we run it first or stand-alone")
     public void testRemoveRowWithoutFilterOrSortApplied(Page page) {
         // Arrange
