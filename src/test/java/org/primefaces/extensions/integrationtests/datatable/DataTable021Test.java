@@ -21,28 +21,23 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.junit.jupiter.api.*;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
-import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
-
-import java.util.List;
 
 /**
  * https://github.com/primefaces/primefaces/issues/7336
  */
 public class DataTable021Test extends AbstractDataTableTest {
-
-//    @BeforeEach
-//    void setUp(Page page, OtherPage otherPage) {
-//        //page.getWebDriver().navigate().refresh();
-//        PrimeSelenium.goTo(otherPage);
-//        PrimeSelenium.goTo(page);
-//    }
 
     @Test
     @Order(1)
