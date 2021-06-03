@@ -21,14 +21,12 @@
  */
 package org.primefaces.extensions.integrationtests.datatable;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.primefaces.extensions.selenium.AbstractPrimePage;
+import org.primefaces.extensions.selenium.PrimeSelenium;
 import org.primefaces.extensions.selenium.component.CommandButton;
 import org.primefaces.extensions.selenium.component.DataTable;
 
@@ -38,6 +36,13 @@ import java.util.List;
  * https://github.com/primefaces/primefaces/issues/7336
  */
 public class DataTable021Test extends AbstractDataTableTest {
+
+//    @BeforeEach
+//    void setUp(Page page, OtherPage otherPage) {
+//        //page.getWebDriver().navigate().refresh();
+//        PrimeSelenium.goTo(otherPage);
+//        PrimeSelenium.goTo(page);
+//    }
 
     @Test
     @Order(1)
@@ -91,8 +96,8 @@ public class DataTable021Test extends AbstractDataTableTest {
     }
 
     @Test
-    @Order(3)
-    @DisplayName("DataTable: remove row without filter or sort applied")
+    @Order(0)
+    @DisplayName("DataTable: remove row without filter or sort applied; this test´s fails when we run it first or stand-alone")
     public void testRemoveRowWithoutFilterOrSortApplied(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -110,7 +115,7 @@ public class DataTable021Test extends AbstractDataTableTest {
 
     @Test
     @Order(4)
-    @DisplayName("DataTable: remove row with sort but not filter applied")
+    @DisplayName("DataTable: remove row with sort but not filter applied; this test´s fails when we run it first or stand-alone")
     public void testRemoveRowWithoutFilterApplied(Page page) {
         // Arrange
         DataTable dataTable = page.dataTable;
@@ -123,6 +128,23 @@ public class DataTable021Test extends AbstractDataTableTest {
 
         // Assert - one row less than before
         Assertions.assertEquals(rows - 1, dataTable.getRows().size());
+
+        assertNoJavascriptErrors();
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("DataTable: add row without filter or sort applied")
+    public void testAddRowWithoutFilterOrSortApplied(Page page) {
+        // Arrange
+        DataTable dataTable = page.dataTable;
+        int rows = dataTable.getRows().size();
+
+        // Act
+        page.buttonAdd.click();
+
+        // Assert - one row more than before
+        Assertions.assertEquals(rows + 1, dataTable.getRows().size());
 
         assertNoJavascriptErrors();
     }
@@ -143,6 +165,13 @@ public class DataTable021Test extends AbstractDataTableTest {
         @Override
         public String getLocation() {
             return "datatable/dataTable021.xhtml";
+        }
+    }
+
+    public static class OtherPage extends AbstractPrimePage {
+        @Override
+        public String getLocation() {
+            return "clientwindow/clientWindow001.xhtml";
         }
     }
 }
